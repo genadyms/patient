@@ -1,1 +1,3 @@
-# patient test project, whit use GWT
+# patient project
+
+Test project, which use GWT, Hibernate
