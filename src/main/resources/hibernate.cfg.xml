@@ -13,8 +13,10 @@
 		<property name="connection.password">postgres</property>
 
 		<!-- Mapping https://github.com/Ekzilit/hospital.git -->
-		<mapping class="org.gmail.genadyms.shared.Patient" />
+		<mapping package="org.gmail.genadyms.shared.Patient" />
 		<mapping class="org.gmail.genadyms.shared.AbstractModel" />
+		<mapping class="org.gmail.genadyms.shared.Tag" />
+		
 
 	</session-factory>
 </hibernate-configuration>

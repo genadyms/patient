@@ -2,10 +2,10 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 9.5.2
--- Dumped by pg_dump version 9.5.2
+-- Dumped from database version 9.5.4
+-- Dumped by pg_dump version 9.5.4
 
--- Started on 2017-01-23 14:22:04
+-- Started on 2017-01-24 01:02:59
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -17,16 +17,16 @@ SET row_security = off;
 
 --
 -- TOC entry 1 (class 3079 OID 12355)
--- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: -
 --
 
 CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
 
 
 --
--- TOC entry 2100 (class 0 OID 0)
+-- TOC entry 2107 (class 0 OID 0)
 -- Dependencies: 1
--- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: -
 --
 
 COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
@@ -34,35 +34,88 @@ COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
 
 SET search_path = public, pg_catalog;
 
-SET default_tablespace = '';
-
 SET default_with_oids = false;
 
 --
--- TOC entry 181 (class 1259 OID 83825)
--- Name: patient; Type: TABLE; Schema: public; Owner: postgres
+-- TOC entry 181 (class 1259 OID 16804)
+-- Name: tag; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE patient (
+CREATE TABLE tag (
     id integer NOT NULL,
-    first_name character varying(150) NOT NULL,
-    created timestamp without time zone NOT NULL,
-    second_name character varying(300) NOT NULL,
-    address character varying(300) NOT NULL
+    name character varying(25) NOT NULL
 );
 
 
-ALTER TABLE patient OWNER TO postgres;
+--
+-- TOC entry 182 (class 1259 OID 16807)
+-- Name: tag_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE tag_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
 
 --
--- TOC entry 2094 (class 0 OID 83825)
+-- TOC entry 2108 (class 0 OID 0)
+-- Dependencies: 182
+-- Name: tag_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE tag_id_seq OWNED BY tag.id;
+
+
+--
+-- TOC entry 1981 (class 2604 OID 16816)
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY tag ALTER COLUMN id SET DEFAULT nextval('tag_id_seq'::regclass);
+
+
+--
+-- TOC entry 2100 (class 0 OID 16804)
 -- Dependencies: 181
--- Data for Name: patient; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: tag; Type: TABLE DATA; Schema: public; Owner: -
 --
 
+INSERT INTO tag (id, name) VALUES (8, 'hello');
+INSERT INTO tag (id, name) VALUES (9, 'hello2');
+INSERT INTO tag (id, name) VALUES (10, 'hello3');
 
 
--- Completed on 2017-01-23 14:22:04
+--
+-- TOC entry 2109 (class 0 OID 0)
+-- Dependencies: 182
+-- Name: tag_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('tag_id_seq', 10, true);
+
+
+--
+-- TOC entry 1983 (class 2606 OID 16825)
+-- Name: tag_name_key; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY tag
+    ADD CONSTRAINT tag_name_key UNIQUE (name);
+
+
+--
+-- TOC entry 1985 (class 2606 OID 16827)
+-- Name: tag_pk; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY tag
+    ADD CONSTRAINT tag_pk PRIMARY KEY (id);
+
+
+-- Completed on 2017-01-24 01:03:02
 
 --
 -- PostgreSQL database dump complete

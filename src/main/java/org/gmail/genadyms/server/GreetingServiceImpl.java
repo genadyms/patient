@@ -6,6 +6,7 @@ import java.util.List;
 import org.gmail.genadyms.client.GreetingService;
 import org.gmail.genadyms.shared.FieldVerifier;
 import org.gmail.genadyms.shared.Patient;
+import org.gmail.genadyms.shared.Tag;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -20,25 +21,19 @@ import org.gmail.genadyms.server.HibernateUtil;
 @SuppressWarnings("serial")
 public class GreetingServiceImpl extends RemoteServiceServlet implements GreetingService {
 
-	public String greetServer(String input) throws IllegalArgumentException {
-		/////////////////
+	static {
 		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
 		Session session = sessionFactory.openSession();
-//		Patient p = new Patient();
-//		p.setId(1L);
-//		p.setFirstName("firstName");
-//		p.setSecondName("secondName");
-//		p.setAddress("address");
-//		p.setCreated(new Date());
-//		session.save(p);
-//		session.flush();
+		session.beginTransaction();
+		Tag tag = new Tag();
+		tag.setName("hello3");
 
-		/////////////////////////
+		session.save(tag);
+		session.getTransaction().commit();
+	}
 
-		Query query = session.createQuery("from Patient");
-		List<Patient> pList = query.list();
-		System.out.println(pList);
-		
+	public String greetServer(String input) throws IllegalArgumentException {
+
 		// Verify that the input is valid.
 		if (!FieldVerifier.isValidName(input)) {
 			// If the input is not valid, throw an IllegalArgumentException back
