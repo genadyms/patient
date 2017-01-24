@@ -35,8 +35,8 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements Greetin
 		EntityManager em = Persistence.createEntityManagerFactory("gwt").createEntityManager();
 		em.getTransaction().begin();
 		Tag tag = new Tag();
-		tag.setName("hello9");
-		tag.setId(18L);
+		tag.setName("hello20");
+		tag.setId(20L);
 		em.merge(tag);
 		em.getTransaction().commit();
 	}

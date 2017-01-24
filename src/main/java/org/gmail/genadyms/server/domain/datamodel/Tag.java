@@ -12,26 +12,13 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "tag")
-public class Tag implements Serializable {// extends AbstractModel {
-//	@Override
-//	public String toString() {
-//		return "Tag [name=" + name + ", getId()=" + getId() + "]";
-//	}
+public class Tag extends AbstractModel {
+	// @Override
+	// public String toString() {
+	// return "Tag [name=" + name + ", getId()=" + getId() + "]";
+	// }
 
-	private static final long serialVersionUID = 1L;
-
-	@Id
-	private Long id;
-	
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-//	@Basic
-	@Column(name="name")
+	@Column(name = "name")
 	private String name;
 
 	public String getName() {
