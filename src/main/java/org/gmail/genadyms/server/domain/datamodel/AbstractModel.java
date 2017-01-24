@@ -1,4 +1,4 @@
-package org.gmail.genadyms.shared;
+package org.gmail.genadyms.server.domain.datamodel;
 
 import java.io.Serializable;
 

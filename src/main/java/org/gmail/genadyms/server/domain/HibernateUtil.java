@@ -1,4 +1,4 @@
-package org.gmail.genadyms.server;
+package org.gmail.genadyms.server.domain;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;

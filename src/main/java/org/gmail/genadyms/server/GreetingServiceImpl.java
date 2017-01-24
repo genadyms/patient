@@ -4,16 +4,15 @@ import java.util.Date;
 import java.util.List;
 
 import org.gmail.genadyms.client.GreetingService;
+import org.gmail.genadyms.server.domain.HibernateUtil;
+import org.gmail.genadyms.server.domain.datamodel.Patient;
+import org.gmail.genadyms.server.domain.datamodel.Tag;
 import org.gmail.genadyms.shared.FieldVerifier;
-import org.gmail.genadyms.shared.Patient;
-import org.gmail.genadyms.shared.Tag;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
-
-import org.gmail.genadyms.server.HibernateUtil;
 
 /**
  * The server-side implementation of the RPC service.
@@ -26,7 +25,7 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements Greetin
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
 		Tag tag = new Tag();
-		tag.setName("hello3");
+		tag.setName("hello5");
 
 		session.save(tag);
 		session.getTransaction().commit();

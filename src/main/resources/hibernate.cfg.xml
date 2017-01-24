@@ -13,9 +13,9 @@
 		<property name="connection.password">postgres</property>
 
 		<!-- Mapping https://github.com/Ekzilit/hospital.git -->
-		<mapping package="org.gmail.genadyms.shared.Patient" />
-		<mapping class="org.gmail.genadyms.shared.AbstractModel" />
-		<mapping class="org.gmail.genadyms.shared.Tag" />
+		<mapping package="org.gmail.genadyms.server.domain.datamodel.Patient" />
+		<mapping class="org.gmail.genadyms.server.domain.datamodel.AbstractModel" />
+		<mapping class="org.gmail.genadyms.server.domain.datamodel.Tag" />
 		
 
 	</session-factory>
