@@ -3,8 +3,11 @@ package org.gmail.genadyms.server;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.Persistence;
+
 import org.gmail.genadyms.client.GreetingService;
-import org.gmail.genadyms.server.domain.HibernateUtil;
+import org.gmail.genadyms.server.domain.TEMP_HibernateUtil;
 import org.gmail.genadyms.server.domain.datamodel.Patient;
 import org.gmail.genadyms.server.domain.datamodel.Tag;
 import org.gmail.genadyms.shared.FieldVerifier;
@@ -21,14 +24,21 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 public class GreetingServiceImpl extends RemoteServiceServlet implements GreetingService {
 
 	static {
-		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
-		Session session = sessionFactory.openSession();
-		session.beginTransaction();
+//		SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
+//		Session session = sessionFactory.openSession();
+//		session.beginTransaction();
+//		Tag tag = new Tag();
+//		tag.setName("hello5");
+//
+//		session.save(tag);
+//		session.getTransaction().commit();
+		EntityManager em = Persistence.createEntityManagerFactory("gwt").createEntityManager();
+		em.getTransaction().begin();
 		Tag tag = new Tag();
-		tag.setName("hello5");
-
-		session.save(tag);
-		session.getTransaction().commit();
+		tag.setName("hello9");
+		tag.setId(18L);
+		em.merge(tag);
+		em.getTransaction().commit();
 	}
 
 	public String greetServer(String input) throws IllegalArgumentException {
