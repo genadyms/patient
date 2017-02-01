@@ -9,37 +9,39 @@ import javax.persistence.OneToMany;
 
 @Entity
 public class BedPlace extends AbstractModel {
-    @Column
-    private Integer numberOfChamber;
+	private static final long serialVersionUID = 1L;
 
-    @Column
-    private Integer numberOfBed;
+	@Column
+	private Integer numberOfChamber;
 
-    @OneToMany(mappedBy = "bedPlace", fetch = FetchType.LAZY)
-    private List<PatientCard> patientCard;
+	@Column
+	private Integer numberOfBed;
 
-    public Integer getNumberOfChamber() {
-        return numberOfChamber;
-    }
+	@OneToMany(mappedBy = "bedPlace", fetch = FetchType.LAZY)
+	private List<PatientCard> patientCard;
 
-    public void setNumberOfChamber(Integer numberOfChamber) {
-        this.numberOfChamber = numberOfChamber;
-    }
+	public Integer getNumberOfChamber() {
+		return numberOfChamber;
+	}
 
-    public Integer getNumberOfBed() {
-        return numberOfBed;
-    }
+	public void setNumberOfChamber(Integer numberOfChamber) {
+		this.numberOfChamber = numberOfChamber;
+	}
 
-    public void setNumberOfBed(Integer numberOfBed) {
-        this.numberOfBed = numberOfBed;
-    }
+	public Integer getNumberOfBed() {
+		return numberOfBed;
+	}
 
-    public List<PatientCard> getPatientCard() {
-        return patientCard;
-    }
+	public void setNumberOfBed(Integer numberOfBed) {
+		this.numberOfBed = numberOfBed;
+	}
 
-    public void setPatientCard(List<PatientCard> patientCard) {
-        this.patientCard = patientCard;
-    }
+	public List<PatientCard> getPatientCard() {
+		return patientCard;
+	}
+
+	public void setPatientCard(List<PatientCard> patientCard) {
+		this.patientCard = patientCard;
+	}
 
 }

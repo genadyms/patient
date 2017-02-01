@@ -24,36 +24,20 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements Greetin
 		this.dao = new PatientDao();
 	}
 
-	private Patient save(Patient patient) {
+	public Patient save(Patient patient) {
 		this.dao.insert(patient);
 		return patient;
 	}
 
-	private void testIt() {
-		Long all = dao.count();
-		if (null == all) {
-			System.out.println("null!!!!!");
-
-		} else {
-			System.out.println(all);
-		}
-		Patient p = new Patient();
-		p.setFirstName("fname12");
-		p.setLastName("lname12");
-		p.setMiddleName("mname2");
-		p.setHomeAddress("my home address2");
-		p.setDateOfBirth(new Date());
-
-		save(p);
-		Patient updtP = dao.get(19L);
-		updtP.setMiddleName("isupdated");
-		dao.update(updtP);
-
+	public void delete(Patient patient) {
+		this.dao.delete(patient.getId());
 	}
 
+	public Patient getPatient(Long id) {
+		return this.dao.get(id);
+	}
 	@Override
 	public String greetServer(String name) throws IllegalArgumentException {
-		testIt();
 		return "hello world!";
 	}
 }

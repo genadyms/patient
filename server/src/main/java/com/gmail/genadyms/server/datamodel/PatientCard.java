@@ -10,7 +10,8 @@ import javax.persistence.ManyToOne;
 @Entity
 public class PatientCard extends AbstractModel {
 
-    @ManyToOne(targetEntity = Patient.class, fetch = FetchType.LAZY)
+	private static final long serialVersionUID = 1L;
+	@ManyToOne(targetEntity = Patient.class, fetch = FetchType.LAZY)
     private Patient patient;
     @Column
     private String diagnosis;

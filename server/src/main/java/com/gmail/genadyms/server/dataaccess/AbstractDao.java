@@ -15,6 +15,7 @@ public class AbstractDao<T, ID> {
     protected AbstractDao(final Class<T> entityClass) {
         this.entityManager =
                 Persistence.createEntityManagerFactory("gwt").createEntityManager();
+        
         this.entityClass = entityClass;
     }
 
@@ -37,7 +38,7 @@ public class AbstractDao<T, ID> {
     }
 
     public T update(T entity) {
-        getEntityManager().getTransaction().begin();
+    	getEntityManager().getTransaction().begin();
         entity = entityManager.merge(entity);
         getEntityManager().getTransaction().commit();
         return entity;
@@ -46,8 +47,9 @@ public class AbstractDao<T, ID> {
     public void delete(ID id) {
         getEntityManager().getTransaction().begin();
         entityManager.createQuery(String.format("delete from %s e where e.id = :id", entityClass.getSimpleName())).setParameter("id", id).executeUpdate();
+        getEntityManager().flush();
+        getEntityManager().clear();
         getEntityManager().getTransaction().commit();
-
     }
 
     public Class<T> getEntityClass() {
