@@ -19,7 +19,7 @@
     <inherits name="com.gmail.genadyms.server"/>
 
     <!-- Specify the app entry point class.                         -->
-    <entry-point class='com.gmail.genadyms.web.parent'/>
+    <entry-point class='com.gmail.genadyms.web.Patients'/>
 
     <!-- Specify the paths for translatable code                    -->
     <source path='web'/>

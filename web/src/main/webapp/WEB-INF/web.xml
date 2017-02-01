@@ -5,20 +5,31 @@
 
 <web-app>
 
-  <!-- Servlets -->
-  <servlet>
-    <servlet-name>greetServlet</servlet-name>
-    <servlet-class>com.gmail.genadyms.server.service.GreetingServiceImpl</servlet-class>
-  </servlet>
+	<!-- Servlets -->
+	<servlet>
+	<servlet-name>patientsServlet</servlet-name>
+	<servlet-class>com.gmail.genadyms.server.service.PatientsServiceImpl</servlet-class>
+	</servlet>
 
-  <servlet-mapping>
-    <servlet-name>greetServlet</servlet-name>
-    <url-pattern>/parent/greet</url-pattern>
-  </servlet-mapping>
+	<servlet-mapping>
+	<servlet-name>patientsServlet</servlet-name>
+	<url-pattern>/patient</url-pattern>
+	</servlet-mapping>
 
-  <!-- Default page to serve -->
-  <welcome-file-list>
-    <welcome-file>parent.html</welcome-file>
-  </welcome-file-list>
+
+	<!-- <servlet> -->
+	<!-- <servlet-name>greetServlet</servlet-name> -->
+	<!-- <servlet-class>com.gmail.genadyms.server.service.GreetingServiceImpl</servlet-class> -->
+	<!-- </servlet> -->
+
+	<!-- <servlet-mapping> -->
+	<!-- <servlet-name>greetServlet</servlet-name> -->
+	<!-- <url-pattern>/parent/greet</url-pattern> -->
+	<!-- </servlet-mapping> -->
+
+	<!-- Default page to serve -->
+	<welcome-file-list>
+		<welcome-file>parent.html</welcome-file>
+	</welcome-file-list>
 
 </web-app>

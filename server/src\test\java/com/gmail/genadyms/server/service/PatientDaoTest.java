@@ -27,7 +27,6 @@ public class PatientDaoTest {
 		Long id = patient.getId();
 		Assert.assertNotNull(id);
 		dao.delete(id);
-		System.out.println("1 " + patient.getFirstName());
 		Patient delPatient = dao.get(patient.getId());
 		Assert.assertNull(delPatient);
 	}
