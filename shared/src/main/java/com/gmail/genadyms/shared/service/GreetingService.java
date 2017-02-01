@@ -1,4 +1,4 @@
-package com.gmail.genadyms.web;
+package com.gmail.genadyms.shared.service;
 
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;

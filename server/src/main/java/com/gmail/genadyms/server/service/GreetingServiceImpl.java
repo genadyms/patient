@@ -1,6 +1,6 @@
 package com.gmail.genadyms.server.service;
 
-import com.gmail.genadyms.web.GreetingService;
+import com.gmail.genadyms.shared.service.GreetingService;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 @SuppressWarnings("serial")

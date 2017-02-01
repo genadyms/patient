@@ -1,6 +1,7 @@
-package com.gmail.genadyms.web;
+package com.gmail.genadyms.client;
 
-import com.gmail.genadyms.web.presenter.Presenter;
+import com.gmail.genadyms.client.presenter.Presenter;
+import com.gmail.genadyms.shared.service.PatientServiceAsync;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.event.shared.HandlerManager;
@@ -9,10 +10,10 @@ import com.google.gwt.user.client.ui.HasWidgets;
 
 public class AppController implements Presenter, ValueChangeHandler<String> {
 	private final HandlerManager eventBus;
-	private final PatientsServiceAsync rpcService;
+	private final PatientServiceAsync rpcService;
 	private HasWidgets container;
 
-	public AppController(PatientsServiceAsync rpcService, HandlerManager eventBus) {
+	public AppController(PatientServiceAsync rpcService, HandlerManager eventBus) {
 		this.eventBus = eventBus;
 		this.rpcService = rpcService;
 		bind();

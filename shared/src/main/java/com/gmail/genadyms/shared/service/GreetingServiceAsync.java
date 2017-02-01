@@ -1,4 +1,4 @@
-package com.gmail.genadyms.web;
+package com.gmail.genadyms.shared.service;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -8,7 +8,7 @@ public interface GreetingServiceAsync
 
     /**
      * GWT-RPC service  asynchronous (client-side) interface
-     * @see com.gmail.genadyms.web.GreetingService
+     * @see com.gmail.genadyms.shared.service.GreetingService
      */
     void greetServer( java.lang.String name, AsyncCallback<java.lang.String> callback );
 

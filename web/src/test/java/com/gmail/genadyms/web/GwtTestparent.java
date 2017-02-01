@@ -1,8 +1,8 @@
 package com.gmail.genadyms.web;
 
 import com.gmail.genadyms.shared.FieldVerifier;
-import com.gmail.genadyms.web.GreetingService;
-import com.gmail.genadyms.web.GreetingServiceAsync;
+import com.gmail.genadyms.shared.service.GreetingService;
+import com.gmail.genadyms.shared.service.GreetingServiceAsync;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.junit.client.GWTTestCase;
 import com.google.gwt.user.client.rpc.AsyncCallback;
