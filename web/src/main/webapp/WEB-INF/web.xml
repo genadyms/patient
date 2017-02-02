@@ -6,7 +6,7 @@
 <web-app>
 
   <!-- Servlets -->
-  <servlet>
+  <!--<servlet>
     <servlet-name>greetServlet</servlet-name>
     <servlet-class>com.gmail.genadyms.server.service.GreetingServiceImpl</servlet-class>
   </servlet>
@@ -14,8 +14,17 @@
   <servlet-mapping>
     <servlet-name>greetServlet</servlet-name>
     <url-pattern>/parent/greet</url-pattern>
-  </servlet-mapping>
+  </servlet-mapping>-->
 
+  <servlet>
+    <servlet-name>contactsServiceServlet</servlet-name>
+    <servlet-class>com.gmail.genadyms.server.service.ContactsServiceImpl</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>contactsServiceServlet</servlet-name>
+    <url-pattern>/parent/contactsService</url-pattern>
+  </servlet-mapping>
   <!-- Default page to serve -->
   <welcome-file-list>
     <welcome-file>parent.html</welcome-file>

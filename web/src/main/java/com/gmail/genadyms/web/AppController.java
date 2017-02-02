@@ -1,8 +1,12 @@
 package com.gmail.genadyms.web;
 
+import com.gmail.genadyms.web.event.*;
+import com.gmail.genadyms.web.presenter.ContactsPresenter;
+import com.gmail.genadyms.web.presenter.EditContactPresenter;
 import com.gmail.genadyms.web.presenter.PatientsPresenter;
 import com.gmail.genadyms.web.presenter.Presenter;
-import com.gmail.genadyms.web.view.PatientsView;
+import com.gmail.genadyms.web.view.ContactsView;
+import com.gmail.genadyms.web.view.EditContactView;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.event.shared.HandlerManager;
@@ -11,10 +15,10 @@ import com.google.gwt.user.client.ui.HasWidgets;
 
 public class AppController implements Presenter, ValueChangeHandler<String> {
     private final HandlerManager eventBus;
-    private final GreetingServiceAsync rpcService;
+    private final ContactsServiceAsync rpcService;
     private HasWidgets container;
 
-    public AppController(GreetingServiceAsync rpcService, HandlerManager eventBus) {
+    public AppController(ContactsServiceAsync rpcService, HandlerManager eventBus) {
         this.eventBus = eventBus;
         this.rpcService = rpcService;
         bind();
@@ -22,27 +26,84 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
 
     private void bind() {
         History.addValueChangeHandler(this);
+
+        eventBus.addHandler(AddContactEvent.TYPE,
+                new AddContactEventHandler() {
+                    public void onAddContact(AddContactEvent event) {
+                        doAddNewContact();
+                    }
+                });
+
+        eventBus.addHandler(EditContactEvent.TYPE,
+                new EditContactEventHandler() {
+                    public void onEditContact(EditContactEvent event) {
+                        doEditContact(event.getId());
+                    }
+                });
+
+        eventBus.addHandler(EditContactCancelledEvent.TYPE,
+                new EditContactCancelledEventHandler() {
+                    public void onEditContactCancelled(EditContactCancelledEvent event) {
+                        doEditContactCancelled();
+                    }
+                });
+
+        eventBus.addHandler(ContactUpdatedEvent.TYPE,
+                new ContactUpdatedEventHandler() {
+                    public void onContactUpdated(ContactUpdatedEvent event) {
+                        doContactUpdated();
+                    }
+                });
     }
 
     private void doAddNewContact() {
         History.newItem("add");
     }
 
+    private void doEditContact(String id) {
+        History.newItem("edit", false);
+        Presenter presenter = new EditContactPresenter(rpcService, eventBus, new EditContactView(), id);
+        presenter.go(container);
+    }
 
-    @Override
-    public void go(HasWidgets container) {
+    private void doEditContactCancelled() {
+        History.newItem("list");
+    }
+
+    private void doContactUpdated() {
+        History.newItem("list");
+    }
+
+    public void go(final HasWidgets container) {
         this.container = container;
 
         if ("".equals(History.getToken())) {
             History.newItem("list");
-        } else {
+        }
+        else {
             History.fireCurrentHistoryState();
         }
     }
 
-    @Override
     public void onValueChange(ValueChangeEvent<String> event) {
         String token = event.getValue();
-        Presenter presenter = new PatientsPresenter(rpcService, eventBus, new PatientsView());
+
+        if (token != null) {
+            Presenter presenter = null;
+
+            if (token.equals("list")) {
+                presenter = new ContactsPresenter(rpcService, eventBus, new ContactsView());
+            }
+            else if (token.equals("add")) {
+                presenter = new EditContactPresenter(rpcService, eventBus, new EditContactView());
+            }
+            else if (token.equals("edit")) {
+                presenter = new EditContactPresenter(rpcService, eventBus, new EditContactView());
+            }
+
+            if (presenter != null) {
+                presenter.go(container);
+            }
+        }
     }
 }

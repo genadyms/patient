@@ -27,7 +27,9 @@ public class GWTLauncher implements EntryPoint {
 
   @Override
   public void onModuleLoad() {
-    GreetingServiceAsync rpcService = GWT.create(GreetingService.class);
+//    GreetingServiceAsync rpcService = GWT.create(GreetingService.class);
+
+    ContactsServiceAsync rpcService = GWT.create(ContactsService.class);
     HandlerManager eventBus = new HandlerManager(null);
     AppController appController = new AppController(rpcService, eventBus);
     appController.go(RootPanel.get());
