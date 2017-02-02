@@ -20,14 +20,22 @@ public class PatientsPresenter implements Presenter {
 		this.rpcService = rpcService;
 		this.eventBus = eventBus;
 		this.display = view;
+		System.out.println("PRESENTER RUN!!!");
 	}
 
 	@Override
 	public void go(HasWidgets container) {
+		bind();
+		container.clear();
+		container.add(display.asWidget());
+	}
+
+	private void bind() {
+		// TODO Auto-generated method stub
 
 	}
 
-	public interface Display extends HasValue<List<String>> {
+	public interface Display {// extends HasValue<List<String>> {
 
 		HasClickHandlers getAddButton();
 
