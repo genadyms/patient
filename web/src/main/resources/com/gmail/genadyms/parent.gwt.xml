@@ -19,8 +19,8 @@
     <inherits name="com.gmail.genadyms.server"/>
 
     <!-- Specify the app entry point class.                         -->
-    <entry-point class='com.gmail.genadyms.client.GwtLauncher'/>
-
+<!--     <entry-point class='com.gmail.genadyms.client.GwtLauncher'/> -->
+ <entry-point class='com.gmail.genadyms.web.GwtLauncher'/>
     <!-- Specify the paths for translatable code                    -->
     <source path='web'/>
 </module>

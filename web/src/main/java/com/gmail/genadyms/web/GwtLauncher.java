@@ -1,4 +1,4 @@
-package com.gmail.genadyms.client;
+package com.gmail.genadyms.web;
 
 import com.gmail.genadyms.shared.service.PatientService;
 import com.gmail.genadyms.shared.service.PatientServiceAsync;

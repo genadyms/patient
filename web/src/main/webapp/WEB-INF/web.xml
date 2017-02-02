@@ -13,7 +13,7 @@
 
 	<servlet-mapping>
 	<servlet-name>patientsServlet</servlet-name>
-	<url-pattern>/patient</url-pattern>
+	<url-pattern>/parent/patients</url-pattern>
 	</servlet-mapping>
 
 

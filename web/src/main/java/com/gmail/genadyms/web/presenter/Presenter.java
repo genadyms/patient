@@ -1,4 +1,4 @@
-package com.gmail.genadyms.client.presenter;
+package com.gmail.genadyms.web.presenter;
 
 import com.google.gwt.user.client.ui.HasWidgets;
 

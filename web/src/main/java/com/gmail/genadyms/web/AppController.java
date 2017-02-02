@@ -1,7 +1,9 @@
-package com.gmail.genadyms.client;
+package com.gmail.genadyms.web;
 
-import com.gmail.genadyms.client.presenter.Presenter;
 import com.gmail.genadyms.shared.service.PatientServiceAsync;
+import com.gmail.genadyms.web.presenter.PatientsPresenter;
+import com.gmail.genadyms.web.presenter.Presenter;
+import com.gmail.genadyms.web.view.PatientsView;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.event.shared.HandlerManager;
@@ -77,7 +79,7 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
 
 	public void onValueChange(ValueChangeEvent<String> event) {
 		String token = event.getValue();
-
+		Presenter presenter = new PatientsPresenter(rpcService, eventBus, new PatientsView());
 //		if (token != null) {
 //			Presenter presenter = null;
 //

@@ -1,4 +1,4 @@
-package com.gmail.genadyms.client;
+package com.gmail.genadyms.web;
 
 /**
  * Interface to represent the messages contained in resource bundle:
