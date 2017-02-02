@@ -3,7 +3,6 @@ package com.gmail.genadyms.web;
 import com.gmail.genadyms.web.event.*;
 import com.gmail.genadyms.web.presenter.ContactsPresenter;
 import com.gmail.genadyms.web.presenter.EditContactPresenter;
-import com.gmail.genadyms.web.presenter.PatientsPresenter;
 import com.gmail.genadyms.web.presenter.Presenter;
 import com.gmail.genadyms.web.view.ContactsView;
 import com.gmail.genadyms.web.view.EditContactView;
