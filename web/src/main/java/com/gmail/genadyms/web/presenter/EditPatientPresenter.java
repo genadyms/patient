@@ -13,7 +13,7 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.user.client.Window;
 
 public class EditPatientPresenter implements Presenter {
-	
+
 	public interface Display {
 		HasClickHandlers getSaveButton();
 
@@ -41,24 +41,24 @@ public class EditPatientPresenter implements Presenter {
 		bind();
 	}
 
-	public EditPatientPresenter(PatientServiceAsync rpcService, HandlerManager eventBus, Display display, String id) {
+	public EditPatientPresenter(PatientServiceAsync rpcService, HandlerManager eventBus, Display display, Long id) {
 		this.rpcService = rpcService;
 		this.eventBus = eventBus;
 		this.display = display;
 		bind();
 
-		// rpcService.getPatient(id, new AsyncCallback<PatientDTO>() {
-		// public void onSuccess(PatientDTO result) {
-		// contact = result;
-		// EditPatientPresenter.this.display.getFirstName().setValue(contact.getFirstName());
-		// EditPatientPresenter.this.display.getLastName().setValue(contact.getLastName());
-		// EditPatientPresenter.this.display.getEmailAddress().setValue(contact.getEmailAddress());
-		// }
-		//
-		// public void onFailure(Throwable caught) {
-		// Window.alert("Error retrieving contact");
-		// }
-		// });
+		rpcService.getPatient(id, new AsyncCallback<PatientDTO>() {
+			public void onSuccess(PatientDTO result) {
+				contact = result;
+				EditPatientPresenter.this.display.getFirstName().setValue(contact.getFirstName());
+				EditPatientPresenter.this.display.getLastName().setValue(contact.getLastName());
+				EditPatientPresenter.this.display.getEmailAddress().setValue(contact.getAddress());
+			}
+
+			public void onFailure(Throwable caught) {
+				Window.alert("Error retrieving contact");
+			}
+		});
 
 	}
 

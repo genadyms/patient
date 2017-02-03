@@ -59,7 +59,7 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
         History.newItem("add");
     }
 
-    private void doEditContact(String id) {
+    private void doEditContact(Long id) {
         History.newItem("edit", false);
         Presenter presenter = new EditPatientPresenter(rpcService, eventBus, new EditPatientView(), id);
         presenter.go(container);

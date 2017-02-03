@@ -26,15 +26,11 @@ public class PatientsPresenter implements Presenter {
 	public interface Display {
 		HasClickHandlers getAddButton();
 
-		HasClickHandlers getDeleteButton();
-
 		HasClickHandlers getList();
 
 		void setData(List<String> data);
 
 		int getClickedRow(ClickEvent event);
-
-		List<Integer> getSelectedRows();
 
 		Widget asWidget();
 	}
@@ -56,22 +52,17 @@ public class PatientsPresenter implements Presenter {
 			}
 		});
 
-//		display.getDeleteButton().addClickHandler(new ClickHandler() {
-//			public void onClick(ClickEvent event) {
-//				deleteSelectedContacts();
-//			}
-//		});
 
-//		display.getList().addClickHandler(new ClickHandler() {
-//			public void onClick(ClickEvent event) {
-//				int selectedRow = display.getClickedRow(event);
-//
-//				if (selectedRow >= 0) {
-//					String id = patientsDTO.get(selectedRow).getId();
-//					eventBus.fireEvent(new EditPatientEvent(id));
-//				}
-//			}
-//		});
+		display.getList().addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				int selectedRow = display.getClickedRow(event);
+
+				if (selectedRow >= 0) {
+					Long id = patientsDTO.get(selectedRow).getId();
+					eventBus.fireEvent(new EditPatientEvent(id));
+				}
+			}
+		});
 	}
 
 	public void go(final HasWidgets container) {
@@ -80,32 +71,6 @@ public class PatientsPresenter implements Presenter {
 		container.add(display.asWidget());
 		fetchContactDetails();
 	}
-
-	public void sortContactDetails() {
-
-		// Yes, we could use a more optimized method of sorting, but the
-		// point is to create a test case that helps illustrate the higher
-		// level concepts used when creating MVP-based applications.
-		//
-//		for (int i = 0; i < patientsDTO.size(); ++i) {
-//			for (int j = 0; j < patientsDTO.size() - 1; ++j) {
-//				if (patientsDTO.get(j).getDisplayName()
-//						.compareToIgnoreCase(patientsDTO.get(j + 1).getDisplayName()) >= 0) {
-//					PatientDetails tmp = patientsDTO.get(j);
-//					patientsDTO.set(j, patientsDTO.get(j + 1));
-//					patientsDTO.set(j + 1, tmp);
-//				}
-//			}
-//		}
-	}
-
-//	public void setContactDetails(List<PatientDetails> contactDetails) {
-//		this.patientsDTO = contactDetails;
-//	}
-//
-//	public PatientDetails getContactDetail(int index) {
-//		return patientsDTO.get(index);
-//	}
 
 	private void fetchContactDetails() {
 		rpcService.getPatients(new AsyncCallback<List<PatientDTO>>() {
@@ -125,14 +90,4 @@ public class PatientsPresenter implements Presenter {
 			}
 		});
 	}
-
-//	private void deleteSelectedContacts() {
-//		List<Integer> selectedRows = display.getSelectedRows();
-//		ArrayList<String> ids = new ArrayList<String>();
-//
-//		for (int i = 0; i < selectedRows.size(); ++i) {
-//			ids.add(patientsDTO.get(selectedRows.get(i)).getId());
-//		}
-//
-//	}
 }

@@ -4,13 +4,13 @@ import com.google.gwt.event.shared.GwtEvent;
 
 public class EditPatientEvent extends GwtEvent<EditPatientEventHandler>{
   public static Type<EditPatientEventHandler> TYPE = new Type<EditPatientEventHandler>();
-  private final String id;
+  private final Long id;
   
-  public EditPatientEvent(String id) {
+  public EditPatientEvent(Long id) {
     this.id = id;
   }
   
-  public String getId() { return id; }
+  public Long getId() { return id; }
   
   @Override
   public Type<EditPatientEventHandler> getAssociatedType() {
