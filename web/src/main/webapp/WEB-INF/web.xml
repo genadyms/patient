@@ -8,12 +8,12 @@
     <!-- Servlets -->
     <servlet>
         <servlet-name>contactsServiceServlet</servlet-name>
-        <servlet-class>com.gmail.genadyms.server.service.ContactsServiceImpl</servlet-class>
+        <servlet-class>com.gmail.genadyms.server.service.PatientsServiceImpl</servlet-class>
     </servlet>
 
     <servlet-mapping>
         <servlet-name>contactsServiceServlet</servlet-name>
-        <url-pattern>/parent/contactsService</url-pattern>
+        <url-pattern>/parent/patient</url-pattern>
     </servlet-mapping>
     <!-- Default page to serve -->
     <welcome-file-list>

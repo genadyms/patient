@@ -3,15 +3,15 @@ package com.gmail.genadyms.shared;
 import java.io.Serializable;
 
 @SuppressWarnings("serial")
-public class ContactDetails implements Serializable {
+public class PatientDetails implements Serializable {
     private String id;
     private String displayName;
 
-    public ContactDetails() {
-        new ContactDetails("0", "");
+    public PatientDetails() {
+        new PatientDetails("0", "");
     }
 
-    public ContactDetails(String id, String displayName) {
+    public PatientDetails(String id, String displayName) {
         this.id = id;
         this.displayName = displayName;
     }

@@ -1,6 +1,6 @@
 package com.gmail.genadyms.web.view;
 
-import com.gmail.genadyms.web.presenter.ContactsPresenter;
+import com.gmail.genadyms.web.presenter.PatientsPresenter;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.user.client.ui.Button;
@@ -15,13 +15,13 @@ import com.google.gwt.user.client.ui.Widget;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ContactsView extends Composite implements ContactsPresenter.Display {
+public class PatientsView extends Composite implements PatientsPresenter.Display {
   private final Button addButton;
   private final Button deleteButton;
   private FlexTable contactsTable;
   private final FlexTable contentTable;
   
-  public ContactsView() {
+  public PatientsView() {
     DecoratorPanel contentTableDecorator = new DecoratorPanel();
     initWidget(contentTableDecorator);
     contentTableDecorator.setWidth("100%");

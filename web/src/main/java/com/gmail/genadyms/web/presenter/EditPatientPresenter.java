@@ -1,9 +1,9 @@
 package com.gmail.genadyms.web.presenter;
 
-import com.gmail.genadyms.shared.Contact;
-import com.gmail.genadyms.web.ContactsServiceAsync;
-import com.gmail.genadyms.web.event.ContactUpdatedEvent;
-import com.gmail.genadyms.web.event.EditContactCancelledEvent;
+import com.gmail.genadyms.shared.PatientDTO;
+import com.gmail.genadyms.web.PatientsServiceAsync;
+import com.gmail.genadyms.web.event.PatientUpdatedEvent;
+import com.gmail.genadyms.web.event.EditPatientCancelledEvent;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.HasClickHandlers;
@@ -14,7 +14,7 @@ import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.user.client.Window;
 
-public class EditContactPresenter implements Presenter {
+public class EditPatientPresenter implements Presenter {
     public interface Display {
         HasClickHandlers getSaveButton();
 
@@ -29,31 +29,31 @@ public class EditContactPresenter implements Presenter {
         Widget asWidget();
     }
 
-    private Contact contact;
-    private final ContactsServiceAsync rpcService;
+    private PatientDTO contact;
+    private final PatientsServiceAsync rpcService;
     private final HandlerManager eventBus;
     private final Display display;
 
-    public EditContactPresenter(ContactsServiceAsync rpcService, HandlerManager eventBus, Display display) {
+    public EditPatientPresenter(PatientsServiceAsync rpcService, HandlerManager eventBus, Display display) {
         this.rpcService = rpcService;
         this.eventBus = eventBus;
-        this.contact = new Contact();
+        this.contact = new PatientDTO();
         this.display = display;
         bind();
     }
 
-    public EditContactPresenter(ContactsServiceAsync rpcService, HandlerManager eventBus, Display display, String id) {
+    public EditPatientPresenter(PatientsServiceAsync rpcService, HandlerManager eventBus, Display display, String id) {
         this.rpcService = rpcService;
         this.eventBus = eventBus;
         this.display = display;
         bind();
 
-        rpcService.getContact(id, new AsyncCallback<Contact>() {
-            public void onSuccess(Contact result) {
+        rpcService.getPatient(id, new AsyncCallback<PatientDTO>() {
+            public void onSuccess(PatientDTO result) {
                 contact = result;
-                EditContactPresenter.this.display.getFirstName().setValue(contact.getFirstName());
-                EditContactPresenter.this.display.getLastName().setValue(contact.getLastName());
-                EditContactPresenter.this.display.getEmailAddress().setValue(contact.getEmailAddress());
+                EditPatientPresenter.this.display.getFirstName().setValue(contact.getFirstName());
+                EditPatientPresenter.this.display.getLastName().setValue(contact.getLastName());
+                EditPatientPresenter.this.display.getEmailAddress().setValue(contact.getEmailAddress());
             }
 
             public void onFailure(Throwable caught) {
@@ -72,7 +72,7 @@ public class EditContactPresenter implements Presenter {
 
         this.display.getCancelButton().addClickHandler(new ClickHandler() {
             public void onClick(ClickEvent event) {
-                eventBus.fireEvent(new EditContactCancelledEvent());
+                eventBus.fireEvent(new EditPatientCancelledEvent());
             }
         });
     }
@@ -87,9 +87,9 @@ public class EditContactPresenter implements Presenter {
         contact.setLastName(display.getLastName().getValue());
         contact.setEmailAddress(display.getEmailAddress().getValue());
 
-        rpcService.updateContact(contact, new AsyncCallback<Contact>() {
-            public void onSuccess(Contact result) {
-                eventBus.fireEvent(new ContactUpdatedEvent(result));
+        rpcService.updatePatient(contact, new AsyncCallback<PatientDTO>() {
+            public void onSuccess(PatientDTO result) {
+                eventBus.fireEvent(new PatientUpdatedEvent(result));
             }
 
             public void onFailure(Throwable caught) {

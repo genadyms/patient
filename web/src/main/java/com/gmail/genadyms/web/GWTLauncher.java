@@ -9,7 +9,7 @@ public class GWTLauncher implements EntryPoint {
 
     @Override
     public void onModuleLoad() {
-        ContactsServiceAsync rpcService = GWT.create(ContactsService.class);
+        PatientsServiceAsync rpcService = GWT.create(PatientsService.class);
         HandlerManager eventBus = new HandlerManager(null);
         AppController appController = new AppController(rpcService, eventBus);
         appController.go(RootPanel.get());

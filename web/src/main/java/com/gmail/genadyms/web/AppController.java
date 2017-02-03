@@ -1,11 +1,11 @@
 package com.gmail.genadyms.web;
 
 import com.gmail.genadyms.web.event.*;
-import com.gmail.genadyms.web.presenter.ContactsPresenter;
-import com.gmail.genadyms.web.presenter.EditContactPresenter;
+import com.gmail.genadyms.web.presenter.PatientsPresenter;
+import com.gmail.genadyms.web.presenter.EditPatientPresenter;
 import com.gmail.genadyms.web.presenter.Presenter;
-import com.gmail.genadyms.web.view.ContactsView;
-import com.gmail.genadyms.web.view.EditContactView;
+import com.gmail.genadyms.web.view.PatientsView;
+import com.gmail.genadyms.web.view.EditPatientView;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.event.shared.HandlerManager;
@@ -14,10 +14,10 @@ import com.google.gwt.user.client.ui.HasWidgets;
 
 public class AppController implements Presenter, ValueChangeHandler<String> {
     private final HandlerManager eventBus;
-    private final ContactsServiceAsync rpcService;
+    private final PatientsServiceAsync rpcService;
     private HasWidgets container;
 
-    public AppController(ContactsServiceAsync rpcService, HandlerManager eventBus) {
+    public AppController(PatientsServiceAsync rpcService, HandlerManager eventBus) {
         this.eventBus = eventBus;
         this.rpcService = rpcService;
         bind();
@@ -26,30 +26,30 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
     private void bind() {
         History.addValueChangeHandler(this);
 
-        eventBus.addHandler(AddContactEvent.TYPE,
-                new AddContactEventHandler() {
-                    public void onAddContact(AddContactEvent event) {
+        eventBus.addHandler(AddPatientEvent.TYPE,
+                new AddPatientEventHandler() {
+                    public void onAddContact(AddPatientEvent event) {
                         doAddNewContact();
                     }
                 });
 
-        eventBus.addHandler(EditContactEvent.TYPE,
-                new EditContactEventHandler() {
-                    public void onEditContact(EditContactEvent event) {
+        eventBus.addHandler(EditPatientEvent.TYPE,
+                new EditPatientEventHandler() {
+                    public void onEditContact(EditPatientEvent event) {
                         doEditContact(event.getId());
                     }
                 });
 
-        eventBus.addHandler(EditContactCancelledEvent.TYPE,
-                new EditContactCancelledEventHandler() {
-                    public void onEditContactCancelled(EditContactCancelledEvent event) {
+        eventBus.addHandler(EditPatientCancelledEvent.TYPE,
+                new EditPatientCancelledEventHandler() {
+                    public void onEditContactCancelled(EditPatientCancelledEvent event) {
                         doEditContactCancelled();
                     }
                 });
 
-        eventBus.addHandler(ContactUpdatedEvent.TYPE,
-                new ContactUpdatedEventHandler() {
-                    public void onContactUpdated(ContactUpdatedEvent event) {
+        eventBus.addHandler(PatientUpdatedEvent.TYPE,
+                new PatientUpdatedEventHandler() {
+                    public void onContactUpdated(PatientUpdatedEvent event) {
                         doContactUpdated();
                     }
                 });
@@ -61,7 +61,7 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
 
     private void doEditContact(String id) {
         History.newItem("edit", false);
-        Presenter presenter = new EditContactPresenter(rpcService, eventBus, new EditContactView(), id);
+        Presenter presenter = new EditPatientPresenter(rpcService, eventBus, new EditPatientView(), id);
         presenter.go(container);
     }
 
@@ -91,13 +91,13 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
             Presenter presenter = null;
 
             if (token.equals("list")) {
-                presenter = new ContactsPresenter(rpcService, eventBus, new ContactsView());
+                presenter = new PatientsPresenter(rpcService, eventBus, new PatientsView());
             }
             else if (token.equals("add")) {
-                presenter = new EditContactPresenter(rpcService, eventBus, new EditContactView());
+                presenter = new EditPatientPresenter(rpcService, eventBus, new EditPatientView());
             }
             else if (token.equals("edit")) {
-                presenter = new EditContactPresenter(rpcService, eventBus, new EditContactView());
+                presenter = new EditPatientPresenter(rpcService, eventBus, new EditPatientView());
             }
 
             if (presenter != null) {

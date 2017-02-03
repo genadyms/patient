@@ -3,23 +3,23 @@ package com.gmail.genadyms.shared;
 import java.io.Serializable;
 
 @SuppressWarnings("serial")
-public class Contact implements Serializable {
+public class PatientDTO implements Serializable {
     public String id;
     public String firstName;
     public String lastName;
     public String emailAddress;
 
-    public Contact() {}
+    public PatientDTO() {}
 
-    public Contact(String id, String firstName, String lastName, String emailAddress) {
+    public PatientDTO(String id, String firstName, String lastName, String emailAddress) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.emailAddress = emailAddress;
     }
 
-    public ContactDetails getLightWeightContact() {
-        return new ContactDetails(id, getFullName());
+    public PatientDetails getLightWeightContact() {
+        return new PatientDetails(id, getFullName());
     }
 
     public String getId() { return id; }

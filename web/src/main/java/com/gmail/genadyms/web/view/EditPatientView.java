@@ -1,6 +1,6 @@
 package com.gmail.genadyms.web.view;
 
-import com.gmail.genadyms.web.presenter.EditContactPresenter;
+import com.gmail.genadyms.web.presenter.EditPatientPresenter;
 import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Composite;
@@ -13,7 +13,7 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-public class EditContactView extends Composite implements EditContactPresenter.Display {
+public class EditPatientView extends Composite implements EditPatientPresenter.Display {
     private final TextBox firstName;
     private final TextBox lastName;
     private final TextBox emailAddress;
@@ -21,7 +21,7 @@ public class EditContactView extends Composite implements EditContactPresenter.D
     private final Button saveButton;
     private final Button cancelButton;
 
-    public EditContactView() {
+    public EditPatientView() {
         DecoratorPanel contentDetailsDecorator = new DecoratorPanel();
         contentDetailsDecorator.setWidth("18em");
         initWidget(contentDetailsDecorator);
