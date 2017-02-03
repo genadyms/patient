@@ -3,7 +3,7 @@ package com.gmail.genadyms.server.dataaccess;
 import org.junit.Test;
 
 import com.gmail.genadyms.server.dataaccess.PatientDao;
-import com.gmail.genadyms.server.datamodel.BedPlace;
+import com.gmail.genadyms.server.datamodel.Ward;
 import com.gmail.genadyms.server.datamodel.Patient;
 
 import java.util.Date;
@@ -21,7 +21,7 @@ public class PatientDaoTest extends BedPlaceDaoTest{
 	}
 
 	private void clearDb(Patient patient) {
-		BedPlace bp = patient.getBedPlace();	
+		Ward bp = patient.getWard();	
 		dao.delete(patient.getId());
 		clearBedPlace(bp.getId());
 	}
@@ -40,11 +40,11 @@ public class PatientDaoTest extends BedPlaceDaoTest{
 		Patient p = new Patient();
 		p.setFirstName("first-name-" + String.valueOf(Math.random()));
 		p.setLastName("last-name-" + String.valueOf(Math.random()));
-		p.setHomeAddress(("home-address-" + String.valueOf(Math.random())));
+		p.setAddress(("home-address-" + String.valueOf(Math.random())));
 		p.setDiagnosis("diagnosis");
-		p.setDiseaseDate(new Date());
-		BedPlace bedPlace = saveMockBedPlace(2, 2);
-		p.setBedPlace(bedPlace);
+		p.setComingDate(new Date());
+		Ward bedPlace = saveMockBedPlace(2, 2);
+		p.setWard(bedPlace);
 		dao.insert(p);
 		return p;
 	}

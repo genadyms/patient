@@ -1,7 +1,8 @@
 package com.gmail.genadyms.web.presenter;
 
+import com.gmail.genadyms.shared.PatientDTO;
 import com.gmail.genadyms.shared.PatientDetails;
-import com.gmail.genadyms.web.PatientsServiceAsync;
+import com.gmail.genadyms.web.PatientServiceAsync;
 import com.gmail.genadyms.web.event.AddPatientEvent;
 import com.gmail.genadyms.web.event.EditPatientEvent;
 import com.gmail.genadyms.web.presenter.Presenter;
@@ -20,7 +21,7 @@ import java.util.List;
 
 public class PatientsPresenter implements Presenter {
 
-	private List<PatientDetails> contactDetails;
+	private List<PatientDTO> patientsDTO;
 
 	public interface Display {
 		HasClickHandlers getAddButton();
@@ -38,11 +39,11 @@ public class PatientsPresenter implements Presenter {
 		Widget asWidget();
 	}
 
-	private final PatientsServiceAsync rpcService;
+	private final PatientServiceAsync rpcService;
 	private final HandlerManager eventBus;
 	private final Display display;
 
-	public PatientsPresenter(PatientsServiceAsync rpcService, HandlerManager eventBus, Display view) {
+	public PatientsPresenter(PatientServiceAsync rpcService, HandlerManager eventBus, Display view) {
 		this.rpcService = rpcService;
 		this.eventBus = eventBus;
 		this.display = view;
@@ -55,22 +56,22 @@ public class PatientsPresenter implements Presenter {
 			}
 		});
 
-		display.getDeleteButton().addClickHandler(new ClickHandler() {
-			public void onClick(ClickEvent event) {
-				deleteSelectedContacts();
-			}
-		});
+//		display.getDeleteButton().addClickHandler(new ClickHandler() {
+//			public void onClick(ClickEvent event) {
+//				deleteSelectedContacts();
+//			}
+//		});
 
-		display.getList().addClickHandler(new ClickHandler() {
-			public void onClick(ClickEvent event) {
-				int selectedRow = display.getClickedRow(event);
-
-				if (selectedRow >= 0) {
-					String id = contactDetails.get(selectedRow).getId();
-					eventBus.fireEvent(new EditPatientEvent(id));
-				}
-			}
-		});
+//		display.getList().addClickHandler(new ClickHandler() {
+//			public void onClick(ClickEvent event) {
+//				int selectedRow = display.getClickedRow(event);
+//
+//				if (selectedRow >= 0) {
+//					String id = patientsDTO.get(selectedRow).getId();
+//					eventBus.fireEvent(new EditPatientEvent(id));
+//				}
+//			}
+//		});
 	}
 
 	public void go(final HasWidgets container) {
@@ -86,35 +87,34 @@ public class PatientsPresenter implements Presenter {
 		// point is to create a test case that helps illustrate the higher
 		// level concepts used when creating MVP-based applications.
 		//
-		for (int i = 0; i < contactDetails.size(); ++i) {
-			for (int j = 0; j < contactDetails.size() - 1; ++j) {
-				if (contactDetails.get(j).getDisplayName()
-						.compareToIgnoreCase(contactDetails.get(j + 1).getDisplayName()) >= 0) {
-					PatientDetails tmp = contactDetails.get(j);
-					contactDetails.set(j, contactDetails.get(j + 1));
-					contactDetails.set(j + 1, tmp);
-				}
-			}
-		}
+//		for (int i = 0; i < patientsDTO.size(); ++i) {
+//			for (int j = 0; j < patientsDTO.size() - 1; ++j) {
+//				if (patientsDTO.get(j).getDisplayName()
+//						.compareToIgnoreCase(patientsDTO.get(j + 1).getDisplayName()) >= 0) {
+//					PatientDetails tmp = patientsDTO.get(j);
+//					patientsDTO.set(j, patientsDTO.get(j + 1));
+//					patientsDTO.set(j + 1, tmp);
+//				}
+//			}
+//		}
 	}
 
-	public void setContactDetails(List<PatientDetails> contactDetails) {
-		this.contactDetails = contactDetails;
-	}
-
-	public PatientDetails getContactDetail(int index) {
-		return contactDetails.get(index);
-	}
+//	public void setContactDetails(List<PatientDetails> contactDetails) {
+//		this.patientsDTO = contactDetails;
+//	}
+//
+//	public PatientDetails getContactDetail(int index) {
+//		return patientsDTO.get(index);
+//	}
 
 	private void fetchContactDetails() {
-		rpcService.getPatientDetails(new AsyncCallback<ArrayList<PatientDetails>>() {
-			public void onSuccess(ArrayList<PatientDetails> result) {
-				contactDetails = result;
-				sortContactDetails();
+		rpcService.getPatients(new AsyncCallback<List<PatientDTO>>() {
+			public void onSuccess(List<PatientDTO> result) {
+				patientsDTO = result;
 				List<String> data = new ArrayList<String>();
 
 				for (int i = 0; i < result.size(); ++i) {
-					data.add(contactDetails.get(i).getDisplayName());
+					data.add(patientsDTO.get(i).getAddress());
 				}
 
 				display.setData(data);
@@ -126,31 +126,13 @@ public class PatientsPresenter implements Presenter {
 		});
 	}
 
-	private void deleteSelectedContacts() {
-		List<Integer> selectedRows = display.getSelectedRows();
-		ArrayList<String> ids = new ArrayList<String>();
-
-		for (int i = 0; i < selectedRows.size(); ++i) {
-			ids.add(contactDetails.get(selectedRows.get(i)).getId());
-		}
-
-		rpcService.deletePatients(ids, new AsyncCallback<ArrayList<PatientDetails>>() {
-			public void onSuccess(ArrayList<PatientDetails> result) {
-				contactDetails = result;
-				sortContactDetails();
-				List<String> data = new ArrayList<String>();
-
-				for (int i = 0; i < result.size(); ++i) {
-					data.add(contactDetails.get(i).getDisplayName());
-				}
-
-				display.setData(data);
-
-			}
-
-			public void onFailure(Throwable caught) {
-				Window.alert("Error deleting selected contacts");
-			}
-		});
-	}
+//	private void deleteSelectedContacts() {
+//		List<Integer> selectedRows = display.getSelectedRows();
+//		ArrayList<String> ids = new ArrayList<String>();
+//
+//		for (int i = 0; i < selectedRows.size(); ++i) {
+//			ids.add(patientsDTO.get(selectedRows.get(i)).getId());
+//		}
+//
+//	}
 }

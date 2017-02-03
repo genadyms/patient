@@ -1,34 +1,82 @@
 package com.gmail.genadyms.shared;
 
 import java.io.Serializable;
+import java.util.Date;
 
-@SuppressWarnings("serial")
 public class PatientDTO implements Serializable {
-    public String id;
-    public String firstName;
-    public String lastName;
-    public String emailAddress;
+	private static final long serialVersionUID = 1L;
 
-    public PatientDTO() {}
+	private Long id;
+	private String firstName;
+	private String lastName;
+	private String address;
+	private String diagnosis;
+	private Date leavingDate;
+	private Date comingDate;
+	private Long ward;
 
-    public PatientDTO(String id, String firstName, String lastName, String emailAddress) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.emailAddress = emailAddress;
-    }
+	public Long getId() {
+		return id;
+	}
 
-    public PatientDetails getLightWeightContact() {
-        return new PatientDetails(id, getFullName());
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public String getId() { return id; }
-    public void setId(String id) { this.id = id; }
-    public String getFirstName() { return firstName; }
-    public void setFirstName(String firstName) { this.firstName = firstName; }
-    public String getLastName() { return lastName; }
-    public void setLastName(String lastName) { this.lastName = lastName; }
-    public String getEmailAddress() { return emailAddress; }
-    public void setEmailAddress(String emailAddress) { this.emailAddress = emailAddress; }
-    public String getFullName() { return firstName + " " + lastName; }
+	public Long getWard() {
+		return ward;
+	}
+
+	public void setWard(Long ward) {
+		this.ward = ward;
+	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public String getDiagnosis() {
+		return diagnosis;
+	}
+
+	public void setDiagnosis(String diagnosis) {
+		this.diagnosis = diagnosis;
+	}
+
+	public Date getLeavingDate() {
+		return leavingDate;
+	}
+
+	public void setLeavingDate(Date leavingDate) {
+		this.leavingDate = leavingDate;
+	}
+
+	public Date getComingDate() {
+		return comingDate;
+	}
+
+	public void setComingDate(Date comingDate) {
+		this.comingDate = comingDate;
+	}
+
 }

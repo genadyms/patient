@@ -14,10 +14,10 @@ import com.google.gwt.user.client.ui.HasWidgets;
 
 public class AppController implements Presenter, ValueChangeHandler<String> {
     private final HandlerManager eventBus;
-    private final PatientsServiceAsync rpcService;
+    private final PatientServiceAsync rpcService;
     private HasWidgets container;
 
-    public AppController(PatientsServiceAsync rpcService, HandlerManager eventBus) {
+    public AppController(PatientServiceAsync rpcService, HandlerManager eventBus) {
         this.eventBus = eventBus;
         this.rpcService = rpcService;
         bind();

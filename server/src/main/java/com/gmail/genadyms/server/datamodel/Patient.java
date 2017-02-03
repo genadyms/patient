@@ -1,13 +1,11 @@
 package com.gmail.genadyms.server.datamodel;
 
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 
 @Entity
 public class Patient extends AbstractModel {
@@ -17,13 +15,16 @@ public class Patient extends AbstractModel {
 	@Column
 	private String lastName;
 	@Column
-	private String homeAddress;
+	private String address;
 	@Column
 	private String diagnosis;
 	@Column
-	private Date issueDate;
+	private Date leavingDate;
 	@Column
-	private Date diseaseDate;
+	private Date comingDate;
+
+	@ManyToOne(targetEntity = Ward.class, fetch = FetchType.LAZY)
+	private Ward ward;
 
 	public String getFirstName() {
 		return firstName;
@@ -41,12 +42,12 @@ public class Patient extends AbstractModel {
 		this.lastName = lastName;
 	}
 
-	public String getHomeAddress() {
-		return homeAddress;
+	public String getAddress() {
+		return address;
 	}
 
-	public void setHomeAddress(String homeAddress) {
-		this.homeAddress = homeAddress;
+	public void setAddress(String homeAddress) {
+		this.address = homeAddress;
 	}
 
 	public String getDiagnosis() {
@@ -57,35 +58,34 @@ public class Patient extends AbstractModel {
 		this.diagnosis = diagnosis;
 	}
 
-	public Date getIssueDate() {
-		return issueDate;
+	public Date getLeavingDate() {
+		return leavingDate;
 	}
 
-	public void setIssueDate(Date issueDate) {
-		this.issueDate = issueDate;
+	public void setLeavingDate(Date leavingDate) {
+		this.leavingDate = leavingDate;
 	}
 
-	public Date getDiseaseDate() {
-		return diseaseDate;
+	public Date getComingDate() {
+		return comingDate;
 	}
 
-	public void setDiseaseDate(Date diseaseDate) {
-		this.diseaseDate = diseaseDate;
+	public void setComingDate(Date diseaseDate) {
+		this.comingDate = diseaseDate;
 	}
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
+	public Ward getWard() {
+		return ward;
 	}
 
-	 @ManyToOne(targetEntity = BedPlace.class, fetch = FetchType.LAZY)
-	 private BedPlace bedPlace;
-
-	public BedPlace getBedPlace() {
-		return bedPlace;
+	public void setWard(Ward bedPlace) {
+		this.ward = bedPlace;
 	}
 
-	public void setBedPlace(BedPlace bedPlace) {
-		this.bedPlace = bedPlace;
+	@Override
+	public String toString() {
+		return "Patient [firstName=" + firstName + ", lastName=" + lastName + ", address=" + address + ", diagnosis="
+				+ diagnosis + ", leavingDate=" + leavingDate + ", comingDate=" + comingDate + "]";
 	}
 
 }

@@ -8,7 +8,7 @@
     <!-- Servlets -->
     <servlet>
         <servlet-name>contactsServiceServlet</servlet-name>
-        <servlet-class>com.gmail.genadyms.server.service.PatientsServiceImpl</servlet-class>
+        <servlet-class>com.gmail.genadyms.server.service.PatientServiceImpl</servlet-class>
     </servlet>
 
     <servlet-mapping>

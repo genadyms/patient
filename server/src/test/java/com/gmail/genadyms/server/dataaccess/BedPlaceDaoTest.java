@@ -3,30 +3,30 @@ package com.gmail.genadyms.server.dataaccess;
 import org.junit.Assert;
 import org.junit.Test;
 
-import com.gmail.genadyms.server.datamodel.BedPlace;
+import com.gmail.genadyms.server.datamodel.Ward;
 
 public class BedPlaceDaoTest {
-	private BedPlaceDao dao = new BedPlaceDao();
+	private WardDao dao = new WardDao();
 	
 	@Test
 	public void testSave() {
-		BedPlace bedPlace = saveMockBedPlace(21, 21);
+		Ward bedPlace = saveMockBedPlace(21, 21);
 		Assert.assertNotNull(bedPlace.getId());
 		dao.delete(bedPlace.getId());
 	}
 	
 	@Test
 	public void testDelete() {
-		BedPlace bedPlace = saveMockBedPlace(22,22);
+		Ward bedPlace = saveMockBedPlace(22,22);
 		dao.delete(bedPlace.getId());
-		BedPlace delPlace = dao.get(bedPlace.getId());
+		Ward delPlace = dao.get(bedPlace.getId());
 		Assert.assertNull(delPlace);
 	}
 	
-	protected BedPlace saveMockBedPlace(Integer nChamber, Integer nBed) {
-		BedPlace mock = new BedPlace();
-		mock.setNumberOfChamber(nChamber);
-		mock.setNumberOfBed(nBed);
+	protected Ward saveMockBedPlace(Integer nChamber, Integer nBed) {
+		Ward mock = new Ward();
+		mock.setNumber(nChamber);
+		mock.setCountBeds(nBed);
 		dao.insert(mock);
 		return mock;
 	}
