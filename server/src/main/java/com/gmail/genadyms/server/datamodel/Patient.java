@@ -6,69 +6,86 @@ import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 @Entity
 public class Patient extends AbstractModel {
-    @Column
-    private String firstName;
-    @Column
-    private String lastName;
-    @Column
-    private String middleName;
-    @Column
-    private Date dateOfBirth;
-    @Column
-    private String homeAddress;
+	private static final long serialVersionUID = 1L;
+	@Column
+	private String firstName;
+	@Column
+	private String lastName;
+	@Column
+	private String homeAddress;
+	@Column
+	private String diagnosis;
+	@Column
+	private Date issueDate;
+	@Column
+	private Date diseaseDate;
 
-//    @OneToMany(mappedBy = "patient", fetch = FetchType.LAZY)
-//    private List<PatientCard> patientCards;
+	public String getFirstName() {
+		return firstName;
+	}
 
-    public String getFirstName() {
-        return firstName;
-    }
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
+	public String getLastName() {
+		return lastName;
+	}
 
-    public String getLastName() {
-        return lastName;
-    }
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
+	public String getHomeAddress() {
+		return homeAddress;
+	}
 
-    public String getMiddleName() {
-        return middleName;
-    }
+	public void setHomeAddress(String homeAddress) {
+		this.homeAddress = homeAddress;
+	}
 
-    public void setMiddleName(String middleName) {
-        this.middleName = middleName;
-    }
+	public String getDiagnosis() {
+		return diagnosis;
+	}
 
-    public Date getDateOfBirth() {
-        return dateOfBirth;
-    }
+	public void setDiagnosis(String diagnosis) {
+		this.diagnosis = diagnosis;
+	}
 
-    public void setDateOfBirth(Date dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
-    }
+	public Date getIssueDate() {
+		return issueDate;
+	}
 
-    public String getHomeAddress() {
-        return homeAddress;
-    }
+	public void setIssueDate(Date issueDate) {
+		this.issueDate = issueDate;
+	}
 
-    public void setHomeAddress(String homeAddress) {
-        this.homeAddress = homeAddress;
-    }
+	public Date getDiseaseDate() {
+		return diseaseDate;
+	}
 
-//    public List<PatientCard> getPatientCards() {
-//        return patientCards;
-//    }
-//
-//    public void setPatientCards(List<PatientCard> patientCards) {
-//        this.patientCards = patientCards;
-//    }
+	public void setDiseaseDate(Date diseaseDate) {
+		this.diseaseDate = diseaseDate;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	 @ManyToOne(targetEntity = BedPlace.class, fetch = FetchType.LAZY)
+	 private BedPlace bedPlace;
+
+	public BedPlace getBedPlace() {
+		return bedPlace;
+	}
+
+	public void setBedPlace(BedPlace bedPlace) {
+		this.bedPlace = bedPlace;
+	}
+
 }

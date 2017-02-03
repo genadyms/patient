@@ -9,16 +9,27 @@ import javax.persistence.OneToMany;
 
 @Entity
 public class BedPlace extends AbstractModel {
-    @Column
+  
+	private static final long serialVersionUID = 1L;
+
+	@Column
     private Integer numberOfChamber;
 
     @Column
     private Integer numberOfBed;
 
     @OneToMany(mappedBy = "bedPlace", fetch = FetchType.LAZY)
-    private List<PatientCard> patientCard;
+    private List<Patient> patient;
 
-    public Integer getNumberOfChamber() {
+    public List<Patient> getPatient() {
+		return patient;
+	}
+
+	public void setPatient(List<Patient> patient) {
+		this.patient = patient;
+	}
+
+	public Integer getNumberOfChamber() {
         return numberOfChamber;
     }
 
@@ -34,12 +45,6 @@ public class BedPlace extends AbstractModel {
         this.numberOfBed = numberOfBed;
     }
 
-    public List<PatientCard> getPatientCard() {
-        return patientCard;
-    }
-
-    public void setPatientCard(List<PatientCard> patientCard) {
-        this.patientCard = patientCard;
-    }
+  
 
 }
