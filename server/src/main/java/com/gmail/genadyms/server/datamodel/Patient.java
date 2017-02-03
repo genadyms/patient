@@ -1,14 +1,16 @@
 package com.gmail.genadyms.server.datamodel;
 
 import java.util.Date;
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
 
 @Entity
 public class Patient extends AbstractModel {
- 
-	private static final long serialVersionUID = 1L;
-	@Column
+    @Column
     private String firstName;
     @Column
     private String lastName;

@@ -1,4 +1,4 @@
-package com.gmail.genadyms.server.service;
+package com.gmail.genadyms.server.dataaccess;
 
 import org.junit.Test;
 
@@ -36,7 +36,6 @@ public class PatientDaoTest {
 		Patient patient = createMockPatient();
 		dao.insert(patient);
 		String changeFirstName = "change-firstname";
-		Assert.assertNotEquals(changeFirstName, patient.getFirstName());
 		patient.setFirstName(changeFirstName);
 		dao.update(patient);
 		Assert.assertEquals(changeFirstName, patient.getFirstName());
