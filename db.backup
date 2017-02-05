@@ -2,10 +2,10 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 9.5.2
--- Dumped by pg_dump version 9.5.2
+-- Dumped from database version 9.5.4
+-- Dumped by pg_dump version 9.5.4
 
--- Started on 2017-02-03 16:03:37
+-- Started on 2017-02-05 22:03:08
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -24,7 +24,7 @@ CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
 
 
 --
--- TOC entry 2122 (class 0 OID 0)
+-- TOC entry 2121 (class 0 OID 0)
 -- Dependencies: 1
 -- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: -
 --
@@ -37,19 +37,19 @@ SET search_path = public, pg_catalog;
 SET default_with_oids = false;
 
 --
--- TOC entry 181 (class 1259 OID 92028)
--- Name: bed_place; Type: TABLE; Schema: public; Owner: -
+-- TOC entry 181 (class 1259 OID 17018)
+-- Name: ward; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE bed_place (
+CREATE TABLE ward (
     id integer NOT NULL,
-    number_of_chamber integer NOT NULL,
-    number_of_bed integer NOT NULL
+    number integer NOT NULL,
+    count_beds integer
 );
 
 
 --
--- TOC entry 182 (class 1259 OID 92031)
+-- TOC entry 182 (class 1259 OID 17021)
 -- Name: bed_place_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
@@ -62,16 +62,16 @@ CREATE SEQUENCE bed_place_id_seq
 
 
 --
--- TOC entry 2123 (class 0 OID 0)
+-- TOC entry 2122 (class 0 OID 0)
 -- Dependencies: 182
 -- Name: bed_place_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE bed_place_id_seq OWNED BY bed_place.id;
+ALTER SEQUENCE bed_place_id_seq OWNED BY ward.id;
 
 
 --
--- TOC entry 183 (class 1259 OID 92033)
+-- TOC entry 183 (class 1259 OID 17023)
 -- Name: patient; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -80,15 +80,15 @@ CREATE TABLE patient (
     first_name character varying(100) NOT NULL,
     last_name character varying(100) NOT NULL,
     diagnosis character varying(100) NOT NULL,
-    disease_date date NOT NULL,
-    issue_date date[],
-    bed_place_id integer NOT NULL,
-    home_address character varying(150) NOT NULL
+    coming_date date NOT NULL,
+    leaving_date date[],
+    ward_id integer NOT NULL,
+    address character varying(150) NOT NULL
 );
 
 
 --
--- TOC entry 184 (class 1259 OID 92041)
+-- TOC entry 184 (class 1259 OID 17029)
 -- Name: patient_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
@@ -101,7 +101,7 @@ CREATE SEQUENCE patient_id_seq
 
 
 --
--- TOC entry 2124 (class 0 OID 0)
+-- TOC entry 2123 (class 0 OID 0)
 -- Dependencies: 184
 -- Name: patient_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
@@ -110,15 +110,7 @@ ALTER SEQUENCE patient_id_seq OWNED BY patient.id;
 
 
 --
--- TOC entry 1988 (class 2604 OID 92043)
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY bed_place ALTER COLUMN id SET DEFAULT nextval('bed_place_id_seq'::regclass);
-
-
---
--- TOC entry 1989 (class 2604 OID 92044)
+-- TOC entry 1989 (class 2604 OID 17032)
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -126,61 +118,54 @@ ALTER TABLE ONLY patient ALTER COLUMN id SET DEFAULT nextval('patient_id_seq'::r
 
 
 --
--- TOC entry 2112 (class 0 OID 92028)
--- Dependencies: 181
--- Data for Name: bed_place; Type: TABLE DATA; Schema: public; Owner: -
+-- TOC entry 1988 (class 2604 OID 17031)
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-INSERT INTO bed_place (id, number_of_chamber, number_of_bed) VALUES (6, 23, 12);
-INSERT INTO bed_place (id, number_of_chamber, number_of_bed) VALUES (15, 2, 12);
+ALTER TABLE ONLY ward ALTER COLUMN id SET DEFAULT nextval('bed_place_id_seq'::regclass);
 
 
 --
--- TOC entry 2125 (class 0 OID 0)
+-- TOC entry 2124 (class 0 OID 0)
 -- Dependencies: 182
 -- Name: bed_place_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('bed_place_id_seq', 23, true);
+SELECT pg_catalog.setval('bed_place_id_seq', 73, true);
 
 
 --
--- TOC entry 2114 (class 0 OID 92033)
+-- TOC entry 2114 (class 0 OID 17023)
 -- Dependencies: 183
 -- Data for Name: patient; Type: TABLE DATA; Schema: public; Owner: -
 --
 
+INSERT INTO patient (id, first_name, last_name, diagnosis, coming_date, leaving_date, ward_id, address) VALUES (39, 'first', 'first', 'diagnosis', '2014-02-02', NULL, 60, 'address');
 
 
 --
--- TOC entry 2126 (class 0 OID 0)
+-- TOC entry 2125 (class 0 OID 0)
 -- Dependencies: 184
 -- Name: patient_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('patient_id_seq', 19, true);
+SELECT pg_catalog.setval('patient_id_seq', 43, true);
 
 
 --
--- TOC entry 1991 (class 2606 OID 92091)
--- Name: bed_place_number_of_chamber_number_of_bed_key; Type: CONSTRAINT; Schema: public; Owner: -
+-- TOC entry 2112 (class 0 OID 17018)
+-- Dependencies: 181
+-- Data for Name: ward; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY bed_place
-    ADD CONSTRAINT bed_place_number_of_chamber_number_of_bed_key UNIQUE (number_of_chamber, number_of_bed);
-
-
---
--- TOC entry 1993 (class 2606 OID 92047)
--- Name: bed_place_pk; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY bed_place
-    ADD CONSTRAINT bed_place_pk PRIMARY KEY (id);
+INSERT INTO ward (id, number, count_beds) VALUES (60, 1, 10);
+INSERT INTO ward (id, number, count_beds) VALUES (61, 3, 10);
+INSERT INTO ward (id, number, count_beds) VALUES (62, 4, 5);
+INSERT INTO ward (id, number, count_beds) VALUES (63, 5, 7);
 
 
 --
--- TOC entry 1996 (class 2606 OID 92051)
+-- TOC entry 1996 (class 2606 OID 17038)
 -- Name: patient_pk; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -189,23 +174,41 @@ ALTER TABLE ONLY patient
 
 
 --
--- TOC entry 1994 (class 1259 OID 92089)
+-- TOC entry 1991 (class 2606 OID 17058)
+-- Name: ward_number_key; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY ward
+    ADD CONSTRAINT ward_number_key UNIQUE (number);
+
+
+--
+-- TOC entry 1993 (class 2606 OID 17036)
+-- Name: ward_pk; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY ward
+    ADD CONSTRAINT ward_pk PRIMARY KEY (id);
+
+
+--
+-- TOC entry 1994 (class 1259 OID 17039)
 -- Name: fki_bed_place_id_fk; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX fki_bed_place_id_fk ON patient USING btree (bed_place_id);
+CREATE INDEX fki_bed_place_id_fk ON patient USING btree (ward_id);
 
 
 --
--- TOC entry 1997 (class 2606 OID 92084)
--- Name: bed_place_id_fk; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- TOC entry 1997 (class 2606 OID 17059)
+-- Name: patient_ward_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY patient
-    ADD CONSTRAINT bed_place_id_fk FOREIGN KEY (bed_place_id) REFERENCES bed_place(id);
+    ADD CONSTRAINT patient_ward_id_fkey FOREIGN KEY (ward_id) REFERENCES ward(id);
 
 
--- Completed on 2017-02-03 16:03:38
+-- Completed on 2017-02-05 22:03:09
 
 --
 -- PostgreSQL database dump complete

@@ -36,21 +36,21 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
         eventBus.addHandler(EditPatientEvent.TYPE,
                 new EditPatientEventHandler() {
                     public void onEditContact(EditPatientEvent event) {
-                        doEditContact(event.getId());
+                        doEditPatient(event.getId());
                     }
                 });
 
         eventBus.addHandler(EditPatientCancelledEvent.TYPE,
                 new EditPatientCancelledEventHandler() {
                     public void onEditContactCancelled(EditPatientCancelledEvent event) {
-                        doEditContactCancelled();
+                        doEditPatientCancelled();
                     }
                 });
 
         eventBus.addHandler(PatientUpdatedEvent.TYPE,
                 new PatientUpdatedEventHandler() {
                     public void onContactUpdated(PatientUpdatedEvent event) {
-                        doContactUpdated();
+                        doPatientUpdated();
                     }
                 });
     }
@@ -59,17 +59,17 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
         History.newItem("add");
     }
 
-    private void doEditContact(Long id) {
+    private void doEditPatient(Long id) {
         History.newItem("edit", false);
         Presenter presenter = new EditPatientPresenter(rpcService, eventBus, new EditPatientView(), id);
         presenter.go(container);
     }
 
-    private void doEditContactCancelled() {
+    private void doEditPatientCancelled() {
         History.newItem("list");
     }
 
-    private void doContactUpdated() {
+    private void doPatientUpdated() {
         History.newItem("list");
     }
 
