@@ -53,7 +53,7 @@ public class AbstractDao<T, ID> {
 		return entityClass;
 	}
 
-	protected EntityManager getEntityManager() {
+	public EntityManager getEntityManager() {
 		return entityManager;
 	}
 	/*
