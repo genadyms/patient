@@ -44,13 +44,7 @@ public class AbstractDao<T, ID> {
 	}
 
 	public void delete(T entity) {
-		// public void delete(ID id) {
 		getEntityManager().getTransaction().begin();
-		// entityManager.createQuery(String.format("delete from %s e where e.id
-		// = :id", entityClass.getSimpleName()))
-		// .setParameter("id", id).executeUpdate();
-		// getEntityManager().flush();
-		// getEntityManager().clear();
 		getEntityManager().remove(entity);
 		getEntityManager().getTransaction().commit();
 	}
@@ -59,7 +53,7 @@ public class AbstractDao<T, ID> {
 		return entityClass;
 	}
 
-	public EntityManager getEntityManager() {
+	protected EntityManager getEntityManager() {
 		return entityManager;
 	}
 	/*
