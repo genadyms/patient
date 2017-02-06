@@ -1,7 +1,8 @@
 package com.gmail.genadyms.web.presenter;
 
-import com.gmail.genadyms.shared.PatientDTO;
-import com.gmail.genadyms.web.PatientServiceAsync;
+import com.gmail.genadyms.shared.dto.PatientDTO;
+import com.gmail.genadyms.web.event.EditPatientCancelledEvent;
+import com.gmail.genadyms.web.service.PatientServiceAsync;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.HasClickHandlers;
@@ -15,6 +16,7 @@ import com.google.gwt.user.client.Window;
 public class EditPatientPresenter implements Presenter {
 
 	public interface Display {
+
 		HasClickHandlers getSaveButton();
 
 		HasClickHandlers getCancelButton();
@@ -23,12 +25,12 @@ public class EditPatientPresenter implements Presenter {
 
 		HasValue<String> getLastName();
 
-		HasValue<String> getEmailAddress();
+		HasValue<String> getAddress();
 
 		Widget asWidget();
 	}
 
-	private PatientDTO contact;
+	private PatientDTO patient;
 	private final PatientServiceAsync rpcService;
 	private final HandlerManager eventBus;
 	private final Display display;
@@ -36,7 +38,7 @@ public class EditPatientPresenter implements Presenter {
 	public EditPatientPresenter(PatientServiceAsync rpcService, HandlerManager eventBus, Display display) {
 		this.rpcService = rpcService;
 		this.eventBus = eventBus;
-		this.contact = new PatientDTO();
+		this.patient = new PatientDTO();
 		this.display = display;
 		bind();
 	}
@@ -49,10 +51,10 @@ public class EditPatientPresenter implements Presenter {
 
 		rpcService.getPatient(id, new AsyncCallback<PatientDTO>() {
 			public void onSuccess(PatientDTO result) {
-				contact = result;
-				EditPatientPresenter.this.display.getFirstName().setValue(contact.getFirstName());
-				EditPatientPresenter.this.display.getLastName().setValue(contact.getLastName());
-				EditPatientPresenter.this.display.getEmailAddress().setValue(contact.getAddress());
+				patient = result;
+				EditPatientPresenter.this.display.getFirstName().setValue(patient.getFirstName());
+				EditPatientPresenter.this.display.getLastName().setValue(patient.getLastName());
+				EditPatientPresenter.this.display.getAddress().setValue(patient.getAddress());
 			}
 
 			public void onFailure(Throwable caught) {
@@ -69,11 +71,11 @@ public class EditPatientPresenter implements Presenter {
 			}
 		});
 
-		// this.display.getCancelButton().addClickHandler(new ClickHandler() {
-		// public void onClick(ClickEvent event) {
-		// eventBus.fireEvent(new EditPatientCancelledEvent());
-		// }
-		// });
+		this.display.getCancelButton().addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				eventBus.fireEvent(new EditPatientCancelledEvent());
+			}
+		});
 	}
 
 	public void go(final HasWidgets container) {
@@ -82,19 +84,27 @@ public class EditPatientPresenter implements Presenter {
 	}
 
 	private void doSave() {
-		contact.setFirstName(display.getFirstName().getValue());
-		contact.setLastName(display.getLastName().getValue());
+		patient.setFirstName(display.getFirstName().getValue());
+		patient.setLastName(display.getLastName().getValue());
 		// contact.setEmailAddress(display.getEmailAddress().getValue());
-
-		rpcService.updatePatient(contact, new AsyncCallback<PatientDTO>() {
+		rpcService.addPatient(patient, new AsyncCallback<PatientDTO>() {
 			public void onSuccess(PatientDTO result) {
-				// eventBus.fireEvent(new PatientUpdatedEvent(result));
+				Window.alert(result.getFirstName()+result.getId());
 			}
 
 			public void onFailure(Throwable caught) {
-				Window.alert("Error updating contact");
+				Window.alert("Error updating patient");
 			}
 		});
+//		rpcService.updatePatient(patient, new AsyncCallback<PatientDTO>() {
+//			public void onSuccess(PatientDTO result) {
+//
+//			}
+//
+//			public void onFailure(Throwable caught) {
+//				Window.alert("Error updating patient");
+//			}
+//		});
 	}
 
 }

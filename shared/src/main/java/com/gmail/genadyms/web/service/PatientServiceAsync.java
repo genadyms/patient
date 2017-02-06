@@ -1,6 +1,6 @@
-package com.gmail.genadyms.web;
+package com.gmail.genadyms.web.service;
 
-import com.gmail.genadyms.shared.PatientDTO;
+import com.gmail.genadyms.shared.dto.PatientDTO;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 import java.util.List;

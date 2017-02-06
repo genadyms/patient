@@ -4,6 +4,7 @@ import com.gmail.genadyms.web.event.*;
 import com.gmail.genadyms.web.presenter.PatientsPresenter;
 import com.gmail.genadyms.web.presenter.EditPatientPresenter;
 import com.gmail.genadyms.web.presenter.Presenter;
+import com.gmail.genadyms.web.service.PatientServiceAsync;
 import com.gmail.genadyms.web.view.PatientsView;
 import com.gmail.genadyms.web.view.EditPatientView;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
@@ -28,28 +29,28 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
 
         eventBus.addHandler(AddPatientEvent.TYPE,
                 new AddPatientEventHandler() {
-                    public void onAddContact(AddPatientEvent event) {
+                    public void onAddPatient(AddPatientEvent event) {
                         doAddNewContact();
                     }
                 });
 
         eventBus.addHandler(EditPatientEvent.TYPE,
                 new EditPatientEventHandler() {
-                    public void onEditContact(EditPatientEvent event) {
+                    public void onEditPatient(EditPatientEvent event) {
                         doEditPatient(event.getId());
                     }
                 });
 
         eventBus.addHandler(EditPatientCancelledEvent.TYPE,
                 new EditPatientCancelledEventHandler() {
-                    public void onEditContactCancelled(EditPatientCancelledEvent event) {
+                    public void onEditPatientCancelled(EditPatientCancelledEvent event) {
                         doEditPatientCancelled();
                     }
                 });
 
         eventBus.addHandler(PatientUpdatedEvent.TYPE,
                 new PatientUpdatedEventHandler() {
-                    public void onContactUpdated(PatientUpdatedEvent event) {
+                    public void onPatientUpdated(PatientUpdatedEvent event) {
                         doPatientUpdated();
                     }
                 });

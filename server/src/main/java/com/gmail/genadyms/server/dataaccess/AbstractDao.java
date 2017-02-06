@@ -15,8 +15,7 @@ public class AbstractDao<T, ID> {
 
 	protected AbstractDao(final Class<T> entityClass) {
 		this.entityManager = EntityManagerUtil.getEntityManager();
-
-		this.entityClass = entityClass;
+	this.entityClass = entityClass;
 	}
 
 	public List<T> getAll() {
@@ -57,7 +56,7 @@ public class AbstractDao<T, ID> {
 		return entityClass;
 	}
 
-	protected EntityManager getEntityManager() {
+	public EntityManager getEntityManager() {
 		return entityManager;
 	}
 	/*

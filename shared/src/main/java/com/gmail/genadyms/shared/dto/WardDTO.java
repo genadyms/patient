@@ -1,4 +1,4 @@
-package com.gmail.genadyms.shared;
+package com.gmail.genadyms.shared.dto;
 
 import java.io.Serializable;
 

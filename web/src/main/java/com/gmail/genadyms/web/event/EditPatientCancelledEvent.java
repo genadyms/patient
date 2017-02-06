@@ -12,6 +12,6 @@ public class EditPatientCancelledEvent extends GwtEvent<EditPatientCancelledEven
 
   @Override
   protected void dispatch(EditPatientCancelledEventHandler handler) {
-    handler.onEditContactCancelled(this);
+    handler.onEditPatientCancelled(this);
   }
 }

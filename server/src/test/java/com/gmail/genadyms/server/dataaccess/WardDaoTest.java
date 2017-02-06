@@ -5,7 +5,7 @@ import org.junit.Test;
 
 import com.gmail.genadyms.server.datamodel.Ward;
 
-public class BedPlaceDaoTest {
+public class WardDaoTest {
 	private WardDao dao = new WardDao();
 	
 	@Test

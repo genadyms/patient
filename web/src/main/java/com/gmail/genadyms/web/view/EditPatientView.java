@@ -16,7 +16,7 @@ import com.google.gwt.user.client.ui.Widget;
 public class EditPatientView extends Composite implements EditPatientPresenter.Display {
     private final TextBox firstName;
     private final TextBox lastName;
-    private final TextBox emailAddress;
+    private final TextBox address;
     private final FlexTable detailsTable;
     private final Button saveButton;
     private final Button cancelButton;
@@ -38,7 +38,7 @@ public class EditPatientView extends Composite implements EditPatientPresenter.D
         detailsTable.getColumnFormatter().addStyleName(1, "add-contact-input");
         firstName = new TextBox();
         lastName = new TextBox();
-        emailAddress = new TextBox();
+        address = new TextBox();
         initDetailsTable();
         contentDetailsPanel.add(detailsTable);
 
@@ -56,8 +56,8 @@ public class EditPatientView extends Composite implements EditPatientPresenter.D
         detailsTable.setWidget(0, 1, firstName);
         detailsTable.setWidget(1, 0, new Label("Lastname"));
         detailsTable.setWidget(1, 1, lastName);
-        detailsTable.setWidget(2, 0, new Label("Email Address"));
-        detailsTable.setWidget(2, 1, emailAddress);
+        detailsTable.setWidget(2, 0, new Label("Address"));
+        detailsTable.setWidget(2, 1, address);
         firstName.setFocus(true);
     }
 
@@ -69,8 +69,8 @@ public class EditPatientView extends Composite implements EditPatientPresenter.D
         return lastName;
     }
 
-    public HasValue<String> getEmailAddress() {
-        return emailAddress;
+    public HasValue<String> getAddress() {
+        return address;
     }
 
     public HasClickHandlers getSaveButton() {

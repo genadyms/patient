@@ -12,6 +12,6 @@ public class AddPatientEvent extends GwtEvent<AddPatientEventHandler> {
 
 	@Override
 	protected void dispatch(AddPatientEventHandler handler) {
-		handler.onAddContact(this);
+		handler.onAddPatient(this);
 	}
 }

@@ -1,12 +1,10 @@
 package com.gmail.genadyms.web.presenter;
 
-import com.gmail.genadyms.shared.PatientDTO;
-import com.gmail.genadyms.shared.PatientDetails;
-import com.gmail.genadyms.web.PatientServiceAsync;
+import com.gmail.genadyms.shared.dto.PatientDTO;
 import com.gmail.genadyms.web.event.AddPatientEvent;
 import com.gmail.genadyms.web.event.EditPatientEvent;
 import com.gmail.genadyms.web.presenter.Presenter;
-
+import com.gmail.genadyms.web.service.PatientServiceAsync;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.HasClickHandlers;
@@ -20,8 +18,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PatientsPresenter implements Presenter {
-
-	private List<PatientDTO> patientsDTO;
 
 	public interface Display {
 		HasClickHandlers getAddButton();
@@ -52,15 +48,14 @@ public class PatientsPresenter implements Presenter {
 			}
 		});
 
-
 		display.getList().addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
 				int selectedRow = display.getClickedRow(event);
 
-				if (selectedRow >= 0) {
-					Long id = patientsDTO.get(selectedRow).getId();
-					eventBus.fireEvent(new EditPatientEvent(id));
-				}
+				// if (selectedRow >= 0) {
+				// Long id = patientsDTO.get(selectedRow).getId();
+				// eventBus.fireEvent(new EditPatientEvent(id));
+				// }
 			}
 		});
 	}
@@ -75,13 +70,13 @@ public class PatientsPresenter implements Presenter {
 	private void fetchContactDetails() {
 		rpcService.getPatients(new AsyncCallback<List<PatientDTO>>() {
 			public void onSuccess(List<PatientDTO> result) {
-				patientsDTO = result;
+				System.out.println("on success "+this.getClass().getCanonicalName());
+				List<PatientDTO> patientsDTO = result;
 				List<String> data = new ArrayList<String>();
 
 				for (int i = 0; i < result.size(); ++i) {
 					data.add(patientsDTO.get(i).getAddress());
 				}
-
 				display.setData(data);
 			}
 

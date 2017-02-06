@@ -1,6 +1,6 @@
 package com.gmail.genadyms.web.event;
 
-import com.gmail.genadyms.shared.PatientDTO;
+import com.gmail.genadyms.shared.dto.PatientDTO;
 import com.google.gwt.event.shared.GwtEvent;
 
 public class PatientUpdatedEvent extends GwtEvent<PatientUpdatedEventHandler>{
@@ -21,6 +21,6 @@ public class PatientUpdatedEvent extends GwtEvent<PatientUpdatedEventHandler>{
 
   @Override
   protected void dispatch(PatientUpdatedEventHandler handler) {
-    handler.onContactUpdated(this);
+    handler.onPatientUpdated(this);
   }
 }

@@ -1,7 +1,6 @@
-package com.gmail.genadyms.web;
+package com.gmail.genadyms.web.service;
 
-import com.gmail.genadyms.shared.PatientDTO;
-import com.gmail.genadyms.shared.PatientDetails;
+import com.gmail.genadyms.shared.dto.PatientDTO;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 

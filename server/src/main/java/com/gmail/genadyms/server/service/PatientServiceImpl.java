@@ -3,8 +3,8 @@ package com.gmail.genadyms.server.service;
 import com.gmail.genadyms.server.dataaccess.PatientDao;
 import com.gmail.genadyms.server.dataaccess.WardDao;
 import com.gmail.genadyms.server.datamodel.Patient;
-import com.gmail.genadyms.shared.PatientDTO;
-import com.gmail.genadyms.web.PatientService;
+import com.gmail.genadyms.shared.dto.PatientDTO;
+import com.gmail.genadyms.web.service.PatientService;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import java.util.ArrayList;
@@ -22,15 +22,19 @@ public class PatientServiceImpl extends RemoteServiceServlet implements PatientS
 
 	@Override
 	public PatientDTO addPatient(PatientDTO patientDTO) {
-		Patient patient = toDAO(patientDTO);
-		patientDao.insert(patient);
-		return toDTO(patient);
+//		Patient patient = toDAO(patientDTO);
+//		patientDao.insert(patient);
+		PatientDTO patient = toDTO(patientDao.getAll().get(0));
+		return patient;
 	}
 
 	@Override
 	public List<PatientDTO> getPatients() {
+		
 		List<Patient> patienstDao = patientDao.getAll();
-		return toDTO(patienstDao);
+		List<PatientDTO> result = toDTO(patienstDao);
+		patientDao.getEntityManager().clear();
+		return result;
 	}
 
 	@Override
@@ -40,13 +44,15 @@ public class PatientServiceImpl extends RemoteServiceServlet implements PatientS
 
 	@Override
 	public PatientDTO updatePatient(PatientDTO patientDTO) {
-		patientDao.update(toDAO(patientDTO));
-		return null;
+		Patient patient = toDAO(patientDTO);
+		patientDao.update(patient);
+		return toDTO(patient);
 	}
 
 	private List<PatientDTO> toDTO(List<Patient> patientsDao) {
 		List<PatientDTO> resultDto = new ArrayList();
 		for (Patient patient : patientsDao) {
+			System.out.println("---- "+patient.getAddress());
 			resultDto.add(toDTO(patient));
 		}
 		return resultDto;
@@ -54,7 +60,8 @@ public class PatientServiceImpl extends RemoteServiceServlet implements PatientS
 
 	private Patient toDAO(PatientDTO patientDTO) {
 		Patient patient = new Patient();
-		patient.setId(patientDTO.getId());
+		if (null != patientDTO.getId())
+			patient.setId(patientDTO.getId());
 		patient.setFirstName(patientDTO.getFirstName());
 		patient.setLastName(patientDTO.getLastName());
 		patient.setAddress(patientDTO.getAddress());
@@ -62,7 +69,7 @@ public class PatientServiceImpl extends RemoteServiceServlet implements PatientS
 		patient.setComingDate(patientDTO.getComingDate());
 		patient.setLeavingDate(patientDTO.getLeavingDate());
 		patient.setWard(wardDao.get(patientDTO.getWard()));
-		return null;
+		return patient;
 	}
 
 	private PatientDTO toDTO(Patient patient) {

@@ -7,12 +7,13 @@ import com.gmail.genadyms.server.datamodel.Ward;
 import com.gmail.genadyms.server.datamodel.Patient;
 
 import java.util.Date;
+import java.util.List;
 
 import org.junit.Assert;
 
-public class PatientDaoTest extends BedPlaceDaoTest{
+public class PatientDaoTest extends WardDaoTest{
 	private PatientDao dao = new PatientDao();
-
+	
 	@Test
 	public void testSave() {
 		Patient patient = saveMockPatient();
@@ -36,6 +37,28 @@ public class PatientDaoTest extends BedPlaceDaoTest{
 		clearDb(patient);
 	}
 
+//	@Test
+//	public void testChangeAll(){
+//		List<Patient> allList1 = dao.getAll();
+//		System.out.println(allList1.size());
+//		Patient p = null;
+//		for (Patient cur : allList1) {
+//			if(null==p) {
+//				p=cur;
+//			}
+//			System.out.println(cur.getAddress());
+//		}
+//		p.setAddress("get all example");
+//		System.out.println("----------------------------------------------");
+//		dao.update(p);
+//		List<Patient> allList2 = dao.getAll();
+//		System.out.println(allList2.size());
+//		for (Patient cur : allList2) {
+//			System.out.println(cur.getAddress());
+//		}
+//		
+//	}
+	
 	private Patient saveMockPatient() {
 		Patient p = new Patient();
 		p.setFirstName("first-name-" + String.valueOf(Math.random()));
@@ -43,7 +66,7 @@ public class PatientDaoTest extends BedPlaceDaoTest{
 		p.setAddress(("home-address-" + String.valueOf(Math.random())));
 		p.setDiagnosis("diagnosis");
 		p.setComingDate(new Date());
-		Ward bedPlace = saveMockBedPlace(2, 2);
+		Ward bedPlace = saveMockBedPlace(33, 2);
 		p.setWard(bedPlace);
 		dao.insert(p);
 		return p;
