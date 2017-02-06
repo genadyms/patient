@@ -12,13 +12,13 @@ public class WardDaoTest {
 	public void testSave() {
 		Ward bedPlace = saveMockBedPlace(21, 21);
 		Assert.assertNotNull(bedPlace.getId());
-		dao.delete(bedPlace.getId());
+		dao.delete(bedPlace);
 	}
 	
 	@Test
 	public void testDelete() {
 		Ward bedPlace = saveMockBedPlace(22,22);
-		dao.delete(bedPlace.getId());
+		dao.delete(bedPlace);
 		Ward delPlace = dao.get(bedPlace.getId());
 		Assert.assertNull(delPlace);
 	}
@@ -31,7 +31,7 @@ public class WardDaoTest {
 		return mock;
 	}
 	
-	protected void clearBedPlace(Long id) {
-		dao.delete(id);
+	protected void clearBedPlace(Ward ward) {
+		dao.delete(ward);
 	}
 }

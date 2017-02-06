@@ -23,8 +23,8 @@ public class PatientDaoTest extends WardDaoTest{
 
 	private void clearDb(Patient patient) {
 		Ward bp = patient.getWard();	
-		dao.delete(patient.getId());
-		clearBedPlace(bp.getId());
+		dao.delete(patient);
+		clearBedPlace(bp);
 	}
 
 	@Test

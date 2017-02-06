@@ -5,7 +5,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaQuery;
 
-import com.gmail.genadyms.server.dataaccess.util.EntityManagerUtil;
+import com.gmail.genadyms.server.dataaccess.util.EntityManagerFactoryBuilder;
 
 public class AbstractDao<T, ID> {
 
@@ -14,8 +14,8 @@ public class AbstractDao<T, ID> {
 	private final Class<T> entityClass;
 
 	protected AbstractDao(final Class<T> entityClass) {
-		this.entityManager = EntityManagerUtil.getEntityManager();
-	this.entityClass = entityClass;
+		this.entityManager = EntityManagerFactoryBuilder.getEntityManagerFactory().createEntityManager();
+		this.entityClass = entityClass;
 	}
 
 	public List<T> getAll() {
@@ -43,12 +43,15 @@ public class AbstractDao<T, ID> {
 		return entity;
 	}
 
-	public void delete(ID id) {
+	public void delete(T entity) {
+		// public void delete(ID id) {
 		getEntityManager().getTransaction().begin();
-		entityManager.createQuery(String.format("delete from %s e where e.id = :id", entityClass.getSimpleName()))
-				.setParameter("id", id).executeUpdate();
-		getEntityManager().flush();
-		getEntityManager().clear();
+		// entityManager.createQuery(String.format("delete from %s e where e.id
+		// = :id", entityClass.getSimpleName()))
+		// .setParameter("id", id).executeUpdate();
+		// getEntityManager().flush();
+		// getEntityManager().clear();
+		getEntityManager().remove(entity);
 		getEntityManager().getTransaction().commit();
 	}
 
