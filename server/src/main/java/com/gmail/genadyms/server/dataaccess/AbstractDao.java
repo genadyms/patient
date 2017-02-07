@@ -16,6 +16,7 @@ public class AbstractDao<T, ID> {
 	protected AbstractDao(final Class<T> entityClass) {
 		this.entityManager = EntityManagerFactoryBuilder.getEntityManagerFactory().createEntityManager();
 		this.entityClass = entityClass;
+		System.out.println("--------------------"+this.getClass().getName()+"---------------------------");
 	}
 
 	public List<T> getAll() {

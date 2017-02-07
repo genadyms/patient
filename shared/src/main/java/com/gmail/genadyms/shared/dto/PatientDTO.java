@@ -13,6 +13,13 @@ public class PatientDTO implements Serializable {
 	private String diagnosis;
 	private Date leavingDate;
 	private Date comingDate;
+	@Override
+	public String toString() {
+		return "PatientDTO [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", address=" + address
+				+ ", diagnosis=" + diagnosis + ", leavingDate=" + leavingDate + ", comingDate=" + comingDate + ", ward="
+				+ ward + "]";
+	}
+
 	private Long ward;
 
 	public Long getId() {

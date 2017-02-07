@@ -8,6 +8,7 @@ import com.gmail.genadyms.web.service.PatientService;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @SuppressWarnings("serial")
@@ -23,9 +24,19 @@ public class PatientServiceImpl extends RemoteServiceServlet implements PatientS
 
 	@Override
 	public PatientDTO addPatient(PatientDTO patientDTO) {
+		System.out.println(patientDTO);
 		// Patient patient = toDAO(patientDTO);
 		// patientDao.insert(patient);
-		PatientDTO patient = toDTO(patientDao.getAll().get(0));
+		Patient db = patientDao.getAll().get(0);
+		PatientDTO patient = toDTO(db);
+		Patient p = new Patient();
+		p.setAddress("test address  "+Math.random());
+		p.setFirstName(patientDTO.getFirstName());
+		p.setLastName(patientDTO.getLastName());
+		p.setComingDate(new Date());
+		p.setDiagnosis("diagnosis");
+		p.setWard(db.getWard());
+		patientDao.insert(p);
 		return patient;
 	}
 
@@ -82,6 +93,7 @@ public class PatientServiceImpl extends RemoteServiceServlet implements PatientS
 		dto.setComingDate(patient.getComingDate());
 		dto.setLeavingDate(patient.getLeavingDate());
 		dto.setWard(patient.getWard().getId());
+//		patientDao.getEntityManager().detach(patient);
 		return dto;
 	}
 }
