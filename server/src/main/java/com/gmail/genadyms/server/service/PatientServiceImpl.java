@@ -14,7 +14,6 @@ import java.util.List;
 public class PatientServiceImpl extends RemoteServiceServlet implements PatientService {
 	private final PatientDao patientDao;
 	private final WardDao wardDao;
-	private List<Patient> patienstDao = new ArrayList<>();
 
 	public PatientServiceImpl() {
 		System.out.println("Constructor!!!");
@@ -32,14 +31,9 @@ public class PatientServiceImpl extends RemoteServiceServlet implements PatientS
 
 	@Override
 	public List<PatientDTO> getPatients() {
-		if (patienstDao.isEmpty()) {
-			patienstDao = patientDao.getAll();
-		} else {
-			for(Patient p: patienstDao) {
-				patientDao.getEntityManager().refresh(p);
-			}
-		}
+		List<Patient> patienstDao = patientDao.getAll();
 		List<PatientDTO> result = toDTO(patienstDao);
+		patientDao.getEntityManager().clear();
 		return result;
 	}
 
