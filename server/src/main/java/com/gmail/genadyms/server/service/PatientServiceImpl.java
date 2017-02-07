@@ -30,11 +30,11 @@ public class PatientServiceImpl extends RemoteServiceServlet implements PatientS
 		Patient db = patientDao.getAll().get(0);
 		PatientDTO patient = toDTO(db);
 		Patient p = new Patient();
-		p.setAddress("test address  "+Math.random());
+		p.setAddress(patientDTO.getAddress());
 		p.setFirstName(patientDTO.getFirstName());
 		p.setLastName(patientDTO.getLastName());
-		p.setComingDate(new Date());
-		p.setDiagnosis("diagnosis");
+		p.setComingDate(patientDTO.getComingDate());
+		p.setDiagnosis(patientDTO.getDiagnosis());
 		p.setWard(db.getWard());
 		patientDao.insert(p);
 		return patient;

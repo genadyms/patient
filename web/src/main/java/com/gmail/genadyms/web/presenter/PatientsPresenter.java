@@ -8,81 +8,89 @@ import com.gmail.genadyms.web.service.PatientServiceAsync;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.HasClickHandlers;
+import com.google.gwt.event.logical.shared.HasValueChangeHandlers;
+import com.google.gwt.event.logical.shared.ValueChangeEvent;
+import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.event.shared.HandlerManager;
+import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.gwt.user.client.ui.Widget;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+
 
 public class PatientsPresenter implements Presenter {
 
-	public interface Display {
-		HasClickHandlers getAddButton();
+    public interface Display {
+        HasClickHandlers getAddButton();
 
-		HasClickHandlers getList();
+        HasClickHandlers getList();
 
-		void setData(List<String> data);
 
-		int getClickedRow(ClickEvent event);
 
-		Widget asWidget();
-	}
+        void setData(List<String> data);
 
-	private final PatientServiceAsync rpcService;
-	private final HandlerManager eventBus;
-	private final Display display;
+        int getClickedRow(ClickEvent event);
 
-	public PatientsPresenter(PatientServiceAsync rpcService, HandlerManager eventBus, Display view) {
-		this.rpcService = rpcService;
-		this.eventBus = eventBus;
-		this.display = view;
-	}
+        Widget asWidget();
+    }
 
-	public void bind() {
-		display.getAddButton().addClickHandler(new ClickHandler() {
-			public void onClick(ClickEvent event) {
-				eventBus.fireEvent(new AddPatientEvent());
-			}
-		});
+    private final PatientServiceAsync rpcService;
+    private final HandlerManager eventBus;
+    private final Display display;
 
-		display.getList().addClickHandler(new ClickHandler() {
-			public void onClick(ClickEvent event) {
-				int selectedRow = display.getClickedRow(event);
+    public PatientsPresenter(PatientServiceAsync rpcService, HandlerManager eventBus, Display view) {
+        this.rpcService = rpcService;
+        this.eventBus = eventBus;
+        this.display = view;
+    }
 
-				// if (selectedRow >= 0) {
-				// Long id = patientsDTO.get(selectedRow).getId();
-				// eventBus.fireEvent(new EditPatientEvent(id));
-				// }
-			}
-		});
-	}
+    public void bind() {
+        display.getAddButton().addClickHandler(new ClickHandler() {
+            public void onClick(ClickEvent event) {
+                eventBus.fireEvent(new AddPatientEvent());
+            }
+        });
 
-	public void go(final HasWidgets container) {
-		bind();
-		container.clear();
-		container.add(display.asWidget());
-		fetchContactDetails();
-	}
+        display.getList().addClickHandler(new ClickHandler() {
+            public void onClick(ClickEvent event) {
+                int selectedRow = display.getClickedRow(event);
 
-	private void fetchContactDetails() {
-		rpcService.getPatients(new AsyncCallback<List<PatientDTO>>() {
-			public void onSuccess(List<PatientDTO> result) {
-				System.out.println("on success "+this.getClass().getCanonicalName());
-				List<PatientDTO> patientsDTO = result;
-				List<String> data = new ArrayList<String>();
+//                if (selectedRow >= 0) {
+//                    Long id = patientDTO.get(selectedRow).getId();
+//                    eventBus.fireEvent(new EditPatientEvent(id));
+//                }
+            }
+        });
+    }
 
-				for (int i = 0; i < result.size(); ++i) {
-					data.add(patientsDTO.get(i).getAddress());
-				}
-				display.setData(data);
-			}
+    public void go(final HasWidgets container) {
+        bind();
+        container.clear();
+        container.add(display.asWidget());
+        fetchContactDetails();
+    }
 
-			public void onFailure(Throwable caught) {
-				Window.alert("Error fetching contact details");
-			}
-		});
-	}
+    private void fetchContactDetails() {
+        rpcService.getPatients(new AsyncCallback<List<PatientDTO>>() {
+            public void onSuccess(List<PatientDTO> result) {
+                System.out.println("on success " + this.getClass().getCanonicalName());
+                List<PatientDTO> patientsDTO = result;
+                List<String> data = new ArrayList<String>();
+
+                for (int i = 0; i < result.size(); ++i) {
+                    data.add(patientsDTO.toString());//.get(i).getAddress());
+                }
+                display.setData(data);
+            }
+
+            public void onFailure(Throwable caught) {
+                Window.alert("Error fetching contact details");
+            }
+        });
+    }
 }

@@ -3,15 +3,12 @@ package com.gmail.genadyms.web.view;
 import com.gmail.genadyms.web.presenter.PatientsPresenter;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.HasClickHandlers;
-import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.CheckBox;
-import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.DecoratorPanel;
-import com.google.gwt.user.client.ui.DockPanel;
-import com.google.gwt.user.client.ui.FlexTable;
-import com.google.gwt.user.client.ui.HorizontalPanel;
-import com.google.gwt.user.client.ui.HTMLTable;
-import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.event.logical.shared.HasValueChangeHandlers;
+import com.google.gwt.user.client.ui.*;
+import com.google.gwt.user.datepicker.client.DatePicker;
+import com.google.gwt.i18n.client.DateTimeFormat;
+
+import java.util.Date;
 import java.util.List;
 
 public class PatientsView extends Composite implements PatientsPresenter.Display {
@@ -52,6 +49,30 @@ public class PatientsView extends Composite implements PatientsPresenter.Display
 		patientsTable.getColumnFormatter().setWidth(0, "15px");
 		contentTable.setWidget(1, 0, patientsTable);
 
+
+
+
+		/*
+		 // Create a date picker
+    DatePicker datePicker = new DatePicker();
+    final Label text = new Label();
+
+    // Set the value in the text box when the user selects a date
+    datePicker.addValueChangeHandler(new ValueChangeHandler<Date>() {
+      public void onValueChange(ValueChangeEvent<Date> event) {
+        Date date = event.getValue();
+        String dateString = DateTimeFormat.getMediumDateFormat().format(date);
+        text.setText(dateString);
+      }
+    });
+
+    // Set the default value
+    datePicker.setValue(new Date(), true);
+
+    // Add the widgets to the page
+    RootPanel.get().add(text);
+    RootPanel.get().add(datePicker);
+		*/
 		contentTableDecorator.add(contentTable);
 	}
 
@@ -63,11 +84,13 @@ public class PatientsView extends Composite implements PatientsPresenter.Display
 		return patientsTable;
 	}
 
-	public void setData(List<String> data) {
+
+
+    public void setData(List<String> data) {
 		patientsTable.removeAllRows();
 
 		for (int i = 0; i < data.size(); ++i) {
-			patientsTable.setWidget(i, 0, new CheckBox());
+//			patientsTable.setWidget(i, 0, new CheckBox());
 			patientsTable.setText(i, 1, data.get(i));
 		}
 	}
