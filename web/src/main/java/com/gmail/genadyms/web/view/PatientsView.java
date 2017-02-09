@@ -21,50 +21,41 @@ import java.util.Date;
 import java.util.List;
 
 public class PatientsView extends Composite implements PatientsPresenter.Display {
-	private final Button addButton;
-	private FlexTable patientsTable;
-	private final FlexTable contentTable;
-	private  final List<PatientDTO> patientsData =  new ArrayList();;
+    private final Button addButton;
+    private FlexTable patientsTable;
+    private final FlexTable contentTable;
+    private final CellTable<PatientDTO> table = new CellTable<PatientDTO>();
 
-	public PatientsView() {
-		DecoratorPanel contentTableDecorator = new DecoratorPanel();
-		initWidget(contentTableDecorator);
-		contentTableDecorator.setWidth("100%");
+    public PatientsView() {
+        DecoratorPanel contentTableDecorator = new DecoratorPanel();
+        initWidget(contentTableDecorator);
+        contentTableDecorator.setWidth("80%");
+
 //		contentTableDecorator.setWidth("18em");
-//		for (int i=0; i<10; i++) {
-//			PatientDTO p = new PatientDTO();
-//			p.setFirstName("firstName "+i);
-//			p.setLastName("lastName "+i);
-//			p.setDiagnosis("diagnosis "+i);
-//			p.setComingDate(new Date());
-//			p.setLeavingDate(new Date());
-//			p.setWard(Long.valueOf(i));
-//			patientsData.add(p);
-//		}
-		
-		contentTable = new FlexTable();
+
+        contentTable = new FlexTable();
 //		 contentTable.setWidth("100%");
 //		 contentTable.getCellFormatter().addStyleName(0, 0,
 //		 "contacts-ListContainer");
 //		 contentTable.getCellFormatter().setWidth(0, 0, "100%");
 //		 contentTable.getFlexCellFormatter().setVerticalAlignment(0, 0,
 //		 DockPanel.ALIGN_TOP);
-		
-		 // Create the menu
-		 //
-		 HorizontalPanel hPanel = new HorizontalPanel();
+
+        // Create the menu
+        //
+        HorizontalPanel hPanel = new HorizontalPanel();
 //		 hPanel.setBorderWidth(0);
 //		 hPanel.setSpacing(0);
 //		 hPanel.setHorizontalAlignment(HorizontalPanel.ALIGN_LEFT);
-		addButton = new Button("Add");
+        addButton = new Button("Add");
 //		 hPanel.add(addButton);
 //		 contentTable.getCellFormatter().addStyleName(0, 0,
 //		 "contacts-ListMenu");
 //		 contentTable.setWidget(0, 0, hPanel);
-		//
-		// // Create the contacts list
-		// //
-		patientsTable = new FlexTable();
+        //
+        // // Create the contacts list
+        // //
+        patientsTable = new FlexTable();
 //		patientsTable.setCellSpacing(0);
 //		patientsTable.setCellPadding(0);
 //		patientsTable.setWidth("100%");
@@ -73,73 +64,64 @@ public class PatientsView extends Composite implements PatientsPresenter.Display
 //		contentTable.setWidget(1, 0, patientsTable);
 
 //		contentTableDecorator.add(contentTable);
-		
-		final CellTable<PatientDTO> table = new CellTable<PatientDTO>();
-		table.setPageSize(3);
 
-		TextColumn<PatientDTO> fullName = new TextColumn<PatientDTO>() {
+        table.setPageSize(3);
 
-			@Override
-			public String getValue(PatientDTO patient) {
-				String fullName = patient.getFirstName() + " " + patient.getLastName();
-				return fullName;
-			}
+        TextColumn<PatientDTO> fullName = new TextColumn<PatientDTO>() {
 
-		};
-		table.addColumn(fullName, "Name");
+            @Override
+            public String getValue(PatientDTO patient) {
+                String fullName = patient.getFirstName() + " " + patient.getLastName();
+                return fullName;
+            }
 
-		TextColumn<PatientDTO> diagnosis = new TextColumn<PatientDTO>() {
+        };
+        table.addColumn(fullName, "Name");
 
-			@Override
-			public String getValue(PatientDTO patient) {
-				return patient.getDiagnosis();
-			}
+        TextColumn<PatientDTO> diagnosis = new TextColumn<PatientDTO>() {
 
-		};
-		table.addColumn(diagnosis, "Diagnosis");
+            @Override
+            public String getValue(PatientDTO patient) {
+                return patient.getDiagnosis();
+            }
 
-		DateCell dateComingCell = new DateCell();
-		Column<PatientDTO, Date> dateComingColumn = new Column<PatientDTO, Date>(dateComingCell) {
+        };
+        table.addColumn(diagnosis, "Diagnosis");
 
-			@Override
-			public Date getValue(PatientDTO patient) {
-				return patient.getComingDate();
-			}
+        DateCell dateComingCell = new DateCell();
+        Column<PatientDTO, Date> dateComingColumn = new Column<PatientDTO, Date>(dateComingCell) {
 
-		};
-		table.addColumn(dateComingColumn, "Coming");
+            @Override
+            public Date getValue(PatientDTO patient) {
+                return patient.getComingDate();
+            }
 
-		DateCell dateLeavingCell = new DateCell();
-		Column<PatientDTO, Date> dateLeavingColumn = new Column<PatientDTO, Date>(dateLeavingCell) {
+        };
+        table.addColumn(dateComingColumn, "Coming");
 
-			@Override
-			public Date getValue(PatientDTO patient) {
-				return patient.getLeavingDate();
-			}
+        DateCell dateLeavingCell = new DateCell();
+        Column<PatientDTO, Date> dateLeavingColumn = new Column<PatientDTO, Date>(dateLeavingCell) {
 
-		};
-		table.addColumn(dateLeavingColumn, "Leaving");
+            @Override
+            public Date getValue(PatientDTO patient) {
+                return patient.getLeavingDate();
+            }
 
-		TextColumn<PatientDTO> ward = new TextColumn<PatientDTO>() {
+        };
+        table.addColumn(dateLeavingColumn, "Leaving");
 
-			@Override
-			public String getValue(PatientDTO patient) {
-				return String.valueOf(patient.getWard());
-			}
+        TextColumn<PatientDTO> ward = new TextColumn<PatientDTO>() {
 
-		};
-		table.addColumn(ward, "Ward");
+            @Override
+            public String getValue(PatientDTO patient) {
+                return String.valueOf(patient.getWard());
+            }
 
-		AsyncDataProvider<PatientDTO> provider = new AsyncDataProvider<PatientDTO>() {
-			@Override
-			protected void onRangeChanged(HasData<PatientDTO> display) {
-				int start = display.getVisibleRange().getStart();
-				int end = start + display.getVisibleRange().getLength();
-				end = end >= patientsData.size() ? patientsData.size() : end;
-				List<PatientDTO> sub = patientsData.subList(start, end);
-				updateRowData(start, sub);
-			}
-		};
+        };
+        table.addColumn(ward, "Ward");
+
+
+
 //		http://www.mytechtip.com/2010/11/gwt-celltable-example-using_8168.html
 //		http://stackoverflow.com/questions/17859782/implement-simplepager-with-datagrid-and-asyncdataprovider
 //		// Associate an async data provider to the table
@@ -162,59 +144,61 @@ public class PatientsView extends Composite implements PatientsPresenter.Display
 //	        remoteService.fetchPage(start, length, callback);
 //	      }
 //	    };
-		provider.addDataDisplay(table);
-		provider.updateRowCount(patientsData.size(), true);
+        table.setTitle("table title");
 
-		SimplePager pager = new SimplePager();
-		pager.setDisplay(table);
-		VerticalPanel vp = new VerticalPanel();
-	    vp.add(table);
-	    vp.add(pager);
-		contentTableDecorator.add(vp);
-	}
+        SimplePager pager = new SimplePager();
+        pager.setDisplay(table);
+        VerticalPanel vp = new VerticalPanel();
+        vp.add(table);
+        vp.add(pager);
+        contentTableDecorator.add(vp);
+    }
 
-	public HasClickHandlers getAddButton() {
-		return addButton;
-	}
+    public HasClickHandlers getAddButton() {
+        return addButton;
+    }
 
-	public HasClickHandlers getList() {
-		return patientsTable;
-	}
+    public HasClickHandlers getList() {
+        return patientsTable;
+    }
 
-	public void setData(List<String> data) {
-		patientsTable.removeAllRows();
+    public void setProvider(AsyncDataProvider<PatientDTO> provider, int size){
 
-		for (int i = 0; i < data.size(); ++i) {
-			// patientsTable.setWidget(i, 0, new CheckBox());
-			patientsTable.setText(i, 1, data.get(i));
-		}
-	}
+        provider.addDataDisplay(table);
+        provider.updateRowCount(size, true);
 
-	public int getClickedRow(ClickEvent event) {
-		int selectedRow = -1;
-		HTMLTable.Cell cell = patientsTable.getCellForEvent(event);
+    }
 
-		if (cell != null) {
-			// Suppress clicks if the user is actually selecting the
-			// check box
-			//
-			if (cell.getCellIndex() > 0) {
-				selectedRow = cell.getRowIndex();
-			}
-		}
+    public void setData(List<String> data) {
+        patientsTable.removeAllRows();
 
-		return selectedRow;
-	}
+        for (int i = 0; i < data.size(); ++i) {
+            // patientsTable.setWidget(i, 0, new CheckBox());
+            patientsTable.setText(i, 1, data.get(i));
+        }
+    }
 
-	public Widget asWidget() {
-		return this;
-	}
+    public int getClickedRow(ClickEvent event) {
+        int selectedRow = -1;
+        HTMLTable.Cell cell = patientsTable.getCellForEvent(event);
 
-	@Override
-	public void addData(List<PatientDTO> patients) {
-		patientsData.addAll(patients);
-		
-	}
+        if (cell != null) {
+            // Suppress clicks if the user is actually selecting the
+            // check box
+            //
+            if (cell.getCellIndex() > 0) {
+                selectedRow = cell.getRowIndex();
+            }
+        }
+
+        return selectedRow;
+    }
+
+    public Widget asWidget() {
+        return this;
+    }
+
+
 
 //	@Override
 //	public void setData(List<PatientDTO> patientsDTO) {

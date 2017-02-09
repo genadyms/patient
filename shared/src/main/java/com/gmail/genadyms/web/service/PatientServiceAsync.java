@@ -7,11 +7,13 @@ import java.util.List;
 
 public interface PatientServiceAsync {
 
-	public void addPatient(PatientDTO patient, AsyncCallback<PatientDTO> callback);
+    void addPatient(PatientDTO patient, AsyncCallback<PatientDTO> callback);
 
-	public void getPatients(AsyncCallback<List<PatientDTO>> callback);
+    void getPatients(AsyncCallback<List<PatientDTO>> callback);
 
-	public void getPatient(Long id, AsyncCallback<PatientDTO> callback);
+    void getPatient(Long id, AsyncCallback<PatientDTO> callback);
 
-	public void updatePatient(PatientDTO patient, AsyncCallback<PatientDTO> callback);
+    void updatePatient(PatientDTO patient, AsyncCallback<PatientDTO> callback);
+
+    void getPatients(Integer start, Integer length, AsyncCallback<List<PatientDTO>> callback);
 }
