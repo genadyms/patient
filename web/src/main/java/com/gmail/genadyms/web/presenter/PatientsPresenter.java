@@ -22,75 +22,74 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-
 public class PatientsPresenter implements Presenter {
 
-    public interface Display {
-        HasClickHandlers getAddButton();
+	public interface Display {
+		HasClickHandlers getAddButton();
 
-        HasClickHandlers getList();
+		HasClickHandlers getList();
 
+		void setData(List<String> data);
 
+		int getClickedRow(ClickEvent event);
 
-        void setData(List<String> data);
+		Widget asWidget();
 
-        int getClickedRow(ClickEvent event);
+		void addData(List<PatientDTO> patients);
+	}
 
-        Widget asWidget();
-    }
+	private final PatientServiceAsync rpcService;
+	private final HandlerManager eventBus;
+	private final Display display;
 
-    private final PatientServiceAsync rpcService;
-    private final HandlerManager eventBus;
-    private final Display display;
+	public PatientsPresenter(PatientServiceAsync rpcService, HandlerManager eventBus, Display view) {
+		this.rpcService = rpcService;
+		this.eventBus = eventBus;
+		this.display = view;
+	}
 
-    public PatientsPresenter(PatientServiceAsync rpcService, HandlerManager eventBus, Display view) {
-        this.rpcService = rpcService;
-        this.eventBus = eventBus;
-        this.display = view;
-    }
+	public void bind() {
+		display.getAddButton().addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				eventBus.fireEvent(new AddPatientEvent());
+			}
+		});
 
-    public void bind() {
-        display.getAddButton().addClickHandler(new ClickHandler() {
-            public void onClick(ClickEvent event) {
-                eventBus.fireEvent(new AddPatientEvent());
-            }
-        });
+		display.getList().addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				int selectedRow = display.getClickedRow(event);
 
-        display.getList().addClickHandler(new ClickHandler() {
-            public void onClick(ClickEvent event) {
-                int selectedRow = display.getClickedRow(event);
+				// if (selectedRow >= 0) {
+				// Long id = patientDTO.get(selectedRow).getId();
+				// eventBus.fireEvent(new EditPatientEvent(id));
+				// }
+			}
+		});
+	}
 
-//                if (selectedRow >= 0) {
-//                    Long id = patientDTO.get(selectedRow).getId();
-//                    eventBus.fireEvent(new EditPatientEvent(id));
-//                }
-            }
-        });
-    }
+	public void go(final HasWidgets container) {
+		// bind();
+		container.clear();
+		container.add(display.asWidget());
+		fetchContactDetails();
+	}
 
-    public void go(final HasWidgets container) {
-        bind();
-        container.clear();
-        container.add(display.asWidget());
-        fetchContactDetails();
-    }
+	private void fetchContactDetails() {
+		rpcService.getPatients(new AsyncCallback<List<PatientDTO>>() {
+			public void onSuccess(List<PatientDTO> result) {
+				System.out.println("on success " + this.getClass().getCanonicalName());
+				List<PatientDTO> patientsDTO = result;
+				// List<String> data = new ArrayList<String>();
+				display.addData(result);
+				// for (int i = 0; i < result.size(); ++i) {
+				// data.add(patientsDTO.toString());// .get(i).getAddress());
+				// }
+				// display.setData(data);
+			}
 
-    private void fetchContactDetails() {
-        rpcService.getPatients(new AsyncCallback<List<PatientDTO>>() {
-            public void onSuccess(List<PatientDTO> result) {
-                System.out.println("on success " + this.getClass().getCanonicalName());
-                List<PatientDTO> patientsDTO = result;
-                List<String> data = new ArrayList<String>();
-
-                for (int i = 0; i < result.size(); ++i) {
-                    data.add(patientsDTO.toString());//.get(i).getAddress());
-                }
-                display.setData(data);
-            }
-
-            public void onFailure(Throwable caught) {
-                Window.alert("Error fetching contact details");
-            }
-        });
-    }
+			public void onFailure(Throwable caught) {
+				Window.alert("Error fetching contact details");
+			}
+		});
+	}
 }
