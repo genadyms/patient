@@ -32,8 +32,7 @@ public class PatientsPresenter implements Presenter {
 
         HasClickHandlers getList();
 
-        void setData(List<String> data);
-
+        //        void setData(List<String> data);
         int getClickedRow(ClickEvent event);
 
         Widget asWidget();
@@ -66,19 +65,10 @@ public class PatientsPresenter implements Presenter {
         });
 
         AsyncDataProvider<PatientDTO> provider = new AsyncDataProvider<PatientDTO>() {
-
             protected void onRangeChanged(HasData<PatientDTO> display) {
                 final int start = display.getVisibleRange().getStart();
                 int length = display.getVisibleRange().getLength();
-//                int difference = display.getRowCount() - begin;
-//                final int start = (begin>0) ? begin+1 : begin;
-//                length = (begin>0) ? 2 : 3;
-//                if(length>=difference) {
-//            length=difference;
-//            start=start+1;
-//        }
-//                length = length >= difference ? difference : length;
-
+                if (display.getRowCount() == 0) updateCount();
                 AsyncCallback<List<PatientDTO>> callback = new AsyncCallback<List<PatientDTO>>() {
                     @Override
                     public void onFailure(Throwable caught) {
@@ -87,11 +77,14 @@ public class PatientsPresenter implements Presenter {
 
                     @Override
                     public void onSuccess(List<PatientDTO> result) {
-//                        updateRowCount(7, true);
                         updateRowData(start, result);
                     }
                 };
-                // The remote service that should be implemented
+
+                rpcService.getPatients(start, length, callback);
+            }
+
+            private void updateCount() {
                 rpcService.getCountPatients(new AsyncCallback<Long>() {
                     @Override
                     public void onFailure(Throwable caught) {
@@ -103,7 +96,6 @@ public class PatientsPresenter implements Presenter {
                         updateRowCount(result.intValue(), true);
                     }
                 });
-                rpcService.getPatients(start, length, callback);
             }
         };
         provider.addDataDisplay(display.getPatientsTable());
@@ -113,25 +105,6 @@ public class PatientsPresenter implements Presenter {
         bind();
         container.clear();
         container.add(display.asWidget());
-//		fetchContactDetails();
     }
-
-//    private void fetchContactDetails() {
-//        rpcService.getPatients(new AsyncCallback<List<PatientDTO>>() {
-//            public void onSuccess(List<PatientDTO> result) {
-//                System.out.println("on success " + this.getClass().getCanonicalName());
-//                List<String> data = new ArrayList<String>();
-//                display.addData(result);
-//                for (int i = 0; i < result.size(); ++i) {
-//                    data.add(patientsDTO.toString());// .get(i).getAddress());
-//                }
-//                display.setData(data);
-//            }
-//
-//            public void onFailure(Throwable caught) {
-//                Window.alert("Error fetching contact details");
-//            }
-//        });
-//    }
 
 }
