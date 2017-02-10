@@ -47,7 +47,7 @@ public class PatientsView extends Composite implements PatientsPresenter.Display
 //		 hPanel.setBorderWidth(0);
 //		 hPanel.setSpacing(0);
 //		 hPanel.setHorizontalAlignment(HorizontalPanel.ALIGN_LEFT);
-        addButton = new Button("Add");
+//        addButton = new Button("Add");
 //		 hPanel.add(addButton);
 //		 contentTable.getCellFormatter().addStyleName(0, 0,
 //		 "contacts-ListMenu");
@@ -121,7 +121,6 @@ public class PatientsView extends Composite implements PatientsPresenter.Display
         table.addColumn(ward, "Ward");
 
 
-
 //		http://www.mytechtip.com/2010/11/gwt-celltable-example-using_8168.html
 //		http://stackoverflow.com/questions/17859782/implement-simplepager-with-datagrid-and-asyncdataprovider
 //		// Associate an async data provider to the table
@@ -149,6 +148,8 @@ public class PatientsView extends Composite implements PatientsPresenter.Display
         SimplePager pager = new SimplePager();
         pager.setDisplay(table);
         VerticalPanel vp = new VerticalPanel();
+        addButton = new Button(" Add patient ");
+        vp.add(addButton);
         vp.add(table);
         vp.add(pager);
         contentTableDecorator.add(vp);
@@ -162,20 +163,20 @@ public class PatientsView extends Composite implements PatientsPresenter.Display
         return patientsTable;
     }
 
-    public void setProvider(AsyncDataProvider<PatientDTO> provider){
+    public void setProvider(AsyncDataProvider<PatientDTO> provider) {
 
         provider.addDataDisplay(table);
 
     }
 
-    public void setData(List<String> data) {
-        patientsTable.removeAllRows();
-
-        for (int i = 0; i < data.size(); ++i) {
-            // patientsTable.setWidget(i, 0, new CheckBox());
-            patientsTable.setText(i, 1, data.get(i));
-        }
-    }
+//    public void setData(List<String> data) {
+//        patientsTable.removeAllRows();
+//
+//        for (int i = 0; i < data.size(); ++i) {
+//            // patientsTable.setWidget(i, 0, new CheckBox());
+//            patientsTable.setText(i, 1, data.get(i));
+//        }
+//    }
 
     public int getClickedRow(ClickEvent event) {
         int selectedRow = -1;
@@ -197,13 +198,7 @@ public class PatientsView extends Composite implements PatientsPresenter.Display
         return this;
     }
 
-   public  CellTable<PatientDTO> getPatientsTable() {
+    public CellTable<PatientDTO> getPatientsTable() {
         return table;
-   }
-
-//	@Override
-//	public void setData(List<PatientDTO> patientsDTO) {
-////		this.patientsData = patientsDTO;
-//		
-//	}
+    }
 }
