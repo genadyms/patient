@@ -37,42 +37,4 @@ public class PatientDao extends AbstractDao<Patient, Long> {
         q.setMaxResults(limit);
         return q.getResultList();
     }
-/*    @Override
-    public List<Patient> find(PatientFilter filter) {
-        EntityManager em = getEntityManager();
-        CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<Patient> cq = cb.createQuery(Patient.class);
-        Root<Patient> from = cq.from(Patient.class);
-        cq.select(from);
-        
-        Predicate firstNameEqualCondition = cb.equal(from.get(Patient_.firstName), filter.getFirstName());
-        Predicate lastNameEqualCondition = cb.equal(from.get(Patient_.lastName), filter.getLastName());
-        Predicate middleNameEqualCondition = cb.equal(from.get(Patient_.middleName), filter.getMiddleName());
-        
-        if (filter.getFirstName() != null && filter.getLastName() != null && filter.getMiddleName() != null) {
-        	cq.where(cb.and(firstNameEqualCondition,lastNameEqualCondition,middleNameEqualCondition));
-		}else if (filter.getFirstName() != null && filter.getLastName() != null && filter.getMiddleName() == null) {
-			cq.where(cb.and(firstNameEqualCondition,lastNameEqualCondition));
-		}else if (filter.getFirstName() != null && filter.getLastName() == null && filter.getMiddleName() == null) {
-			cq.where(firstNameEqualCondition);
-		}else if (filter.getFirstName() != null && filter.getLastName() == null && filter.getMiddleName() != null) {
-			cq.where(cb.and(firstNameEqualCondition,middleNameEqualCondition));
-		}else if (filter.getFirstName() == null && filter.getLastName() == null && filter.getMiddleName() != null) {
-			cq.where(middleNameEqualCondition);
-		}else if (filter.getFirstName() == null && filter.getLastName() != null && filter.getMiddleName() != null) {
-			cq.where(cb.and(lastNameEqualCondition,middleNameEqualCondition));
-		}else if (filter.getFirstName() == null && filter.getLastName() != null && filter.getMiddleName() == null) {
-			cq.where(lastNameEqualCondition);
-		}
-        
-        if (filter.getSortProperty() != null) {
-            cq.orderBy(new OrderImpl(from.get(filter.getSortProperty()), filter.isSortOrder()));
-        }
-
-        TypedQuery<Patient> q = em.createQuery(cq);
-        setPaging(filter, q);
-        return q.getResultList();
-    }
-*/
-
 }
