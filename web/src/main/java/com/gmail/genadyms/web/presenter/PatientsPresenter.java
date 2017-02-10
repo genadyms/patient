@@ -44,12 +44,13 @@ public class PatientsPresenter implements Presenter {
     private final PatientServiceAsync rpcService;
     private final HandlerManager eventBus;
     private final Display display;
-    private final List<PatientDTO> patientsData = new ArrayList();
+//    private  List<PatientDTO> patientsData = new ArrayList(4);
 
     public PatientsPresenter(PatientServiceAsync rpcService, HandlerManager eventBus, Display view) {
         this.rpcService = rpcService;
         this.eventBus = eventBus;
         this.display = view;
+//        patientsData = buildArray();
     }
 
     public void bind() {
@@ -116,7 +117,16 @@ public class PatientsPresenter implements Presenter {
             }
         };
 
-        display.setProvider(provider, patientsData.size());
+        display.setProvider(provider,7);
+//        rpcService.getPatients(new AsyncCallback<List<PatientDTO>>() {
+//            public void onSuccess(List<PatientDTO> result) {
+//                size = result.size();
+//            }
+//
+//            public void onFailure(Throwable caught) {
+//                Window.alert("Error fetching contact details");
+//            }
+//        });
     }
 
     private void fetchContactDetails() {

@@ -15,22 +15,22 @@ import java.util.List;
 public class PatientServiceImpl extends RemoteServiceServlet implements PatientService {
 	private final PatientDao patientDao;
 	private final WardDao wardDao;
-	private final List<PatientDTO> patientsData = new ArrayList<>();
+//	private final List<PatientDTO> patientsData = new ArrayList<>();
 
 	public PatientServiceImpl() {
 		System.out.println("Constructor!!!");
 		this.patientDao = new PatientDao();
 		this.wardDao = new WardDao();
-		for (int i = 0; i < 10; i++) {
-            PatientDTO p = new PatientDTO();
-            p.setFirstName("firstName " + i);
-            p.setLastName("lastName " + i);
-            p.setDiagnosis("diagnosis " + i);
-            p.setComingDate(new Date());
-            p.setLeavingDate(new Date());
-            p.setWard(Long.valueOf(20 + i));
-            patientsData.add(p);
-        }
+//		for (int i = 0; i < 10; i++) {
+//            PatientDTO p = new PatientDTO();
+//            p.setFirstName("firstName " + i);
+//            p.setLastName("lastName " + i);
+//            p.setDiagnosis("diagnosis " + i);
+//            p.setComingDate(new Date());
+//            p.setLeavingDate(new Date());
+//            p.setWard(Long.valueOf(20 + i));
+//            patientsData.add(p);
+//        }
 	}
 
 	@Override
@@ -61,8 +61,13 @@ public class PatientServiceImpl extends RemoteServiceServlet implements PatientS
 
     @Override
     public List<PatientDTO> getPatients(Integer start, Integer length) {
-//     return patientsData.subList(start, start+length);
-		return getPatients();
+     System.out.println("Start is = "+start);
+		System.out.println("Length is = "+length);
+		List<Patient> res = patientDao.find(start, length);
+		System.out.println("Length resuylt is = " + res.size()+res.toString());
+		return toDTO(res);
+
+//		return getPatients();
     }
 
     @Override
