@@ -13,7 +13,10 @@ public interface PatientServiceAsync {
 
     void getPatient(Long id, AsyncCallback<PatientDTO> callback);
 
+    void getCountPatients(AsyncCallback<Long> callback);
+
     void updatePatient(PatientDTO patient, AsyncCallback<PatientDTO> callback);
 
     void getPatients(Integer start, Integer length, AsyncCallback<List<PatientDTO>> callback);
+
 }

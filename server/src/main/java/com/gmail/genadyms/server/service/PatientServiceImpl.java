@@ -59,7 +59,12 @@ public class PatientServiceImpl extends RemoteServiceServlet implements PatientS
 		return result;
 	}
 
-    @Override
+	@Override
+	public Long getCountPatients() {
+		return patientDao.count();
+	}
+
+	@Override
     public List<PatientDTO> getPatients(Integer start, Integer length) {
      System.out.println("Start is = "+start);
 		System.out.println("Length is = "+length);

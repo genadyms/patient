@@ -162,10 +162,9 @@ public class PatientsView extends Composite implements PatientsPresenter.Display
         return patientsTable;
     }
 
-    public void setProvider(AsyncDataProvider<PatientDTO> provider, int size){
+    public void setProvider(AsyncDataProvider<PatientDTO> provider){
 
         provider.addDataDisplay(table);
-        provider.updateRowCount(size, true);
 
     }
 
@@ -198,7 +197,9 @@ public class PatientsView extends Composite implements PatientsPresenter.Display
         return this;
     }
 
-
+   public  CellTable<PatientDTO> getPatientsTable() {
+        return table;
+   }
 
 //	@Override
 //	public void setData(List<PatientDTO> patientsDTO) {

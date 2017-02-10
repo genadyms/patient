@@ -13,6 +13,7 @@ import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.event.shared.HandlerManager;
 import com.google.gwt.i18n.client.DateTimeFormat;
+import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HasWidgets;
@@ -37,20 +38,18 @@ public class PatientsPresenter implements Presenter {
 
         Widget asWidget();
 
-        void setProvider(AsyncDataProvider<PatientDTO> provider, int size);
+        CellTable<PatientDTO> getPatientsTable();
 
     }
 
     private final PatientServiceAsync rpcService;
     private final HandlerManager eventBus;
     private final Display display;
-//    private  List<PatientDTO> patientsData = new ArrayList(4);
 
     public PatientsPresenter(PatientServiceAsync rpcService, HandlerManager eventBus, Display view) {
         this.rpcService = rpcService;
         this.eventBus = eventBus;
         this.display = view;
-//        patientsData = buildArray();
     }
 
     public void bind() {
@@ -63,44 +62,23 @@ public class PatientsPresenter implements Presenter {
         display.getList().addClickHandler(new ClickHandler() {
             public void onClick(ClickEvent event) {
                 int selectedRow = display.getClickedRow(event);
-
-                // if (selectedRow >= 0) {
-                // Long id = patientDTO.get(selectedRow).getId();
-                // eventBus.fireEvent(new EditPatientEvent(id));
-                // }
             }
         });
-    }
-
-    public void go(final HasWidgets container) {
-        // bind();
-        container.clear();
-        container.add(display.asWidget());
-//		fetchContactDetails();
-//        for (int i = 0; i < 10; i++) {
-//            PatientDTO p = new PatientDTO();
-//            p.setFirstName("firstName " + i);
-//            p.setLastName("lastName " + i);
-//            p.setDiagnosis("diagnosis " + i);
-//            p.setComingDate(new Date());
-//            p.setLeavingDate(new Date());
-//            p.setWard(Long.valueOf(20 + i));
-//            patientsData.add(p);
-//        }
-
 
         AsyncDataProvider<PatientDTO> provider = new AsyncDataProvider<PatientDTO>() {
-            @Override
-//			protected void onRangeChanged(HasData<PatientDTO> display) {
-//				int start = display.getVisibleRange().getStart();
-//				int end = start + display.getVisibleRange().getLength();
-//				end = end >= patientsData.size() ? patientsData.size() : end;
-//				List<PatientDTO> sub = patientsData.subList(start, end);
-//				updateRowData(start, sub);
-//			}
+
             protected void onRangeChanged(HasData<PatientDTO> display) {
                 final int start = display.getVisibleRange().getStart();
                 int length = display.getVisibleRange().getLength();
+//                int difference = display.getRowCount() - begin;
+//                final int start = (begin>0) ? begin+1 : begin;
+//                length = (begin>0) ? 2 : 3;
+//                if(length>=difference) {
+//            length=difference;
+//            start=start+1;
+//        }
+//                length = length >= difference ? difference : length;
+
                 AsyncCallback<List<PatientDTO>> callback = new AsyncCallback<List<PatientDTO>>() {
                     @Override
                     public void onFailure(Throwable caught) {
@@ -109,65 +87,51 @@ public class PatientsPresenter implements Presenter {
 
                     @Override
                     public void onSuccess(List<PatientDTO> result) {
+//                        updateRowCount(7, true);
                         updateRowData(start, result);
                     }
                 };
                 // The remote service that should be implemented
+                rpcService.getCountPatients(new AsyncCallback<Long>() {
+                    @Override
+                    public void onFailure(Throwable caught) {
+                        Window.alert("Error fetching count patients");
+                    }
+
+                    @Override
+                    public void onSuccess(Long result) {
+                        updateRowCount(result.intValue(), true);
+                    }
+                });
                 rpcService.getPatients(start, length, callback);
             }
         };
+        provider.addDataDisplay(display.getPatientsTable());
+    }
 
-        display.setProvider(provider,7);
+    public void go(final HasWidgets container) {
+        bind();
+        container.clear();
+        container.add(display.asWidget());
+//		fetchContactDetails();
+    }
+
+//    private void fetchContactDetails() {
 //        rpcService.getPatients(new AsyncCallback<List<PatientDTO>>() {
 //            public void onSuccess(List<PatientDTO> result) {
-//                size = result.size();
+//                System.out.println("on success " + this.getClass().getCanonicalName());
+//                List<String> data = new ArrayList<String>();
+//                display.addData(result);
+//                for (int i = 0; i < result.size(); ++i) {
+//                    data.add(patientsDTO.toString());// .get(i).getAddress());
+//                }
+//                display.setData(data);
 //            }
 //
 //            public void onFailure(Throwable caught) {
 //                Window.alert("Error fetching contact details");
 //            }
 //        });
-    }
+//    }
 
-    private void fetchContactDetails() {
-        rpcService.getPatients(new AsyncCallback<List<PatientDTO>>() {
-            public void onSuccess(List<PatientDTO> result) {
-                System.out.println("on success " + this.getClass().getCanonicalName());
-                List<PatientDTO> patientsDTO = result;
-                // List<String> data = new ArrayList<String>();
-//				display.addData(result);
-                // for (int i = 0; i < result.size(); ++i) {
-                // data.add(patientsDTO.toString());// .get(i).getAddress());
-                // }
-                // display.setData(data);
-            }
-
-            public void onFailure(Throwable caught) {
-                Window.alert("Error fetching contact details");
-            }
-        });
-    }
-
-//	provider = new AsyncDataProvider<PatientDTO>()
-//
-//	{
-//		@Override
-//		protected void onRangeChanged (HasData < PatientDTO > display) {
-//		final int start = display.getVisibleRange().getStart();
-//		int length = display.getVisibleRange().getLength();
-//		AsyncCallback<List<PatientDTO>> callback = new AsyncCallback<List<PatientDTO>>() {
-//			@Override
-//			public void onFailure(Throwable caught) {
-//				Window.alert(caught.getMessage());
-//			}
-//
-//			@Override
-//			public void onSuccess(List<PatientDTO> result) {
-//				updateRowData(start, result);
-//			}
-//		};
-//		// The remote service that should be implemented
-//		remoteService.fetchPage(start, length, callback);
-//	}
-//	}
 }

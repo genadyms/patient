@@ -13,6 +13,8 @@ public interface PatientService extends RemoteService {
 
 	List<PatientDTO> getPatients();
 
+	Long getCountPatients();
+
 	List<PatientDTO> getPatients(Integer start, Integer length);
 
 	PatientDTO getPatient(Long id);
