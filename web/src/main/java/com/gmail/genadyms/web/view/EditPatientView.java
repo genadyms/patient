@@ -29,7 +29,9 @@ public class EditPatientView extends Composite implements EditPatientPresenter.D
 
     private final DatePicker comingDate = new DatePicker();
     private final Label labelComingDate;
-//    private final DatePicker leavingDate = new DatePicker();
+
+    private final DatePicker leavingDate = new DatePicker();
+    private final Label labelLeavingDate;
 
     public EditPatientView() {
         DecoratorPanel contentDetailsDecorator = new DecoratorPanel();
@@ -54,6 +56,9 @@ public class EditPatientView extends Composite implements EditPatientPresenter.D
         labelComingDate = new Label();
         comingDate.setValue(new Date(), true);
 
+        labelLeavingDate = new Label();
+        leavingDate.setValue(new Date(), true);
+
         initDetailsTable();
         contentDetailsPanel.add(detailsTable);
 
@@ -77,6 +82,8 @@ public class EditPatientView extends Composite implements EditPatientPresenter.D
         detailsTable.setWidget(3, 1, diagnosis);
         detailsTable.setWidget(4, 0, labelComingDate);
         detailsTable.setWidget(4, 1, comingDate);
+        detailsTable.setWidget(5, 0, labelLeavingDate);
+        detailsTable.setWidget(5, 1, leavingDate);
         firstName.setFocus(true);
     }
 
@@ -86,8 +93,18 @@ public class EditPatientView extends Composite implements EditPatientPresenter.D
     }
 
     @Override
-    public void setComingDateValue(Date date) {
+    public void setComingDate(Date date) {
         labelComingDate.setText(DateTimeFormat.getMediumDateFormat().format(date));
+    }
+
+    @Override
+    public HasValueChangeHandlers getLeavingDate() {
+        return leavingDate;
+    }
+
+    @Override
+    public void setLeavingDate(Date date) {
+        labelLeavingDate.setText(DateTimeFormat.getMediumDateFormat().format(date));
     }
 
     public HasValue<String> getFirstName() {
