@@ -3,6 +3,7 @@ package com.gmail.genadyms.web.presenter;
 import com.gmail.genadyms.shared.dto.PatientDTO;
 import com.gmail.genadyms.web.event.AddPatientEvent;
 import com.gmail.genadyms.web.event.EditPatientEvent;
+import com.gmail.genadyms.web.event.PatientUpdatedEvent;
 import com.gmail.genadyms.web.presenter.Presenter;
 import com.gmail.genadyms.web.service.PatientServiceAsync;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -20,6 +21,8 @@ import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.view.client.AsyncDataProvider;
 import com.google.gwt.view.client.HasData;
+import com.google.gwt.view.client.SelectionChangeEvent;
+import com.google.gwt.view.client.SingleSelectionModel;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -29,11 +32,6 @@ public class PatientsPresenter implements Presenter {
 
     public interface Display {
         HasClickHandlers getAddButton();
-
-        HasClickHandlers getList();
-
-        //        void setData(List<String> data);
-        int getClickedRow(ClickEvent event);
 
         Widget asWidget();
 
@@ -58,9 +56,14 @@ public class PatientsPresenter implements Presenter {
             }
         });
 
-        display.getList().addClickHandler(new ClickHandler() {
-            public void onClick(ClickEvent event) {
-                int selectedRow = display.getClickedRow(event);
+        final SingleSelectionModel<PatientDTO> selectionModel = new SingleSelectionModel<PatientDTO>();
+        display.getPatientsTable().setSelectionModel(selectionModel);
+        selectionModel.addSelectionChangeHandler(new SelectionChangeEvent.Handler() {
+            public void onSelectionChange(SelectionChangeEvent event) {
+                PatientDTO selected = selectionModel.getSelectedObject();
+                if (selected != null) {
+                    eventBus.fireEvent(new EditPatientEvent(selected.getId()));
+                }
             }
         });
 
