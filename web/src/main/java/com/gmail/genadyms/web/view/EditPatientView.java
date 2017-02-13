@@ -19,6 +19,7 @@ import com.google.gwt.user.datepicker.client.DatePicker;
 import java.util.Date;
 
 public class EditPatientView extends Composite implements EditPatientPresenter.Display {
+
     private final TextBox firstName;
     private final TextBox lastName;
     private final TextBox address;
@@ -41,8 +42,6 @@ public class EditPatientView extends Composite implements EditPatientPresenter.D
         VerticalPanel contentDetailsPanel = new VerticalPanel();
         contentDetailsPanel.setWidth("100%");
 
-        // Create the contacts list
-        //
         detailsTable = new FlexTable();
         detailsTable.setCellSpacing(0);
         detailsTable.setWidth("100%");
@@ -107,30 +106,37 @@ public class EditPatientView extends Composite implements EditPatientPresenter.D
         labelLeavingDate.setText(DateTimeFormat.getMediumDateFormat().format(date));
     }
 
+    @Override
     public HasValue<String> getFirstName() {
         return firstName;
     }
 
+    @Override
     public HasValue<String> getLastName() {
         return lastName;
     }
 
+    @Override
     public HasValue<String> getAddress() {
         return address;
     }
 
+    @Override
     public HasValue<String> getDiagnosis() {
         return diagnosis;
     }
 
+    @Override
     public HasClickHandlers getSaveButton() {
         return saveButton;
     }
 
+    @Override
     public HasClickHandlers getCancelButton() {
         return cancelButton;
     }
 
+    @Override
     public Widget asWidget() {
         return this;
     }

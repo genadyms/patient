@@ -166,11 +166,11 @@ public class PatientsView extends Composite implements PatientsPresenter.Display
 //        return patientsTable;
 //    }
 
-    public void setProvider(AsyncDataProvider<PatientDTO> provider) {
-
-        provider.addDataDisplay(table);
-
-    }
+//    public void setProvider(AsyncDataProvider<PatientDTO> provider) {
+//
+//        provider.addDataDisplay(table);
+//
+//    }
 
 //    public void setData(List<String> data) {
 //        patientsTable.removeAllRows();

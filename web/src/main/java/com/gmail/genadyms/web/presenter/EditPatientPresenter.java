@@ -70,7 +70,7 @@ public class EditPatientPresenter implements Presenter {
                 EditPatientPresenter.this.display.getFirstName().setValue(patient.getFirstName());
                 EditPatientPresenter.this.display.getLastName().setValue(patient.getLastName());
                 EditPatientPresenter.this.display.getAddress().setValue(patient.getAddress());
-
+                EditPatientPresenter.this.display.getDiagnosis().setValue(patient.getDiagnosis());
             }
 
             public void onFailure(Throwable caught) {

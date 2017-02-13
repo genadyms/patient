@@ -31,6 +31,7 @@ import java.util.List;
 public class PatientsPresenter implements Presenter {
 
     public interface Display {
+
         HasClickHandlers getAddButton();
 
         Widget asWidget();
