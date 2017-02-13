@@ -38,7 +38,11 @@ public class EditPatientPresenter implements Presenter {
 
         HasValueChangeHandlers getComingDate();
 
-        void setComingDateValue(Date date);
+        void setComingDate(Date date);
+
+        HasValueChangeHandlers getLeavingDate();
+
+        void setLeavingDate(Date date);
     }
 
     private PatientDTO patient;
@@ -66,6 +70,7 @@ public class EditPatientPresenter implements Presenter {
                 EditPatientPresenter.this.display.getFirstName().setValue(patient.getFirstName());
                 EditPatientPresenter.this.display.getLastName().setValue(patient.getLastName());
                 EditPatientPresenter.this.display.getAddress().setValue(patient.getAddress());
+
             }
 
             public void onFailure(Throwable caught) {
@@ -77,26 +82,39 @@ public class EditPatientPresenter implements Presenter {
 
     public void bind() {
         this.display.getSaveButton().addClickHandler(new ClickHandler() {
+
+
             public void onClick(ClickEvent event) {
+                Window.alert("Edit patient ok");
                 doSave();
             }
         });
 
         this.display.getCancelButton().addClickHandler(new ClickHandler() {
             public void onClick(ClickEvent event) {
+                Window.alert("Edit patient cancelled");
                 eventBus.fireEvent(new EditPatientCancelledEvent());
             }
         });
 
 
-        display.getComingDate().addValueChangeHandler(new ValueChangeHandler<Date>() {
+        this.display.getComingDate().addValueChangeHandler(new ValueChangeHandler<Date>() {
             public void onValueChange(ValueChangeEvent<Date> event) {
                 Date date = event.getValue();
                 patient.setComingDate(date);
-                display.setComingDateValue(date);
+                display.setComingDate(date);
             }
         });
 
+        this.display.getLeavingDate().addValueChangeHandler(new ValueChangeHandler<Date>() {
+            public void onValueChange(ValueChangeEvent<Date> event) {
+                Date date = event.getValue();
+                patient.setLeavingDate(date);
+                display.setLeavingDate(date);
+            }
+        });
+
+        Window.alert("Edit patient" + patient);
     }
 
     public void go(final HasWidgets container) {
@@ -109,25 +127,32 @@ public class EditPatientPresenter implements Presenter {
         patient.setLastName(display.getLastName().getValue());
         patient.setAddress(display.getAddress().getValue());
         patient.setDiagnosis(display.getDiagnosis().getValue());
-        // contact.setEmailAddress(display.getEmailAddress().getValue());
-        rpcService.addPatient(patient, new AsyncCallback<PatientDTO>() {
-            public void onSuccess(PatientDTO result) {
-                Window.alert(result.getFirstName() + result.getId());
-            }
 
-            public void onFailure(Throwable caught) {
-                Window.alert("Error updating patient");
-            }
-        });
-//		rpcService.updatePatient(patient, new AsyncCallback<PatientDTO>() {
-//			public void onSuccess(PatientDTO result) {
-//
-//			}
-//
-//			public void onFailure(Throwable caught) {
-//				Window.alert("Error updating patient");
-//			}
-//		});
+        if (null != patient.getId()) {
+            rpcService.updatePatient(patient, new AsyncCallback<PatientDTO>() {
+                @Override
+                public void onFailure(Throwable caught) {
+                    Window.alert("Error updating patient");
+                }
+
+                @Override
+                public void onSuccess(PatientDTO result) {
+                    Window.alert("Update patient!");
+                }
+            });
+        } else {
+            rpcService.addPatient(patient, new AsyncCallback<PatientDTO>() {
+                public void onSuccess(PatientDTO result) {
+
+                    Window.alert("Save patient!");
+                }
+
+                public void onFailure(Throwable caught) {
+
+                    Window.alert("Error save patient");
+                }
+            });
+        }
     }
 
 }
