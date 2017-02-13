@@ -10,11 +10,14 @@ import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.Column;
 import com.google.gwt.user.cellview.client.SimplePager;
 import com.google.gwt.user.cellview.client.TextColumn;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.*;
 import com.google.gwt.user.datepicker.client.DatePicker;
 import com.google.gwt.view.client.AsyncDataProvider;
 import com.google.gwt.view.client.HasData;
 import com.google.gwt.i18n.client.DateTimeFormat;
+import com.google.gwt.view.client.SelectionChangeEvent;
+import com.google.gwt.view.client.SingleSelectionModel;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -159,9 +162,9 @@ public class PatientsView extends Composite implements PatientsPresenter.Display
         return addButton;
     }
 
-    public HasClickHandlers getList() {
-        return patientsTable;
-    }
+//    public HasClickHandlers getList() {
+//        return patientsTable;
+//    }
 
     public void setProvider(AsyncDataProvider<PatientDTO> provider) {
 
@@ -178,21 +181,21 @@ public class PatientsView extends Composite implements PatientsPresenter.Display
 //        }
 //    }
 
-    public int getClickedRow(ClickEvent event) {
-        int selectedRow = -1;
-        HTMLTable.Cell cell = patientsTable.getCellForEvent(event);
-
-        if (cell != null) {
-            // Suppress clicks if the user is actually selecting the
-            // check box
-            //
-            if (cell.getCellIndex() > 0) {
-                selectedRow = cell.getRowIndex();
-            }
-        }
-
-        return selectedRow;
-    }
+//    public int getClickedRow(ClickEvent event) {
+//        int selectedRow = -1;
+//        HTMLTable.Cell cell = patientsTable.getCellForEvent(event);
+//
+//        if (cell != null) {
+//            // Suppress clicks if the user is actually selecting the
+//            // check box
+//            //
+//            if (cell.getCellIndex() > 0) {
+//                selectedRow = cell.getRowIndex();
+//            }
+//        }
+//
+//        return selectedRow;
+//    }
 
     public Widget asWidget() {
         return this;
