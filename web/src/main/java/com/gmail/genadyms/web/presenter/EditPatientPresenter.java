@@ -36,13 +36,9 @@ public class EditPatientPresenter implements Presenter {
 
         Widget asWidget();
 
-        HasValueChangeHandlers getComingDate();
+        HasValue<Date> getComingDateBox();
 
-        void setComingDate(Date date);
-
-        HasValueChangeHandlers getLeavingDate();
-
-        void setLeavingDate(Date date);
+        HasValue<Date> getLeavingDateBox();
     }
 
     private PatientDTO patient;
@@ -71,6 +67,8 @@ public class EditPatientPresenter implements Presenter {
                 EditPatientPresenter.this.display.getLastName().setValue(patient.getLastName());
                 EditPatientPresenter.this.display.getAddress().setValue(patient.getAddress());
                 EditPatientPresenter.this.display.getDiagnosis().setValue(patient.getDiagnosis());
+                EditPatientPresenter.this.display.getComingDateBox().setValue(patient.getComingDate());
+                EditPatientPresenter.this.display.getLeavingDateBox().setValue(patient.getLeavingDate());
             }
 
             public void onFailure(Throwable caught) {
@@ -82,35 +80,30 @@ public class EditPatientPresenter implements Presenter {
 
     public void bind() {
         this.display.getSaveButton().addClickHandler(new ClickHandler() {
-
-
             public void onClick(ClickEvent event) {
-                Window.alert("Edit patient ok");
                 doSave();
             }
         });
 
         this.display.getCancelButton().addClickHandler(new ClickHandler() {
             public void onClick(ClickEvent event) {
-                Window.alert("Edit patient cancelled");
                 eventBus.fireEvent(new EditPatientCancelledEvent());
             }
         });
 
-
-        this.display.getComingDate().addValueChangeHandler(new ValueChangeHandler<Date>() {
+        this.display.getComingDateBox().addValueChangeHandler(new ValueChangeHandler<Date>() {
+            @Override
             public void onValueChange(ValueChangeEvent<Date> event) {
                 Date date = event.getValue();
                 patient.setComingDate(date);
-                display.setComingDate(date);
             }
         });
 
-        this.display.getLeavingDate().addValueChangeHandler(new ValueChangeHandler<Date>() {
+        this.display.getLeavingDateBox().addValueChangeHandler(new ValueChangeHandler<Date>() {
+            @Override
             public void onValueChange(ValueChangeEvent<Date> event) {
                 Date date = event.getValue();
                 patient.setLeavingDate(date);
-                display.setLeavingDate(date);
             }
         });
 

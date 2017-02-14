@@ -14,6 +14,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.user.datepicker.client.DateBox;
 import com.google.gwt.user.datepicker.client.DatePicker;
 
 import java.util.Date;
@@ -27,12 +28,8 @@ public class EditPatientView extends Composite implements EditPatientPresenter.D
     private final FlexTable detailsTable;
     private final Button saveButton;
     private final Button cancelButton;
-
-    private final DatePicker comingDate = new DatePicker();
-    private final Label labelComingDate;
-
-    private final DatePicker leavingDate = new DatePicker();
-    private final Label labelLeavingDate;
+    private final DateBox leavingDateBox;
+    private final DateBox comingDateBox;
 
     public EditPatientView() {
         DecoratorPanel contentDetailsDecorator = new DecoratorPanel();
@@ -52,11 +49,15 @@ public class EditPatientView extends Composite implements EditPatientPresenter.D
         address = new TextBox();
         diagnosis = new TextBox();
 
-        labelComingDate = new Label();
-        comingDate.setValue(new Date(), true);
+        DateTimeFormat dateFormat = DateTimeFormat.getFormat("MM/dd/yyyy");
+        leavingDateBox = new DateBox();
+        leavingDateBox.setFormat(new DateBox.DefaultFormat(dateFormat));
+        leavingDateBox.getDatePicker().setYearArrowsVisible(true);
 
-        labelLeavingDate = new Label();
-        leavingDate.setValue(new Date(), true);
+
+        comingDateBox = new DateBox();
+        comingDateBox.setFormat(new DateBox.DefaultFormat(dateFormat));
+        comingDateBox.getDatePicker().setYearArrowsVisible(true);
 
         initDetailsTable();
         contentDetailsPanel.add(detailsTable);
@@ -79,31 +80,29 @@ public class EditPatientView extends Composite implements EditPatientPresenter.D
         detailsTable.setWidget(2, 1, address);
         detailsTable.setWidget(3, 0, new Label("diagnosis"));
         detailsTable.setWidget(3, 1, diagnosis);
-        detailsTable.setWidget(4, 0, labelComingDate);
-        detailsTable.setWidget(4, 1, comingDate);
-        detailsTable.setWidget(5, 0, labelLeavingDate);
-        detailsTable.setWidget(5, 1, leavingDate);
+        Label comingDateLabel = new Label();
+        comingDateLabel.setText("Time coming:");
+
+        detailsTable.setWidget(4, 0, comingDateLabel);
+        detailsTable.setWidget(4, 1, comingDateBox);
+        Label leavingDateLabel = new Label();
+        leavingDateLabel.setText("Time leaving:");
+        detailsTable.setWidget(5, 0, leavingDateLabel);
+        detailsTable.setWidget(5, 1, leavingDateBox);
+
         firstName.setFocus(true);
+
+    }
+
+
+    @Override
+    public HasValue<Date> getComingDateBox() {
+        return comingDateBox;
     }
 
     @Override
-    public HasValueChangeHandlers getComingDate() {
-        return comingDate;
-    }
-
-    @Override
-    public void setComingDate(Date date) {
-        labelComingDate.setText(DateTimeFormat.getMediumDateFormat().format(date));
-    }
-
-    @Override
-    public HasValueChangeHandlers getLeavingDate() {
-        return leavingDate;
-    }
-
-    @Override
-    public void setLeavingDate(Date date) {
-        labelLeavingDate.setText(DateTimeFormat.getMediumDateFormat().format(date));
+    public HasValue<Date> getLeavingDateBox() {
+        return leavingDateBox;
     }
 
     @Override
