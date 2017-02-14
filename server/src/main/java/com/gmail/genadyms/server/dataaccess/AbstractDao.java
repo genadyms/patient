@@ -1,5 +1,6 @@
 package com.gmail.genadyms.server.dataaccess;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -7,7 +8,8 @@ import javax.persistence.criteria.CriteriaQuery;
 
 import com.gmail.genadyms.server.dataaccess.util.EntityManagerFactoryBuilder;
 
-public class AbstractDao<T, ID> {
+public class AbstractDao<T, ID> implements Serializable {
+    private static final long serialVersionUID = 1L;
 
     private EntityManager entityManager;
 
@@ -57,7 +59,6 @@ public class AbstractDao<T, ID> {
     public EntityManager getEntityManager() {
         return entityManager;
     }
-
 
 
 }
