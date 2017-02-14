@@ -1,12 +1,13 @@
 package com.gmail.genadyms.web.presenter;
 
 import com.gmail.genadyms.shared.dto.PatientDTO;
+import com.gmail.genadyms.shared.dto.WardDTO;
 import com.gmail.genadyms.web.event.EditPatientCancelledEvent;
 import com.gmail.genadyms.web.service.PatientServiceAsync;
+import com.gmail.genadyms.web.service.WardServiceAsync;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.HasClickHandlers;
-import com.google.gwt.event.logical.shared.HasValueChangeHandlers;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.event.shared.HandlerManager;
@@ -16,7 +17,9 @@ import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.user.client.Window;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class EditPatientPresenter implements Presenter {
 
@@ -42,25 +45,31 @@ public class EditPatientPresenter implements Presenter {
     }
 
     private PatientDTO patient;
-    private final PatientServiceAsync rpcService;
+    private final PatientServiceAsync rpcPatientService;
+    private final WardServiceAsync rpcWardService;
     private final HandlerManager eventBus;
     private final Display display;
+    private final List<WardDTO> wards;
 
-    public EditPatientPresenter(PatientServiceAsync rpcService, HandlerManager eventBus, Display display) {
-        this.rpcService = rpcService;
+    public EditPatientPresenter(PatientServiceAsync rpcService, WardServiceAsync rpcWardService, HandlerManager eventBus, Display display) {
+        this.rpcPatientService = rpcService;
+        this.rpcWardService = rpcWardService;
         this.eventBus = eventBus;
         this.patient = new PatientDTO();
         this.display = display;
+        this.wards = new ArrayList();
         bind();
     }
 
-    public EditPatientPresenter(PatientServiceAsync rpcService, HandlerManager eventBus, Display display, Long id) {
-        this.rpcService = rpcService;
+    public EditPatientPresenter(PatientServiceAsync rpcPatientService, WardServiceAsync rpcWardService, HandlerManager eventBus, Display display, Long id) {
+        this.rpcPatientService = rpcPatientService;
+        this.rpcWardService = rpcWardService;
         this.eventBus = eventBus;
         this.display = display;
+        this.wards = new ArrayList();
         bind();
 
-        rpcService.getPatient(id, new AsyncCallback<PatientDTO>() {
+        rpcPatientService.getPatient(id, new AsyncCallback<PatientDTO>() {
             public void onSuccess(PatientDTO result) {
                 patient = result;
                 EditPatientPresenter.this.display.getFirstName().setValue(patient.getFirstName());
@@ -79,14 +88,32 @@ public class EditPatientPresenter implements Presenter {
     }
 
     public void bind() {
+        rpcWardService.getFreeWards(new AsyncCallback<List<WardDTO>>() {
+            @Override
+            public void onFailure(Throwable caught) {
+                Window.alert("Failure eward async!!!");
+            }
+
+            @Override
+            public void onSuccess(List<WardDTO> result) {
+                StringBuilder sb = new StringBuilder("Total count is "+wards.size()+"<br>");
+                for(WardDTO dto:wards) {
+                    sb.append(dto.getNumberWard()).append("|").append(dto.getId()+"<br>");
+                }
+                Window.alert("Ward async OK!!!<br>"+sb.toString());
+            }
+        });
         this.display.getSaveButton().addClickHandler(new ClickHandler() {
             public void onClick(ClickEvent event) {
+
                 doSave();
             }
         });
 
         this.display.getCancelButton().addClickHandler(new ClickHandler() {
             public void onClick(ClickEvent event) {
+
+                Window.alert("WArds size is " + wards.size());
                 eventBus.fireEvent(new EditPatientCancelledEvent());
             }
         });
@@ -122,7 +149,7 @@ public class EditPatientPresenter implements Presenter {
         patient.setDiagnosis(display.getDiagnosis().getValue());
 
         if (null != patient.getId()) {
-            rpcService.updatePatient(patient, new AsyncCallback<PatientDTO>() {
+            rpcPatientService.updatePatient(patient, new AsyncCallback<PatientDTO>() {
                 @Override
                 public void onFailure(Throwable caught) {
                     Window.alert("Error updating patient");
@@ -134,7 +161,7 @@ public class EditPatientPresenter implements Presenter {
                 }
             });
         } else {
-            rpcService.addPatient(patient, new AsyncCallback<PatientDTO>() {
+            rpcPatientService.addPatient(patient, new AsyncCallback<PatientDTO>() {
                 public void onSuccess(PatientDTO result) {
 
                     Window.alert("Save patient!");

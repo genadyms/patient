@@ -10,12 +10,13 @@ import com.gmail.genadyms.server.dataaccess.filter.BedPlaceFilter;
 import com.gmail.genadyms.server.datamodel.Ward;
 
 public class WardDao extends AbstractDao<Ward, Long> {
+	private static final long serialVersionUID = 1L;
 
 	public WardDao() {
 		super(Ward.class);
 	}
 
-	public Long count(BedPlaceFilter filter) {
+	public Long count() {
 		EntityManager em = getEntityManager();
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<Long> cq = cb.createQuery(Long.class);

@@ -4,7 +4,6 @@
         "http://java.sun.com/dtd/web-app_2_3.dtd">
 
 <web-app>
-
     <!-- Servlets -->
     <servlet>
         <servlet-name>contactsServiceServlet</servlet-name>
@@ -15,9 +14,18 @@
         <servlet-name>contactsServiceServlet</servlet-name>
         <url-pattern>/parent/patient</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>wardServiceServlet</servlet-name>
+        <servlet-class>com.gmail.genadyms.server.service.WardServiceImpl</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>wardServiceServlet</servlet-name>
+        <url-pattern>/parent/ward</url-pattern>
+    </servlet-mapping>
     <!-- Default page to serve -->
     <welcome-file-list>
         <welcome-file>parent.html</welcome-file>
     </welcome-file-list>
-
 </web-app>

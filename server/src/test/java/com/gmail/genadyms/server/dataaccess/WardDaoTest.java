@@ -10,7 +10,10 @@ public class WardDaoTest {
 	
 	@Test
 	public void testSave() {
+		Long totalStart = dao.count();
 		Ward bedPlace = saveMockBedPlace(21, 21);
+		Long totalSave = dao.count()-1;
+		Assert.assertEquals(totalStart, totalSave);
 		Assert.assertNotNull(bedPlace.getId());
 		dao.delete(bedPlace);
 	}

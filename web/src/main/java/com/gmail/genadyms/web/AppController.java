@@ -5,6 +5,7 @@ import com.gmail.genadyms.web.presenter.PatientsPresenter;
 import com.gmail.genadyms.web.presenter.EditPatientPresenter;
 import com.gmail.genadyms.web.presenter.Presenter;
 import com.gmail.genadyms.web.service.PatientServiceAsync;
+import com.gmail.genadyms.web.service.WardServiceAsync;
 import com.gmail.genadyms.web.view.PatientsView;
 import com.gmail.genadyms.web.view.EditPatientView;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
@@ -15,12 +16,14 @@ import com.google.gwt.user.client.ui.HasWidgets;
 
 public class AppController implements Presenter, ValueChangeHandler<String> {
     private final HandlerManager eventBus;
-    private final PatientServiceAsync rpcService;
+    private final PatientServiceAsync rpcPatientService;
+    private final WardServiceAsync rpcWardService;
     private HasWidgets container;
 
-    public AppController(PatientServiceAsync rpcService, HandlerManager eventBus) {
+    public AppController(PatientServiceAsync rpcPatientService, WardServiceAsync rpcWardService, HandlerManager eventBus) {
         this.eventBus = eventBus;
-        this.rpcService = rpcService;
+        this.rpcPatientService = rpcPatientService;
+        this.rpcWardService = rpcWardService;
         bind();
     }
 
@@ -62,7 +65,7 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
 
     private void doEditPatient(Long id) {
         History.newItem("edit", false);
-        Presenter presenter = new EditPatientPresenter(rpcService, eventBus, new EditPatientView(), id);
+        Presenter presenter = new EditPatientPresenter(rpcPatientService, rpcWardService, eventBus, new EditPatientView(), id);
         presenter.go(container);
     }
 
@@ -79,8 +82,7 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
 
         if ("".equals(History.getToken())) {
             History.newItem("list");
-        }
-        else {
+        } else {
             History.fireCurrentHistoryState();
         }
     }
@@ -92,13 +94,11 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
             Presenter presenter = null;
 
             if (token.equals("list")) {
-                presenter = new PatientsPresenter(rpcService, eventBus, new PatientsView());
-            }
-            else if (token.equals("add")) {
-                presenter = new EditPatientPresenter(rpcService, eventBus, new EditPatientView());
-            }
-            else if (token.equals("edit")) {
-                presenter = new EditPatientPresenter(rpcService, eventBus, new EditPatientView());
+                presenter = new PatientsPresenter(rpcPatientService, eventBus, new PatientsView());
+            } else if (token.equals("add")) {
+                presenter = new EditPatientPresenter(rpcPatientService, rpcWardService,eventBus, new EditPatientView());
+            } else if (token.equals("edit")) {
+                presenter = new EditPatientPresenter(rpcPatientService,  rpcWardService, eventBus, new EditPatientView());
             }
 
             if (presenter != null) {

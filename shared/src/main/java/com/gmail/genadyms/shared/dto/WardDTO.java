@@ -3,39 +3,32 @@ package com.gmail.genadyms.shared.dto;
 import java.io.Serializable;
 
 public class WardDTO implements Serializable {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	private Long id;
-	private Integer number;
-	private Integer countBeds;
+    private Long id;
+    private Integer numberWard;
 
-	public Integer getNumber() {
-		return number;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public void setNumber(Integer number) {
-		this.number = number;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public Integer getCountBeds() {
-		return countBeds;
-	}
+    public void setNumberWard(Integer numberWard) {
+        this.numberWard = numberWard;
+    }
 
-	public void setCountBeds(Integer countBeds) {
-		this.countBeds = countBeds;
-	}
+    public Integer getNumberWard() {
+        return numberWard;
+    }
 
-	@Override
-	public String toString() {
-		return "WardDTO [id=" + id + ", number=" + number + ", countBeds=" + countBeds + "]";
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
+    @Override
+    public String toString() {
+        return "WardDTO{" +
+                "id=" + id +
+                ", numberWard=" + numberWard +
+                '}';
+    }
 }

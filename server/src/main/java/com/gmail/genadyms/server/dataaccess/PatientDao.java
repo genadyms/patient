@@ -12,6 +12,8 @@ import java.util.List;
 
 public class PatientDao extends AbstractDao<Patient, Long> {
 
+    private static final long serialVersionUID = 1L;
+
     public PatientDao() {
         super(Patient.class);
     }
@@ -26,7 +28,7 @@ public class PatientDao extends AbstractDao<Patient, Long> {
         return q.getSingleResult();
     }
 
-    public List<Patient> find (Integer start, Integer limit) {
+    public List<Patient> find(Integer start, Integer limit) {
         EntityManager em = getEntityManager();
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Patient> cq = cb.createQuery(Patient.class);
