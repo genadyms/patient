@@ -13,117 +13,92 @@ import java.util.List;
 
 @SuppressWarnings("serial")
 public class PatientServiceImpl extends RemoteServiceServlet implements PatientService {
-	private final PatientDao patientDao;
-	private final WardDao wardDao;
-//	private final List<PatientDTO> patientsData = new ArrayList<>();
-
-	public PatientServiceImpl() {
-		System.out.println("Constructor!!!");
-		this.patientDao = new PatientDao();
-		this.wardDao = new WardDao();
-//		for (int i = 0; i < 10; i++) {
-//            PatientDTO p = new PatientDTO();
-//            p.setFirstName("firstName " + i);
-//            p.setLastName("lastName " + i);
-//            p.setDiagnosis("diagnosis " + i);
-//            p.setComingDate(new Date());
-//            p.setLeavingDate(new Date());
-//            p.setWard(Long.valueOf(20 + i));
-//            patientsData.add(p);
-//        }
-	}
-
-	@Override
-	public PatientDTO addPatient(PatientDTO patientDTO) {
-		System.out.println(patientDTO);
-		// Patient patient = toDAO(patientDTO);
-		// patientDao.insert(patient);
-		Patient db = patientDao.getAll().get(0);
-		PatientDTO patient = toDTO(db);
-		Patient p = new Patient();
-		p.setAddress(patientDTO.getAddress());
-		p.setFirstName(patientDTO.getFirstName());
-		p.setLastName(patientDTO.getLastName());
-		p.setComingDate(patientDTO.getComingDate());
-		if(null!=patientDTO.getLeavingDate()) {
-			p.setLeavingDate(patientDTO.getLeavingDate());
-		}
-		p.setDiagnosis(patientDTO.getDiagnosis());
-		p.setWard(db.getWard());
-		patientDao.insert(p);
-		return patient;
-	}
-
-	@Override
-	public List<PatientDTO> getPatients() {
-		List<Patient> patienstDao = patientDao.getAll();
-		List<PatientDTO> result = toDTO(patienstDao);
-		patientDao.getEntityManager().clear();
-		return result;
-	}
-
-	@Override
-	public Long getCountPatients() {
-		return patientDao.count();
-	}
-
-	@Override
-    public List<PatientDTO> getPatients(Integer start, Integer length) {
-     System.out.println("Start is = "+start);
-		System.out.println("Length is = "+length);
-		List<Patient> res = patientDao.find(start, length);
-		System.out.println("Length resuylt is = " + res.size()+res.toString());
-		return toDTO(res);
-
-//		return getPatients();
+    private final PatientDao patientDao;
+    private final WardDao wardDao;
+    public PatientServiceImpl() {
+        this.patientDao = new PatientDao();
+        this.wardDao = new WardDao();
     }
 
     @Override
-	public PatientDTO getPatient(Long id) {
-		return toDTO(patientDao.get(id));
-	}
+    public PatientDTO addPatient(PatientDTO patientDTO) {
+        Patient p = new Patient();
+        p.setAddress(patientDTO.getAddress());
+        p.setFirstName(patientDTO.getFirstName());
+        p.setLastName(patientDTO.getLastName());
+        p.setComingDate(patientDTO.getComingDate());
+        if (null != patientDTO.getLeavingDate()) {
+            p.setLeavingDate(patientDTO.getLeavingDate());
+        }
+        p.setDiagnosis(patientDTO.getDiagnosis());
+        p.setWard(wardDao.findByNumberWard(patientDTO.getNumberWard()));
+        patientDao.insert(p);
+        return toDTO(p);
+    }
 
-	@Override
-	public PatientDTO updatePatient(PatientDTO patientDTO) {
-		Patient patient = toDAO(patientDTO);
-		patientDao.update(patient);
-		return toDTO(patient);
-	}
+    @Override
+    public List<PatientDTO> getPatients() {
+        List<Patient> patienstDao = patientDao.getAll();
+        List<PatientDTO> result = toDTO(patienstDao);
+        patientDao.getEntityManager().clear();
+        return result;
+    }
 
-	private List<PatientDTO> toDTO(List<Patient> patientsDao) {
-		List<PatientDTO> resultDto = new ArrayList();
-		for (Patient patient : patientsDao) {
-			System.out.println("---- " + patient.getAddress());
-			resultDto.add(toDTO(patient));
-		}
-		return resultDto;
-	}
+    @Override
+    public Long getCountPatients() {
+        return patientDao.count();
+    }
 
-	private Patient toDAO(PatientDTO patientDTO) {
-		Patient patient = new Patient();
-		if (null != patientDTO.getId())
-			patient.setId(patientDTO.getId());
-		patient.setFirstName(patientDTO.getFirstName());
-		patient.setLastName(patientDTO.getLastName());
-		patient.setAddress(patientDTO.getAddress());
-		patient.setDiagnosis(patientDTO.getDiagnosis());
-		patient.setComingDate(patientDTO.getComingDate());
-		patient.setLeavingDate(patientDTO.getLeavingDate());
-		patient.setWard(wardDao.get(patientDTO.getWard()));
-		return patient;
-	}
+    @Override
+    public List<PatientDTO> getPatients(Integer start, Integer length) {
+        List<Patient> res = patientDao.find(start, length);
+        return toDTO(res);
+   }
 
-	private PatientDTO toDTO(Patient patient) {
-		PatientDTO dto = new PatientDTO();
-		dto.setId(patient.getId());
-		dto.setFirstName(patient.getFirstName());
-		dto.setLastName(patient.getLastName());
-		dto.setAddress(patient.getAddress());
-		dto.setDiagnosis(patient.getDiagnosis());
-		dto.setComingDate(patient.getComingDate());
-		dto.setLeavingDate(patient.getLeavingDate());
-		dto.setWard(patient.getWard().getId());
-//		patientDao.getEntityManager().detach(patient);
-		return dto;
-	}
+    @Override
+    public PatientDTO getPatient(Long id) {
+        return toDTO(patientDao.get(id));
+    }
+
+    @Override
+    public PatientDTO updatePatient(PatientDTO patientDTO) {
+        Patient patient = toDAO(patientDTO);
+        patientDao.update(patient);
+        return toDTO(patient);
+    }
+
+    private List<PatientDTO> toDTO(List<Patient> patientsDao) {
+        List<PatientDTO> resultDto = new ArrayList();
+        for (Patient patient : patientsDao) {
+            resultDto.add(toDTO(patient));
+        }
+        return resultDto;
+    }
+
+    private Patient toDAO(PatientDTO patientDTO) {
+        Patient patient = new Patient();
+        if (null != patientDTO.getId())
+            patient.setId(patientDTO.getId());
+        patient.setFirstName(patientDTO.getFirstName());
+        patient.setLastName(patientDTO.getLastName());
+        patient.setAddress(patientDTO.getAddress());
+        patient.setDiagnosis(patientDTO.getDiagnosis());
+        patient.setComingDate(patientDTO.getComingDate());
+        patient.setLeavingDate(patientDTO.getLeavingDate());
+        patient.setWard(wardDao.findByNumberWard(patientDTO.getNumberWard()));
+        return patient;
+    }
+
+    private PatientDTO toDTO(Patient patient) {
+        PatientDTO dto = new PatientDTO();
+        dto.setId(patient.getId());
+        dto.setFirstName(patient.getFirstName());
+        dto.setLastName(patient.getLastName());
+        dto.setAddress(patient.getAddress());
+        dto.setDiagnosis(patient.getDiagnosis());
+        dto.setComingDate(patient.getComingDate());
+        dto.setLeavingDate(patient.getLeavingDate());
+        dto.setNumberWard(patient.getWard().getNumber());
+        return dto;
+    }
 }

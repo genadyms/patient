@@ -13,14 +13,8 @@ public class PatientDTO implements Serializable {
 	private String diagnosis;
 	private Date leavingDate;
 	private Date comingDate;
-	@Override
-	public String toString() {
-		return "PatientDTO [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", address=" + address
-				+ ", diagnosis=" + diagnosis + ", leavingDate=" + leavingDate + ", comingDate=" + comingDate + ", ward="
-				+ ward + "]";
-	}
 
-	private Long ward;
+	private Integer numberWard;
 
 	public Long getId() {
 		return id;
@@ -28,14 +22,6 @@ public class PatientDTO implements Serializable {
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public Long getWard() {
-		return ward;
-	}
-
-	public void setWard(Long ward) {
-		this.ward = ward;
 	}
 
 	public String getFirstName() {
@@ -86,4 +72,25 @@ public class PatientDTO implements Serializable {
 		this.comingDate = comingDate;
 	}
 
+	public Integer getNumberWard() {
+		return numberWard;
+	}
+
+	public void setNumberWard(Integer numberWard) {
+		this.numberWard = numberWard;
+	}
+
+	@Override
+	public String toString() {
+		return "PatientDTO{" +
+				"id=" + id +
+				", firstName='" + firstName + '\'' +
+				", lastName='" + lastName + '\'' +
+				", address='" + address + '\'' +
+				", diagnosis='" + diagnosis + '\'' +
+				", leavingDate=" + leavingDate +
+				", comingDate=" + comingDate +
+				", numberWard=" + numberWard +
+				'}';
+	}
 }
