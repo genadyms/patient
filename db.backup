@@ -5,7 +5,7 @@
 -- Dumped from database version 9.5.4
 -- Dumped by pg_dump version 9.5.4
 
--- Started on 2017-02-05 22:03:08
+-- Started on 2017-02-15 23:38:07
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -37,7 +37,7 @@ SET search_path = public, pg_catalog;
 SET default_with_oids = false;
 
 --
--- TOC entry 181 (class 1259 OID 17018)
+-- TOC entry 181 (class 1259 OID 17065)
 -- Name: ward; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -49,7 +49,7 @@ CREATE TABLE ward (
 
 
 --
--- TOC entry 182 (class 1259 OID 17021)
+-- TOC entry 182 (class 1259 OID 17068)
 -- Name: bed_place_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
@@ -71,7 +71,7 @@ ALTER SEQUENCE bed_place_id_seq OWNED BY ward.id;
 
 
 --
--- TOC entry 183 (class 1259 OID 17023)
+-- TOC entry 183 (class 1259 OID 17070)
 -- Name: patient; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -81,14 +81,14 @@ CREATE TABLE patient (
     last_name character varying(100) NOT NULL,
     diagnosis character varying(100) NOT NULL,
     coming_date date NOT NULL,
-    leaving_date date[],
     ward_id integer NOT NULL,
-    address character varying(150) NOT NULL
+    address character varying(150) NOT NULL,
+    leaving_date date
 );
 
 
 --
--- TOC entry 184 (class 1259 OID 17029)
+-- TOC entry 184 (class 1259 OID 17076)
 -- Name: patient_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
@@ -110,7 +110,7 @@ ALTER SEQUENCE patient_id_seq OWNED BY patient.id;
 
 
 --
--- TOC entry 1989 (class 2604 OID 17032)
+-- TOC entry 1989 (class 2604 OID 17078)
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -118,7 +118,7 @@ ALTER TABLE ONLY patient ALTER COLUMN id SET DEFAULT nextval('patient_id_seq'::r
 
 
 --
--- TOC entry 1988 (class 2604 OID 17031)
+-- TOC entry 1988 (class 2604 OID 17079)
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -131,16 +131,31 @@ ALTER TABLE ONLY ward ALTER COLUMN id SET DEFAULT nextval('bed_place_id_seq'::re
 -- Name: bed_place_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('bed_place_id_seq', 73, true);
+SELECT pg_catalog.setval('bed_place_id_seq', 203, true);
 
 
 --
--- TOC entry 2114 (class 0 OID 17023)
+-- TOC entry 2114 (class 0 OID 17070)
 -- Dependencies: 183
 -- Data for Name: patient; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-INSERT INTO patient (id, first_name, last_name, diagnosis, coming_date, leaving_date, ward_id, address) VALUES (39, 'first', 'first', 'diagnosis', '2014-02-02', NULL, 60, 'address');
+INSERT INTO patient (id, first_name, last_name, diagnosis, coming_date, ward_id, address, leaving_date) VALUES (91, '9_homes', 'homes', 'diagnosis', '2017-01-18', 60, 'homes', NULL);
+INSERT INTO patient (id, first_name, last_name, diagnosis, coming_date, ward_id, address, leaving_date) VALUES (94, '10_name', 'lname', 'diagnisis', '2016-03-04', 60, 'homes2', NULL);
+INSERT INTO patient (id, first_name, last_name, diagnosis, coming_date, ward_id, address, leaving_date) VALUES (95, '11_name', 'lnm', 'siagnosis', '2016-04-03', 60, 'home11', NULL);
+INSERT INTO patient (id, first_name, last_name, diagnosis, coming_date, ward_id, address, leaving_date) VALUES (96, 'try12', 'vname12', 'diagn12', '2017-02-01', 60, 'add12', NULL);
+INSERT INTO patient (id, first_name, last_name, diagnosis, coming_date, ward_id, address, leaving_date) VALUES (97, 'qqqqq', 'qqqqqq', 'qqqq', '2017-02-02', 60, 'qqq', NULL);
+INSERT INTO patient (id, first_name, last_name, diagnosis, coming_date, ward_id, address, leaving_date) VALUES (98, 'zzzzzzzz', 'zzzzzzzz', 'zzzzzzzz', '2017-02-09', 60, 'zzzzzzzz', NULL);
+INSERT INTO patient (id, first_name, last_name, diagnosis, coming_date, ward_id, address, leaving_date) VALUES (82, '3_qweqwe', 'werwerwer', 'diagnosis', '2017-02-07', 63, 'test address  0.43599442727044924', NULL);
+INSERT INTO patient (id, first_name, last_name, diagnosis, coming_date, ward_id, address, leaving_date) VALUES (83, '4_qweqw', 'asdasdasd', 'diagnosis', '2017-02-07', 61, 'test address  0.06767518038381193', NULL);
+INSERT INTO patient (id, first_name, last_name, diagnosis, coming_date, ward_id, address, leaving_date) VALUES (84, '5_qweqw', 'asdasdasd', 'diagnosis', '2017-02-07', 63, 'test address  0.16068268646412032', NULL);
+INSERT INTO patient (id, first_name, last_name, diagnosis, coming_date, ward_id, address, leaving_date) VALUES (39, 'tes_1t', 'first', 'diagnosis', '2014-02-02', 61, 'hello world 2', NULL);
+INSERT INTO patient (id, first_name, last_name, diagnosis, coming_date, ward_id, address, leaving_date) VALUES (81, '2_new_asdas', 'asdasd', 'diagnosis_4', '2017-02-07', 62, 'test address  0.4620551294374753', NULL);
+INSERT INTO patient (id, first_name, last_name, diagnosis, coming_date, ward_id, address, leaving_date) VALUES (85, '6_firstname', 'lname', 'diagnosis', '2017-02-07', 61, 'test address  0.4146809646229789', NULL);
+INSERT INTO patient (id, first_name, last_name, diagnosis, coming_date, ward_id, address, leaving_date) VALUES (87, '8_gennady', 'ma', 'diagnosis', '2017-02-08', 60, 'home', '2017-02-21');
+INSERT INTO patient (id, first_name, last_name, diagnosis, coming_date, ward_id, address, leaving_date) VALUES (86, '7_test', 'fname', 'diagn', '2017-02-07', 62, 'lname', '2017-02-12');
+INSERT INTO patient (id, first_name, last_name, diagnosis, coming_date, ward_id, address, leaving_date) VALUES (115, 'addtest1', 'addlname1', 'diagn', '2017-02-06', 60, 'addaddress1', '2017-02-28');
+INSERT INTO patient (id, first_name, last_name, diagnosis, coming_date, ward_id, address, leaving_date) VALUES (116, 'add_patient', 'add_lastic', 'gripp', '2017-02-04', 63, 'sovetskay', '2017-02-04');
 
 
 --
@@ -149,11 +164,11 @@ INSERT INTO patient (id, first_name, last_name, diagnosis, coming_date, leaving_
 -- Name: patient_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('patient_id_seq', 43, true);
+SELECT pg_catalog.setval('patient_id_seq', 116, true);
 
 
 --
--- TOC entry 2112 (class 0 OID 17018)
+-- TOC entry 2112 (class 0 OID 17065)
 -- Dependencies: 181
 -- Data for Name: ward; Type: TABLE DATA; Schema: public; Owner: -
 --
@@ -165,7 +180,7 @@ INSERT INTO ward (id, number, count_beds) VALUES (63, 5, 7);
 
 
 --
--- TOC entry 1996 (class 2606 OID 17038)
+-- TOC entry 1996 (class 2606 OID 17081)
 -- Name: patient_pk; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -174,7 +189,7 @@ ALTER TABLE ONLY patient
 
 
 --
--- TOC entry 1991 (class 2606 OID 17058)
+-- TOC entry 1991 (class 2606 OID 17083)
 -- Name: ward_number_key; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -183,7 +198,7 @@ ALTER TABLE ONLY ward
 
 
 --
--- TOC entry 1993 (class 2606 OID 17036)
+-- TOC entry 1993 (class 2606 OID 17085)
 -- Name: ward_pk; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -192,7 +207,7 @@ ALTER TABLE ONLY ward
 
 
 --
--- TOC entry 1994 (class 1259 OID 17039)
+-- TOC entry 1994 (class 1259 OID 17086)
 -- Name: fki_bed_place_id_fk; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -200,7 +215,7 @@ CREATE INDEX fki_bed_place_id_fk ON patient USING btree (ward_id);
 
 
 --
--- TOC entry 1997 (class 2606 OID 17059)
+-- TOC entry 1997 (class 2606 OID 17087)
 -- Name: patient_ward_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -208,7 +223,7 @@ ALTER TABLE ONLY patient
     ADD CONSTRAINT patient_ward_id_fkey FOREIGN KEY (ward_id) REFERENCES ward(id);
 
 
--- Completed on 2017-02-05 22:03:09
+-- Completed on 2017-02-15 23:38:09
 
 --
 -- PostgreSQL database dump complete
