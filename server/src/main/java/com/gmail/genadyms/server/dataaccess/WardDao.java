@@ -9,6 +9,8 @@ import javax.persistence.criteria.Root;
 import com.gmail.genadyms.server.dataaccess.filter.BedPlaceFilter;
 import com.gmail.genadyms.server.datamodel.Ward;
 
+import java.util.List;
+
 public class WardDao extends AbstractDao<Ward, Long> {
 	private static final long serialVersionUID = 1L;
 
@@ -26,31 +28,21 @@ public class WardDao extends AbstractDao<Ward, Long> {
 		return q.getSingleResult();
 	}
 
-	/*
-	 * public List<BedPlace> find(BedPlaceFilter filter) { EntityManager em =
-	 * getEntityManager(); CriteriaBuilder cb = em.getCriteriaBuilder();
-	 * CriteriaQuery<BedPlace> cq = cb.createQuery(BedPlace.class);
-	 * Root<BedPlace> from = cq.from(BedPlace.class);
-	 * 
-	 * cq.select(from);
-	 * 
-	 * if (filter.getNumberOfBed() !=0 && filter.getNumberOfChamber() != 0) {
-	 * Predicate numberOfChamberEqualCondition =
-	 * cb.equal(from.get(BedPlace_.numberOfChamber),
-	 * filter.getNumberOfChamber()); Predicate numberOfBedEqualCondition =
-	 * cb.equal(from.get(BedPlace_.numberOfBed), filter.getNumberOfBed());
-	 * cq.where(cb.and(numberOfChamberEqualCondition,
-	 * numberOfBedEqualCondition)); }else if (filter.getNumberOfBed() ==0 &&
-	 * filter.getNumberOfChamber() != 0) { Predicate
-	 * numberOfChamberEqualCondition =
-	 * cb.equal(from.get(BedPlace_.numberOfChamber),
-	 * filter.getNumberOfChamber()); cq.where(numberOfChamberEqualCondition); }
-	 * 
-	 * if (filter.getSortProperty() != null) { cq.orderBy(new
-	 * OrderImpl(from.get(filter.getSortProperty()), filter.isSortOrder())); }
-	 * 
-	 * TypedQuery<BedPlace> q = em.createQuery(cq); setPaging(filter, q); return
-	 * q.getResultList(); }
-	 */
+	public Ward findByNumberWard(Integer numberWard){
+		EntityManager em = getEntityManager();
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		CriteriaQuery<Ward> cq = cb.createQuery(Ward.class);
+		Root<Ward> from = cq.from(Ward.class);
+		cq.where(cb.equal(from.get("number"), numberWard));
+		TypedQuery<Ward> q = em.createQuery(cq);
+		List<Ward> allitems = q.getResultList();
 
+		if (allitems.isEmpty()) {
+			return null;
+		} else if (allitems.size() == 1) {
+			return allitems.get(0);
+		} else {
+			throw new IllegalArgumentException("more than 1 ward found ");
+		}
+	}
 }
