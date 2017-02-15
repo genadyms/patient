@@ -87,7 +87,7 @@ public class PatientsView extends Composite implements PatientsPresenter.Display
         table.addColumn(ward, "Ward");
         table.setTitle("table title");
 
-        SimplePager pager = new SimplePager();
+        SimplePager pager = new SimplePager(SimplePager.TextLocation.CENTER);
         pager.setDisplay(table);
 
         VerticalPanel vp = new VerticalPanel();
