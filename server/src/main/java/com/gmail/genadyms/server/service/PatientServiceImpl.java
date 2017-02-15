@@ -7,7 +7,6 @@ import com.gmail.genadyms.server.datamodel.Ward;
 import com.gmail.genadyms.shared.dto.PatientDTO;
 import com.gmail.genadyms.web.service.PatientService;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -16,6 +15,7 @@ import java.util.List;
 public class PatientServiceImpl extends RemoteServiceServlet implements PatientService {
     private final PatientDao patientDao;
     private final WardDao wardDao;
+
     public PatientServiceImpl() {
         this.patientDao = new PatientDao();
         this.wardDao = new WardDao();
@@ -32,7 +32,7 @@ public class PatientServiceImpl extends RemoteServiceServlet implements PatientS
             p.setLeavingDate(patientDTO.getLeavingDate());
         }
         p.setDiagnosis(patientDTO.getDiagnosis());
-        p.setWard(wardDao.findByNumberWard(patientDTO.getNumberWard()));
+//        p.setWard(wardDao.findByNumberWard(patientDTO..getNumberWard()));
         patientDao.insert(p);
         return toDTO(p);
     }
@@ -54,7 +54,7 @@ public class PatientServiceImpl extends RemoteServiceServlet implements PatientS
     public List<PatientDTO> getPatients(Integer start, Integer length) {
         List<Patient> res = patientDao.find(start, length);
         return toDTO(res);
-   }
+    }
 
     @Override
     public PatientDTO getPatient(Long id) {
@@ -63,24 +63,13 @@ public class PatientServiceImpl extends RemoteServiceServlet implements PatientS
 
     @Override
     public PatientDTO updatePatient(PatientDTO patientDTO) {
-        System.out.println("Update patient _____________ numberWard i ______________"+patientDTO.getNumberWard());
-        System.out.println("___"+patientDTO.getFirstName()+"------------------");
-        Patient patient = patientDao.get(patientDTO.getId());
-        patient.setFirstName(patientDTO.getFirstName());
-        patientDao.update(patient);
-        return patientDTO;
-//        if(null==patientDTO.getId()){
-//    		return addPatient(patientDTO);
-//    	}
-//        Patient patient = toDAO(patientDTO);
-//        Ward ward = wardDao.findByNumberWard(patientDTO.getNumberWard());
-//        if(null!=ward){
-//            System.out.println("Wrad not null!" +ward);
-//            patient.setWard(ward);
-//        }
-//        System.out.println("Patient _____________ ward is ______________"+patient.getWard());
-//        patientDao.update(patient);
-//        return toDTO(patient);
+        Patient patientEntity = toDAO(patientDTO);
+        if (null == patientDTO.getId()) {
+            patientDao.insert(patientEntity);
+        } else {
+            patientDao.update(patientEntity);
+        }
+        return toDTO(patientEntity);
     }
 
     private List<PatientDTO> toDTO(List<Patient> patientsDao) {
@@ -92,16 +81,15 @@ public class PatientServiceImpl extends RemoteServiceServlet implements PatientS
     }
 
     private Patient toDAO(PatientDTO patientDTO) {
-        Patient patient = new Patient();
-        if (null != patientDTO.getId()){
-            patient = patientDao.get(patientDTO.getId());
-        }
+        Patient patient = (null == patientDTO.getId()) ? new Patient() : patientDao.get(patientDTO.getId());
         patient.setFirstName(patientDTO.getFirstName());
         patient.setLastName(patientDTO.getLastName());
         patient.setAddress(patientDTO.getAddress());
         patient.setDiagnosis(patientDTO.getDiagnosis());
         patient.setComingDate(patientDTO.getComingDate());
         patient.setLeavingDate(patientDTO.getLeavingDate());
+        Ward ward = wardDao.findByNumberWard(patientDTO.getNumberWard());
+        patient.setWard(ward);
         return patient;
     }
 
