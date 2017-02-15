@@ -132,12 +132,12 @@ public class EditPatientPresenter implements Presenter {
 			}
 		});
 
-		 this.display.getWardsListBox().addChangeHandler(new ChangeHandler() {
-		 @Override
-		 public void onChange(ChangeEvent event) {
-		 Window.alert(event.getRelativeElement().getClass().getName());
-		 }
-		 });
+//		 this.display.getWardsListBox().addChangeHandler(new ChangeHandler() {
+//		 @Override
+//		 public void onChange(ChangeEvent event) {
+//		 Window.alert(event.getRelativeElement().getClass().getName());
+//		 }
+//		 });
 	}
 
 	public void go(final HasWidgets container) {
@@ -152,28 +152,17 @@ public class EditPatientPresenter implements Presenter {
 		patient.setDiagnosis(display.getDiagnosis().getValue());
 		patient.setNumberWard(Integer.valueOf(display.getWardsListBox().getSelectedValue()));
 
-			rpcPatientService.updatePatient(patient, new AsyncCallback<PatientDTO>() {
-				@Override
-				public void onFailure(Throwable caught) {
-					Window.alert("Error updating patient");
-				}
+		rpcPatientService.updatePatient(patient, new AsyncCallback<PatientDTO>() {
+			@Override
+			public void onFailure(Throwable caught) {
+				Window.alert("Error updating patient");
+			}
 
-				@Override
-				public void onSuccess(PatientDTO result) {
+			@Override
+			public void onSuccess(PatientDTO result) {
 
-					eventBus.fireEvent(new EditPatientCancelledEvent());
-				}
-			});
-////			rpcPatientService.addPatient(patient, new AsyncCallback<PatientDTO>() {
-////				public void onSuccess(PatientDTO result) {
-////					eventBus.fireEvent(new EditPatientCancelledEvent());
-////				}
-////
-////				public void onFailure(Throwable caught) {
-////					Window.alert("Error save patient");
-////				}
-////			});
-//
+				eventBus.fireEvent(new EditPatientCancelledEvent());
+			}
+		});
 	}
-
 }
