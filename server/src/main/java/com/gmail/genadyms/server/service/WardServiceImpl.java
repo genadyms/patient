@@ -12,7 +12,7 @@ import java.util.List;
 
 public class WardServiceImpl extends RemoteServiceServlet implements WardService {
 
-   private final WardDao wardDao;
+    private final WardDao wardDao;
 
     public WardServiceImpl() {
 
@@ -22,15 +22,12 @@ public class WardServiceImpl extends RemoteServiceServlet implements WardService
     @Override
     public List<WardDTO> getFreeWards() {
         List<Ward> wardsDao = wardDao.getAll();
-        System.out.println("________________________"+wardsDao.size());
         List<WardDTO> result = new ArrayList<>(wardsDao.size());
-        for(Ward wardDao : wardsDao) {
+        for (Ward wardDao : wardsDao) {
             WardDTO wardDTO = new WardDTO();
-            wardDTO.setId(wardDao.getId());
             wardDTO.setNumberWard(wardDao.getNumber());
             result.add(wardDTO);
         }
-        System.out.println("________________________+DTO___"+result.size());
         return result;
     }
 }
