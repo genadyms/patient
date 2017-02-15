@@ -3,6 +3,7 @@ package com.gmail.genadyms.server.service;
 import com.gmail.genadyms.server.dataaccess.PatientDao;
 import com.gmail.genadyms.server.dataaccess.WardDao;
 import com.gmail.genadyms.server.datamodel.Patient;
+import com.gmail.genadyms.server.datamodel.Ward;
 import com.gmail.genadyms.shared.dto.PatientDTO;
 import com.gmail.genadyms.web.service.PatientService;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
@@ -62,9 +63,24 @@ public class PatientServiceImpl extends RemoteServiceServlet implements PatientS
 
     @Override
     public PatientDTO updatePatient(PatientDTO patientDTO) {
-        Patient patient = toDAO(patientDTO);
+        System.out.println("Update patient _____________ numberWard i ______________"+patientDTO.getNumberWard());
+        System.out.println("___"+patientDTO.getFirstName()+"------------------");
+        Patient patient = patientDao.get(patientDTO.getId());
+        patient.setFirstName(patientDTO.getFirstName());
         patientDao.update(patient);
-        return toDTO(patient);
+        return patientDTO;
+//        if(null==patientDTO.getId()){
+//    		return addPatient(patientDTO);
+//    	}
+//        Patient patient = toDAO(patientDTO);
+//        Ward ward = wardDao.findByNumberWard(patientDTO.getNumberWard());
+//        if(null!=ward){
+//            System.out.println("Wrad not null!" +ward);
+//            patient.setWard(ward);
+//        }
+//        System.out.println("Patient _____________ ward is ______________"+patient.getWard());
+//        patientDao.update(patient);
+//        return toDTO(patient);
     }
 
     private List<PatientDTO> toDTO(List<Patient> patientsDao) {
@@ -77,15 +93,15 @@ public class PatientServiceImpl extends RemoteServiceServlet implements PatientS
 
     private Patient toDAO(PatientDTO patientDTO) {
         Patient patient = new Patient();
-        if (null != patientDTO.getId())
-            patient.setId(patientDTO.getId());
+        if (null != patientDTO.getId()){
+            patient = patientDao.get(patientDTO.getId());
+        }
         patient.setFirstName(patientDTO.getFirstName());
         patient.setLastName(patientDTO.getLastName());
         patient.setAddress(patientDTO.getAddress());
         patient.setDiagnosis(patientDTO.getDiagnosis());
         patient.setComingDate(patientDTO.getComingDate());
         patient.setLeavingDate(patientDTO.getLeavingDate());
-        patient.setWard(wardDao.findByNumberWard(patientDTO.getNumberWard()));
         return patient;
     }
 
