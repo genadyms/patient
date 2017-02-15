@@ -3,52 +3,46 @@ package com.gmail.genadyms.web.view;
 import com.gmail.genadyms.shared.dto.PatientDTO;
 import com.gmail.genadyms.web.presenter.PatientsPresenter;
 import com.google.gwt.cell.client.DateCell;
-import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.HasClickHandlers;
-import com.google.gwt.event.logical.shared.HasValueChangeHandlers;
 import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.Column;
 import com.google.gwt.user.cellview.client.SimplePager;
 import com.google.gwt.user.cellview.client.TextColumn;
-import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.ui.*;
-import com.google.gwt.user.datepicker.client.DatePicker;
-import com.google.gwt.view.client.AsyncDataProvider;
-import com.google.gwt.view.client.HasData;
-import com.google.gwt.i18n.client.DateTimeFormat;
-import com.google.gwt.view.client.SelectionChangeEvent;
-import com.google.gwt.view.client.SingleSelectionModel;
+import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.VerticalPanel;
+import com.google.gwt.user.client.ui.Widget;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 public class PatientsView extends Composite implements PatientsPresenter.Display {
     private final Button addButton;
-    private FlexTable patientsTable;
-    private final FlexTable contentTable;
-    private final CellTable<PatientDTO> table = new CellTable<PatientDTO>();
+    private final CellTable<PatientDTO> table;
     private static final int PATIENT_PAGE_SIZE = 5;
 
     public PatientsView() {
-        DecoratorPanel contentTableDecorator = new DecoratorPanel();
-        initWidget(contentTableDecorator);
-        contentTableDecorator.setWidth("80%");
 
-        contentTable = new FlexTable();
-        patientsTable = new FlexTable();
+        table = new CellTable<PatientDTO>();
         table.setPageSize(PATIENT_PAGE_SIZE);
 
-        TextColumn<PatientDTO> fullName = new TextColumn<PatientDTO>() {
-
+        TextColumn<PatientDTO> firstName = new TextColumn<PatientDTO>() {
             @Override
             public String getValue(PatientDTO patient) {
-                String fullName = patient.getFirstName() + " " + patient.getLastName();
-                return fullName;
+                return patient.getFirstName();
             }
 
         };
-        table.addColumn(fullName, "Name");
+        table.addColumn(firstName, "First name");
+
+
+        TextColumn<PatientDTO> lastName = new TextColumn<PatientDTO>() {
+            @Override
+            public String getValue(PatientDTO patient) {
+                return patient.getLastName();
+            }
+
+        };
+        table.addColumn(lastName, "Last name");
 
         TextColumn<PatientDTO> diagnosis = new TextColumn<PatientDTO>() {
 
@@ -95,23 +89,30 @@ public class PatientsView extends Composite implements PatientsPresenter.Display
 
         SimplePager pager = new SimplePager();
         pager.setDisplay(table);
+
         VerticalPanel vp = new VerticalPanel();
+        initWidget(vp);
         addButton = new Button(" Add patient ");
         vp.add(addButton);
         vp.add(table);
         vp.add(pager);
-        contentTableDecorator.add(vp);
+        vp.getHorizontalAlignment();
+
     }
 
+    @Override
     public HasClickHandlers getAddButton() {
         return addButton;
     }
 
+    @Override
     public Widget asWidget() {
         return this;
     }
 
+    @Override
     public CellTable<PatientDTO> getPatientsTable() {
         return table;
     }
+
 }

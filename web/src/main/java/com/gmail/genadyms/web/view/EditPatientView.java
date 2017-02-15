@@ -25,7 +25,7 @@ public class EditPatientView extends Composite implements EditPatientPresenter.D
 
     public EditPatientView() {
         DecoratorPanel contentDetailsDecorator = new DecoratorPanel();
-        contentDetailsDecorator.setWidth("18em");
+        contentDetailsDecorator.setSize("26em","18em");
         initWidget(contentDetailsDecorator);
 
         VerticalPanel contentDetailsPanel = new VerticalPanel();
