@@ -4,16 +4,7 @@ import com.gmail.genadyms.web.presenter.EditPatientPresenter;
 import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.event.logical.shared.HasValueChangeHandlers;
 import com.google.gwt.i18n.client.DateTimeFormat;
-import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.DecoratorPanel;
-import com.google.gwt.user.client.ui.FlexTable;
-import com.google.gwt.user.client.ui.HasValue;
-import com.google.gwt.user.client.ui.HorizontalPanel;
-import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.TextBox;
-import com.google.gwt.user.client.ui.VerticalPanel;
-import com.google.gwt.user.client.ui.Widget;
+import com.google.gwt.user.client.ui.*;
 import com.google.gwt.user.datepicker.client.DateBox;
 import com.google.gwt.user.datepicker.client.DatePicker;
 
@@ -30,6 +21,7 @@ public class EditPatientView extends Composite implements EditPatientPresenter.D
     private final Button cancelButton;
     private final DateBox leavingDateBox;
     private final DateBox comingDateBox;
+    private final ListBox wardsListBox;
 
     public EditPatientView() {
         DecoratorPanel contentDetailsDecorator = new DecoratorPanel();
@@ -48,6 +40,9 @@ public class EditPatientView extends Composite implements EditPatientPresenter.D
         lastName = new TextBox();
         address = new TextBox();
         diagnosis = new TextBox();
+
+        wardsListBox = new ListBox();
+        ;
 
         DateTimeFormat dateFormat = DateTimeFormat.getFormat("MM/dd/yyyy");
         leavingDateBox = new DateBox();
@@ -78,17 +73,19 @@ public class EditPatientView extends Composite implements EditPatientPresenter.D
         detailsTable.setWidget(1, 1, lastName);
         detailsTable.setWidget(2, 0, new Label("Address"));
         detailsTable.setWidget(2, 1, address);
-        detailsTable.setWidget(3, 0, new Label("diagnosis"));
+        detailsTable.setWidget(3, 0, new Label("Diagnosis"));
         detailsTable.setWidget(3, 1, diagnosis);
         Label comingDateLabel = new Label();
         comingDateLabel.setText("Time coming:");
+        detailsTable.setWidget(4, 0, new Label("Ward:"));
+        detailsTable.setWidget(4, 1, wardsListBox);
 
-        detailsTable.setWidget(4, 0, comingDateLabel);
-        detailsTable.setWidget(4, 1, comingDateBox);
+        detailsTable.setWidget(5, 0, comingDateLabel);
+        detailsTable.setWidget(5, 1, comingDateBox);
         Label leavingDateLabel = new Label();
         leavingDateLabel.setText("Time leaving:");
-        detailsTable.setWidget(5, 0, leavingDateLabel);
-        detailsTable.setWidget(5, 1, leavingDateBox);
+        detailsTable.setWidget(6, 0, leavingDateLabel);
+        detailsTable.setWidget(6, 1, leavingDateBox);
 
         firstName.setFocus(true);
 
@@ -103,6 +100,11 @@ public class EditPatientView extends Composite implements EditPatientPresenter.D
     @Override
     public HasValue<Date> getLeavingDateBox() {
         return leavingDateBox;
+    }
+
+    @Override
+    public ListBox getWardsListBox() {
+        return wardsListBox;
     }
 
     @Override
