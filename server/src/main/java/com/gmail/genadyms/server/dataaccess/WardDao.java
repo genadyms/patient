@@ -6,7 +6,9 @@ import javax.persistence.criteria.*;
 
 import com.gmail.genadyms.server.dataaccess.filter.BedPlaceFilter;
 import com.gmail.genadyms.server.datamodel.Patient;
+import com.gmail.genadyms.server.datamodel.Patient_;
 import com.gmail.genadyms.server.datamodel.Ward;
+import com.gmail.genadyms.server.datamodel.Ward_;
 
 import java.util.List;
 
@@ -50,10 +52,8 @@ public class WardDao extends AbstractDao<Ward, Long> {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<Ward> cq = cb.createQuery(Ward.class);
 		Root<Ward> from = cq.from(Ward.class);
-//		cq.where(cb.isNull(from.get("patients").get("leavingDate")));
-//		Ward_
-//		Predicate pred = cb.ge(from.get(Ward_.), y)
-//		cq.where()
+				;
+       cq.where(cb.lt(from.get(Ward_.countBeds), 7));
 		TypedQuery<Ward> q = em.createQuery(cq);
 		return q.getResultList();
 	}

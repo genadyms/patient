@@ -29,7 +29,6 @@ public class WardDaoTest {
 		Assert.assertNull(delPlace);
 	}
 
-	@Ignore
 	@Test
 	public void testGetFreeWards() {
 		List<Ward> wards = dao.getFreeWard();
