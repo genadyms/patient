@@ -7,6 +7,7 @@ import com.gmail.genadyms.server.datamodel.Ward;
 import com.gmail.genadyms.shared.dto.PatientDTO;
 import com.gmail.genadyms.web.service.PatientService;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
