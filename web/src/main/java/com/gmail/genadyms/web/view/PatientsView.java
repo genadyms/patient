@@ -4,6 +4,7 @@ import com.gmail.genadyms.shared.dto.PatientDTO;
 import com.gmail.genadyms.web.presenter.PatientsPresenter;
 import com.google.gwt.cell.client.DateCell;
 import com.google.gwt.event.dom.client.HasClickHandlers;
+import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.Column;
 import com.google.gwt.user.cellview.client.SimplePager;
@@ -15,10 +16,13 @@ import com.google.gwt.user.client.ui.Widget;
 
 import java.util.Date;
 
+import static com.gmail.genadyms.web.view.ConstantsValue.FIRST_NAME;
+
 public class PatientsView extends Composite implements PatientsPresenter.Display {
     private final Button addButton;
     private final CellTable<PatientDTO> table;
-    private static final int PATIENT_PAGE_SIZE = 5;
+    public final static int PATIENT_PAGE_SIZE = 5;
+
 
     public PatientsView() {
 
@@ -32,7 +36,7 @@ public class PatientsView extends Composite implements PatientsPresenter.Display
             }
 
         };
-        table.addColumn(firstName, "First name");
+        table.addColumn(firstName, ConstantsValue.FIRST_NAME.toString());
 
 
         TextColumn<PatientDTO> lastName = new TextColumn<PatientDTO>() {
@@ -42,62 +46,59 @@ public class PatientsView extends Composite implements PatientsPresenter.Display
             }
 
         };
-        table.addColumn(lastName, "Last name");
+        table.addColumn(lastName, ConstantsValue.LAST_NAME.toString());
 
         TextColumn<PatientDTO> diagnosis = new TextColumn<PatientDTO>() {
-
             @Override
             public String getValue(PatientDTO patient) {
                 return patient.getDiagnosis();
             }
-
         };
-        table.addColumn(diagnosis, "Diagnosis");
+        table.addColumn(diagnosis, ConstantsValue.DIAGNOSIS.toString());
 
-        DateCell dateComingCell = new DateCell();
-        Column<PatientDTO, Date> dateComingColumn = new Column<PatientDTO, Date>(dateComingCell) {
+        TextColumn<PatientDTO> comingDate = getPatientDTOTextColumn(ConstantsValue.COMING_DATE);
+        table.addColumn(comingDate, ConstantsValue.COMING_DATE.toString());
 
-            @Override
-            public Date getValue(PatientDTO patient) {
-                return patient.getComingDate();
-            }
-
-        };
-        table.addColumn(dateComingColumn, "Coming");
-
-        DateCell dateLeavingCell = new DateCell();
-        Column<PatientDTO, Date> dateLeavingColumn = new Column<PatientDTO, Date>(dateLeavingCell) {
-
-            @Override
-            public Date getValue(PatientDTO patient) {
-                return patient.getLeavingDate();
-            }
-
-        };
-        table.addColumn(dateLeavingColumn, "Leaving");
+        TextColumn<PatientDTO> leavingDate = getPatientDTOTextColumn(ConstantsValue.LEAVING_DATE);
+        table.addColumn(leavingDate, ConstantsValue.LEAVING_DATE.toString());
 
         TextColumn<PatientDTO> ward = new TextColumn<PatientDTO>() {
-
             @Override
             public String getValue(PatientDTO patient) {
                 return String.valueOf(patient.getNumberWard());
             }
-
         };
-        table.addColumn(ward, "Ward");
-        table.setTitle("table title");
+        table.addColumn(ward, ConstantsValue.WARD.toString());
+
+        table.setTitle(ConstantsValue.TABLE_TITLE.toString());
 
         SimplePager pager = new SimplePager(SimplePager.TextLocation.CENTER);
         pager.setDisplay(table);
-
         VerticalPanel vp = new VerticalPanel();
         initWidget(vp);
-        addButton = new Button(" Add patient ");
+        addButton = new Button(ConstantsValue.BUTTON_ADD.toString());
         vp.add(addButton);
         vp.add(table);
         vp.add(pager);
         vp.getHorizontalAlignment();
 
+    }
+
+    private TextColumn<PatientDTO> getPatientDTOTextColumn(final ConstantsValue valueDate) {
+        return new TextColumn<PatientDTO>() {
+            @Override
+            public String getValue(PatientDTO patient) {
+                DateTimeFormat dateFormat = DateTimeFormat.getFormat(ConstantsValue.FORMAT_TEMPLATE.toString());
+                StringBuffer output = new StringBuffer();
+                if (valueDate.equals(ConstantsValue.COMING_DATE)) {
+                    if (null != patient.getComingDate()) output.append(dateFormat.format(patient.getComingDate()));
+                }
+                if (valueDate.equals(ConstantsValue.LEAVING_DATE)) {
+                    if (null != patient.getLeavingDate()) output.append(dateFormat.format(patient.getLeavingDate()));
+                }
+                return output.toString();
+            }
+        };
     }
 
     @Override

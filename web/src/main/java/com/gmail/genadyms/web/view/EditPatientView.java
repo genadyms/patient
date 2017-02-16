@@ -34,17 +34,15 @@ public class EditPatientView extends Composite implements EditPatientPresenter.D
         detailsTable = new FlexTable();
         detailsTable.setCellSpacing(0);
         detailsTable.setWidth("100%");
-        detailsTable.addStyleName("contacts-ListContainer");
-        detailsTable.getColumnFormatter().addStyleName(1, "add-contact-input");
+//        detailsTable.addStyleName("contacts-ListContainer");
+//        detailsTable.getColumnFormatter().addStyleName(1, "add-contact-input");
         firstName = new TextBox();
         lastName = new TextBox();
         address = new TextBox();
         diagnosis = new TextBox();
 
         wardsListBox = new ListBox();
-        ;
-
-        DateTimeFormat dateFormat = DateTimeFormat.getFormat("MM/dd/yyyy");
+        DateTimeFormat dateFormat = DateTimeFormat.getFormat(ConstantsValue.FORMAT_TEMPLATE.toString());
         leavingDateBox = new DateBox();
         leavingDateBox.setFormat(new DateBox.DefaultFormat(dateFormat));
         leavingDateBox.getDatePicker().setYearArrowsVisible(true);
@@ -58,8 +56,8 @@ public class EditPatientView extends Composite implements EditPatientPresenter.D
         contentDetailsPanel.add(detailsTable);
 
         HorizontalPanel menuPanel = new HorizontalPanel();
-        saveButton = new Button("Save");
-        cancelButton = new Button("Cancel");
+        saveButton = new Button(ConstantsValue.BUTTON_SAVE.toString());
+        cancelButton = new Button(ConstantsValue.BUTTON_CANCEL.toString());
         menuPanel.add(saveButton);
         menuPanel.add(cancelButton);
         contentDetailsPanel.add(menuPanel);
@@ -67,23 +65,23 @@ public class EditPatientView extends Composite implements EditPatientPresenter.D
     }
 
     private void initDetailsTable() {
-        detailsTable.setWidget(0, 0, new Label("Firstname"));
+        detailsTable.setWidget(0, 0, new Label(ConstantsValue.FIRST_NAME.toString()));
         detailsTable.setWidget(0, 1, firstName);
-        detailsTable.setWidget(1, 0, new Label("Lastname"));
+        detailsTable.setWidget(1, 0, new Label(ConstantsValue.LAST_NAME.toString()));
         detailsTable.setWidget(1, 1, lastName);
-        detailsTable.setWidget(2, 0, new Label("Address"));
+        detailsTable.setWidget(2, 0, new Label(ConstantsValue.ADDRESS.toString()));
         detailsTable.setWidget(2, 1, address);
-        detailsTable.setWidget(3, 0, new Label("Diagnosis"));
+        detailsTable.setWidget(3, 0, new Label(ConstantsValue.DIAGNOSIS.toString()));
         detailsTable.setWidget(3, 1, diagnosis);
         Label comingDateLabel = new Label();
-        comingDateLabel.setText("Time coming:");
-        detailsTable.setWidget(4, 0, new Label("Ward:"));
+        comingDateLabel.setText(ConstantsValue.COMING_DATE.toString());
+        detailsTable.setWidget(4, 0, new Label(ConstantsValue.WARD.toString()));
         detailsTable.setWidget(4, 1, wardsListBox);
 
         detailsTable.setWidget(5, 0, comingDateLabel);
         detailsTable.setWidget(5, 1, comingDateBox);
         Label leavingDateLabel = new Label();
-        leavingDateLabel.setText("Time leaving:");
+        leavingDateLabel.setText(ConstantsValue.LEAVING_DATE.toString());
         detailsTable.setWidget(6, 0, leavingDateLabel);
         detailsTable.setWidget(6, 1, leavingDateBox);
 
