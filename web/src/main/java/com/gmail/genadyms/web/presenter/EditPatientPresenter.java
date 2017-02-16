@@ -68,44 +68,62 @@ public class EditPatientPresenter implements Presenter {
                 EditPatientPresenter.this.display.getAddress().setValue(patient.getAddress());
                 EditPatientPresenter.this.display.getDiagnosis().setValue(patient.getDiagnosis());
                 EditPatientPresenter.this.display.getComingDateBox().setValue(patient.getComingDate());
+
                 ListBox wards = EditPatientPresenter.this.display.getWardsListBox();
                 for (int i = 0; i < wards.getItemCount(); i++) {
-                    if (Integer.valueOf(wards.getItemText(i)) == (result.getNumberWard())) {
+                    if (Integer.valueOf(wards.getItemText(i)) == (patient.getNumberWard())) {
                         wards.setItemSelected(i, true);
                         break;
                     }
                 }
-                if(wards.getSelectedIndex()==-1) {
-                    wards.addItem(String.valueOf(result.getNumberWard()));
-                    wards.setItemSelected((wards.getItemCount()-1), true);
-                }
             }
+
             public void onFailure(Throwable caught) {
                 Window.alert("Error retrieving contact");
             }
         });
 
+        ListBox wards = EditPatientPresenter.this.display.getWardsListBox();
+        for (int i = 0; i < wards.getItemCount(); i++) {
+            if (Integer.valueOf(wards.getItemText(i)) == (patient.getNumberWard())) {
+                wards.setItemSelected(i, true);
+                break;
+            }
+        }
     }
 
-    public void bind() {
-
+    private void prepareWards() {
         rpcWardService.getFreeWards(new AsyncCallback<List<WardDTO>>() {
             @Override
             public void onFailure(Throwable caught) {
-                Window.alert("Failure eward async!!!");
+                Window.alert("Failure ward async!!!");
             }
 
             @Override
             public void onSuccess(List<WardDTO> result) {
                 ListBox wardsListBox = EditPatientPresenter.this.display.getWardsListBox();
                 wardsListBox.clear();
+                boolean isNotSelectedWard = null == patient.getId() ? false : true;
                 for (WardDTO dto : result) {
                     String item = String.valueOf(dto.getNumberWard());
                     wardsListBox.addItem(item);
+                    if (isNotSelectedWard) {
+                        if (dto.getNumberWard() == patient.getNumberWard()) {
+                            wardsListBox.setSelectedIndex(wardsListBox.getItemCount() - 1);
+                            isNotSelectedWard = false;
+                        }
+                    }
+                }
+                if (isNotSelectedWard && wardsListBox.getSelectedIndex() == -1) {
+                    wardsListBox.addItem(String.valueOf(patient.getNumberWard()));
+                    wardsListBox.setSelectedIndex(wardsListBox.getItemCount() - 1);
                 }
             }
         });
 
+    }
+
+    public void bind() {
         this.display.getSaveButton().addClickHandler(new ClickHandler() {
             public void onClick(ClickEvent event) {
                 doSave();
@@ -117,7 +135,6 @@ public class EditPatientPresenter implements Presenter {
                 eventBus.fireEvent(new EditPatientCancelledEvent());
             }
         });
-
         this.display.getComingDateBox().addValueChangeHandler(new ValueChangeHandler<Date>() {
             @Override
             public void onValueChange(ValueChangeEvent<Date> event) {
@@ -125,7 +142,6 @@ public class EditPatientPresenter implements Presenter {
                 patient.setComingDate(date);
             }
         });
-
         this.display.getLeavingDateBox().addValueChangeHandler(new ValueChangeHandler<Date>() {
             @Override
             public void onValueChange(ValueChangeEvent<Date> event) {
@@ -136,6 +152,7 @@ public class EditPatientPresenter implements Presenter {
     }
 
     public void go(final HasWidgets container) {
+        prepareWards();
         container.clear();
         container.add(display.asWidget());
     }
