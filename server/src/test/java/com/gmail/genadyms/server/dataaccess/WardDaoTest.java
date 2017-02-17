@@ -61,7 +61,11 @@ public class WardDaoTest {
 				System.out.println(ward);
 			}
 		}
+		System.out.print("from sortings "+wardsFree.size());
 		Assert.assertNotNull(wardsFree);
+		List<Ward> wards = daoWard.findFreeWards();
+		System.out.println(wards.size());
+
 	}
 
 	protected Ward saveMockWard(Integer nChamber, Integer nBed) {
