@@ -1,6 +1,7 @@
 package com.gmail.genadyms.server.dataaccess;
 
 import com.gmail.genadyms.server.datamodel.Patient;
+import com.gmail.genadyms.server.datamodel.Patient_;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
@@ -38,5 +39,15 @@ public class PatientDao extends AbstractDao<Patient, Long> {
         q.setFirstResult(start);
         q.setMaxResults(limit);
         return q.getResultList();
+    }
+    public List<Patient> findActivePatients(){
+    	EntityManager em = getEntityManager();
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Patient> cq = cb.createQuery(Patient.class);
+        Root<Patient> from = cq.from(Patient.class);
+        from.fetch(Patient_.ward);
+        cq.where(from.get(Patient_.leavingDate).isNull());
+        TypedQuery<Patient> q = em.createQuery(cq);
+		return q.getResultList();
     }
 }
