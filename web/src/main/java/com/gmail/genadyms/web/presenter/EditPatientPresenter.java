@@ -93,14 +93,14 @@ public class EditPatientPresenter implements Presenter {
     }
 
     private void prepareWards() {
-        rpcWardService.getFreeWards(new AsyncCallback<List<WardDTO>>() {
+        rpcWardService.getFreeWards(new AsyncCallback<Set<WardDTO>>() {
             @Override
             public void onFailure(Throwable caught) {
                 Window.alert("Failure ward async!!!");
             }
 
             @Override
-            public void onSuccess(List<WardDTO> result) {
+            public void onSuccess(Set<WardDTO> result) {
                 ListBox wardsListBox = EditPatientPresenter.this.display.getWardsListBox();
                 wardsListBox.clear();
                 boolean isNotSelectedWard = null == patient.getId() ? false : true;
@@ -114,7 +114,7 @@ public class EditPatientPresenter implements Presenter {
                         }
                     }
                 }
-                if (isNotSelectedWard && wardsListBox.getSelectedIndex() == -1) {
+                if (isNotSelectedWard && null!=patient.getId()) {
                     wardsListBox.addItem(String.valueOf(patient.getNumberWard()));
                     wardsListBox.setSelectedIndex(wardsListBox.getItemCount() - 1);
                 }
