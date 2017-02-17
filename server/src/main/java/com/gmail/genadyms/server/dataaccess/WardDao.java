@@ -46,15 +46,4 @@ public class WardDao extends AbstractDao<Ward, Long> {
 			throw new IllegalArgumentException("more than 1 ward found ");
 		}
 	}
-
-	public List<Ward> getFreeWard() {
-		EntityManager em = getEntityManager();
-		CriteriaBuilder cb = em.getCriteriaBuilder();
-		CriteriaQuery<Ward> cq = cb.createQuery(Ward.class);
-		Root<Ward> from = cq.from(Ward.class);
-				;
-       cq.where(cb.lt(from.get(Ward_.countBeds), 7));
-		TypedQuery<Ward> q = em.createQuery(cq);
-		return q.getResultList();
-	}
 }
