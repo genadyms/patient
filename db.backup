@@ -5,7 +5,7 @@
 -- Dumped from database version 9.5.4
 -- Dumped by pg_dump version 9.5.4
 
--- Started on 2017-02-15 23:38:07
+-- Started on 2017-02-20 21:08:43
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -37,7 +37,7 @@ SET search_path = public, pg_catalog;
 SET default_with_oids = false;
 
 --
--- TOC entry 181 (class 1259 OID 17065)
+-- TOC entry 181 (class 1259 OID 25257)
 -- Name: ward; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -49,7 +49,7 @@ CREATE TABLE ward (
 
 
 --
--- TOC entry 182 (class 1259 OID 17068)
+-- TOC entry 182 (class 1259 OID 25260)
 -- Name: bed_place_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
@@ -71,7 +71,7 @@ ALTER SEQUENCE bed_place_id_seq OWNED BY ward.id;
 
 
 --
--- TOC entry 183 (class 1259 OID 17070)
+-- TOC entry 183 (class 1259 OID 25262)
 -- Name: patient; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -88,7 +88,7 @@ CREATE TABLE patient (
 
 
 --
--- TOC entry 184 (class 1259 OID 17076)
+-- TOC entry 184 (class 1259 OID 25265)
 -- Name: patient_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
@@ -110,7 +110,7 @@ ALTER SEQUENCE patient_id_seq OWNED BY patient.id;
 
 
 --
--- TOC entry 1989 (class 2604 OID 17078)
+-- TOC entry 1988 (class 2604 OID 25267)
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -118,7 +118,7 @@ ALTER TABLE ONLY patient ALTER COLUMN id SET DEFAULT nextval('patient_id_seq'::r
 
 
 --
--- TOC entry 1988 (class 2604 OID 17079)
+-- TOC entry 1987 (class 2604 OID 25268)
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -131,31 +131,20 @@ ALTER TABLE ONLY ward ALTER COLUMN id SET DEFAULT nextval('bed_place_id_seq'::re
 -- Name: bed_place_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('bed_place_id_seq', 203, true);
+SELECT pg_catalog.setval('bed_place_id_seq', 270, true);
 
 
 --
--- TOC entry 2114 (class 0 OID 17070)
+-- TOC entry 2113 (class 0 OID 25262)
 -- Dependencies: 183
 -- Data for Name: patient; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-INSERT INTO patient (id, first_name, last_name, diagnosis, coming_date, ward_id, address, leaving_date) VALUES (91, '9_homes', 'homes', 'diagnosis', '2017-01-18', 60, 'homes', NULL);
-INSERT INTO patient (id, first_name, last_name, diagnosis, coming_date, ward_id, address, leaving_date) VALUES (94, '10_name', 'lname', 'diagnisis', '2016-03-04', 60, 'homes2', NULL);
-INSERT INTO patient (id, first_name, last_name, diagnosis, coming_date, ward_id, address, leaving_date) VALUES (95, '11_name', 'lnm', 'siagnosis', '2016-04-03', 60, 'home11', NULL);
-INSERT INTO patient (id, first_name, last_name, diagnosis, coming_date, ward_id, address, leaving_date) VALUES (96, 'try12', 'vname12', 'diagn12', '2017-02-01', 60, 'add12', NULL);
-INSERT INTO patient (id, first_name, last_name, diagnosis, coming_date, ward_id, address, leaving_date) VALUES (97, 'qqqqq', 'qqqqqq', 'qqqq', '2017-02-02', 60, 'qqq', NULL);
-INSERT INTO patient (id, first_name, last_name, diagnosis, coming_date, ward_id, address, leaving_date) VALUES (98, 'zzzzzzzz', 'zzzzzzzz', 'zzzzzzzz', '2017-02-09', 60, 'zzzzzzzz', NULL);
-INSERT INTO patient (id, first_name, last_name, diagnosis, coming_date, ward_id, address, leaving_date) VALUES (82, '3_qweqwe', 'werwerwer', 'diagnosis', '2017-02-07', 63, 'test address  0.43599442727044924', NULL);
-INSERT INTO patient (id, first_name, last_name, diagnosis, coming_date, ward_id, address, leaving_date) VALUES (83, '4_qweqw', 'asdasdasd', 'diagnosis', '2017-02-07', 61, 'test address  0.06767518038381193', NULL);
-INSERT INTO patient (id, first_name, last_name, diagnosis, coming_date, ward_id, address, leaving_date) VALUES (84, '5_qweqw', 'asdasdasd', 'diagnosis', '2017-02-07', 63, 'test address  0.16068268646412032', NULL);
-INSERT INTO patient (id, first_name, last_name, diagnosis, coming_date, ward_id, address, leaving_date) VALUES (39, 'tes_1t', 'first', 'diagnosis', '2014-02-02', 61, 'hello world 2', NULL);
-INSERT INTO patient (id, first_name, last_name, diagnosis, coming_date, ward_id, address, leaving_date) VALUES (81, '2_new_asdas', 'asdasd', 'diagnosis_4', '2017-02-07', 62, 'test address  0.4620551294374753', NULL);
-INSERT INTO patient (id, first_name, last_name, diagnosis, coming_date, ward_id, address, leaving_date) VALUES (85, '6_firstname', 'lname', 'diagnosis', '2017-02-07', 61, 'test address  0.4146809646229789', NULL);
-INSERT INTO patient (id, first_name, last_name, diagnosis, coming_date, ward_id, address, leaving_date) VALUES (87, '8_gennady', 'ma', 'diagnosis', '2017-02-08', 60, 'home', '2017-02-21');
-INSERT INTO patient (id, first_name, last_name, diagnosis, coming_date, ward_id, address, leaving_date) VALUES (86, '7_test', 'fname', 'diagn', '2017-02-07', 62, 'lname', '2017-02-12');
-INSERT INTO patient (id, first_name, last_name, diagnosis, coming_date, ward_id, address, leaving_date) VALUES (115, 'addtest1', 'addlname1', 'diagn', '2017-02-06', 60, 'addaddress1', '2017-02-28');
-INSERT INTO patient (id, first_name, last_name, diagnosis, coming_date, ward_id, address, leaving_date) VALUES (116, 'add_patient', 'add_lastic', 'gripp', '2017-02-04', 63, 'sovetskay', '2017-02-04');
+INSERT INTO patient (id, first_name, last_name, diagnosis, coming_date, ward_id, address, leaving_date) VALUES (139, 'Leon', 'Leonov', 'diagnosis1', '2017-02-06', 63, 'lion, leon street, 3-45', '2017-02-15');
+INSERT INTO patient (id, first_name, last_name, diagnosis, coming_date, ward_id, address, leaving_date) VALUES (140, 'Petro', 'Petrovich', 'diagnosis2', '2017-02-06', 63, 'Petrograd, Petro street 3-44', NULL);
+INSERT INTO patient (id, first_name, last_name, diagnosis, coming_date, ward_id, address, leaving_date) VALUES (141, 'Vasia', 'Vasiliev', 'diagnosis2', '2017-02-06', 61, 'Vasilievsk, Vasia street 3-22', NULL);
+INSERT INTO patient (id, first_name, last_name, diagnosis, coming_date, ward_id, address, leaving_date) VALUES (142, 'Georg', 'Georgovich', 'diagnosis2', '2017-02-06', 252, 'Georgievsk, Georg street, 3-21', NULL);
+INSERT INTO patient (id, first_name, last_name, diagnosis, coming_date, ward_id, address, leaving_date) VALUES (143, 'John', 'Johnov', 'diagnosis5', '2017-02-06', 252, 'Jon, Johnovsk street, 2-12', NULL);
 
 
 --
@@ -164,23 +153,24 @@ INSERT INTO patient (id, first_name, last_name, diagnosis, coming_date, ward_id,
 -- Name: patient_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
 --
 
-SELECT pg_catalog.setval('patient_id_seq', 116, true);
+SELECT pg_catalog.setval('patient_id_seq', 149, true);
 
 
 --
--- TOC entry 2112 (class 0 OID 17065)
+-- TOC entry 2111 (class 0 OID 25257)
 -- Dependencies: 181
 -- Data for Name: ward; Type: TABLE DATA; Schema: public; Owner: -
 --
 
-INSERT INTO ward (id, number, count_beds) VALUES (60, 1, 10);
-INSERT INTO ward (id, number, count_beds) VALUES (61, 3, 10);
-INSERT INTO ward (id, number, count_beds) VALUES (62, 4, 5);
-INSERT INTO ward (id, number, count_beds) VALUES (63, 5, 7);
+INSERT INTO ward (id, number, count_beds) VALUES (61, 3, 4);
+INSERT INTO ward (id, number, count_beds) VALUES (63, 5, 3);
+INSERT INTO ward (id, number, count_beds) VALUES (60, 1, 5);
+INSERT INTO ward (id, number, count_beds) VALUES (62, 4, 3);
+INSERT INTO ward (id, number, count_beds) VALUES (252, 2, 2);
 
 
 --
--- TOC entry 1996 (class 2606 OID 17081)
+-- TOC entry 1995 (class 2606 OID 25270)
 -- Name: patient_pk; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -189,7 +179,7 @@ ALTER TABLE ONLY patient
 
 
 --
--- TOC entry 1991 (class 2606 OID 17083)
+-- TOC entry 1990 (class 2606 OID 25272)
 -- Name: ward_number_key; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -198,7 +188,7 @@ ALTER TABLE ONLY ward
 
 
 --
--- TOC entry 1993 (class 2606 OID 17085)
+-- TOC entry 1992 (class 2606 OID 25274)
 -- Name: ward_pk; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -207,7 +197,7 @@ ALTER TABLE ONLY ward
 
 
 --
--- TOC entry 1994 (class 1259 OID 17086)
+-- TOC entry 1993 (class 1259 OID 25275)
 -- Name: fki_bed_place_id_fk; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -215,7 +205,7 @@ CREATE INDEX fki_bed_place_id_fk ON patient USING btree (ward_id);
 
 
 --
--- TOC entry 1997 (class 2606 OID 17087)
+-- TOC entry 1996 (class 2606 OID 25276)
 -- Name: patient_ward_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -223,7 +213,7 @@ ALTER TABLE ONLY patient
     ADD CONSTRAINT patient_ward_id_fkey FOREIGN KEY (ward_id) REFERENCES ward(id);
 
 
--- Completed on 2017-02-15 23:38:09
+-- Completed on 2017-02-20 21:08:46
 
 --
 -- PostgreSQL database dump complete
