@@ -16,7 +16,9 @@ You can launch project:
 
 5. Run this project - mvn tomcat7:run-war-only
 
-6. Enjoy!
+6. Go to http://localhost:8082/parent
+
+7. Enjoy!
 
 Also you can deploy early build *.war file to your favorite web server
 
