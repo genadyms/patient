@@ -1,6 +1,10 @@
 This is test GWT multiproject.
 
-Version GWT 2.7
+In this project you can add patient in hospital and then you can update this info.
+
+Also used paging for list patients. 
+
+Version GWT is 2.7.
 
 Also used JPA, PostgreSQL, some JUnit tests.
 
