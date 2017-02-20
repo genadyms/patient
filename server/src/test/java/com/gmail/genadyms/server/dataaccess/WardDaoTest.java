@@ -35,34 +35,9 @@ public class WardDaoTest {
 		Assert.assertNull(delPlace);
 	}
 
-//	@Ignore
+	@Ignore
 	@Test
 	public void testGetFreeWards() {
-//		List<Patient> patientsActive = daoPatient.findActivePatients();
-//		Assert.assertNotNull(patientsActive);
-//		Map<Ward, Integer> wardsPatients = new HashMap();
-//		System.out.println("Total patients active is " + patientsActive.size());
-//		for (Patient patient : patientsActive) {
-//			Ward currentWard = patient.getWard();
-//			if (wardsPatients.containsKey(currentWard)) {
-//				Integer changeCountsPatients = wardsPatients.get(currentWard) + 1;
-//				wardsPatients.put(currentWard, changeCountsPatients);
-//				System.out.println(currentWard + "|" + changeCountsPatients + "|" + patient.getId());
-//			} else {
-//				wardsPatients.put(currentWard, 1);
-//				System.out.println(currentWard + "|" + patient.getId());
-//			}
-//		}
-//		Set<Ward> wardsFree = new HashSet();
-//		for (Ward ward : wardsPatients.keySet()) {
-//			System.out.println(ward.getCountBeds() + "|" + wardsPatients.get(ward));
-//			if (wardsPatients.get(ward) < ward.getCountBeds()) {
-//				wardsFree.add(ward);
-//				System.out.println(ward);
-//			}
-//		}
-//		System.out.print("from sortings "+wardsFree.size());
-//		Assert.assertNotNull(wardsFree);
 		List<Ward> wards = daoWard.findFreeWards();
 		System.out.println(wards.size());
 
