@@ -19,3 +19,5 @@ You can launch project:
 6. Enjoy!
 
 Also you can deploy early build *.war file to your favorite web server
+
+You can send me your questions, feedback or  offers to genadyms@gmail.com
