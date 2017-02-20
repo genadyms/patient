@@ -17,9 +17,9 @@ public class WardDao extends AbstractDao<Ward, Long> {
     private static final long serialVersionUID = 1L;
 
     private static final String QUERY_FREE_WARDS = "SELECT w " +
-            "FROM " + Ward.class.getName()+
+            "FROM " + Ward.class.getName() +
             " AS w WHERE " +
-            "(SELECT COUNT(p.ward) FROM " + Patient.class.getName()+
+            "(SELECT COUNT(p.ward) FROM " + Patient.class.getName() +
             " AS p WHERE p.leavingDate IS NULL AND p.ward=w) < w.countBeds";
 
     public WardDao() {
@@ -60,24 +60,19 @@ public class WardDao extends AbstractDao<Ward, Long> {
         return q.getResultList();
     }
 
-    public List<Ward> findFreeWardsCriteria() {
-        //https://www.ibm.com/developerworks/ru/library/j-typesafejpa/
-        EntityManager em = getEntityManager();
-        CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<Ward> cq = cb.createQuery(Ward.class);
-        Root<Ward> from = cq.from(Ward.class);
-        ListJoin<Ward, Patient> patients = from.join(Ward_.patients);
-        from.fetch(Ward_.patients);
-//		Expression<Long> expr = cb.count(cb.isNull(patients.get(Patient_.leavingDate)));
-//		Predicate p1 = cb.isNull(from.get(Ward_.patients));
-        Predicate predNull = cb.isNull(patients.get(Patient_.leavingDate));
-        Predicate predEmtyWard = cb.isNull(patients);
-        cq.where(predNull);//cb.lt(expr,from.get(Ward_.countBeds)));
-//		TypedQuery<Ward> q = em.createQuery(cq);
-//		return q.getResultList();
-        cq.distinct(true);
-        TypedQuery<Ward> q = em.createQuery(cq);
-        List<Ward> allitems = q.getResultList();
-        return allitems;
-    }
+//    public List<Ward> findFreeWardsCriteria() {
+//       EntityManager em = getEntityManager();
+//        CriteriaBuilder cb = em.getCriteriaBuilder();
+//        CriteriaQuery<Ward> cq = cb.createQuery(Ward.class);
+//        Root<Ward> from = cq.from(Ward.class);
+//        ListJoin<Ward, Patient> patients = from.join(Ward_.patients);
+//        from.fetch(Ward_.patients);
+//        Predicate predNull = cb.isNull(patients.get(Patient_.leavingDate));
+//        Predicate predEmtyWard = cb.isNull(patients);
+//        cq.where(predNull);
+//        cq.distinct(true);
+//        TypedQuery<Ward> q = em.createQuery(cq);
+//        List<Ward> allitems = q.getResultList();
+//        return allitems;
+//    }
 }
