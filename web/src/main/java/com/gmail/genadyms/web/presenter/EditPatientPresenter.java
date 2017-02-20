@@ -68,6 +68,7 @@ public class EditPatientPresenter implements Presenter {
                 EditPatientPresenter.this.display.getAddress().setValue(patient.getAddress());
                 EditPatientPresenter.this.display.getDiagnosis().setValue(patient.getDiagnosis());
                 EditPatientPresenter.this.display.getComingDateBox().setValue(patient.getComingDate());
+                EditPatientPresenter.this.display.getLeavingDateBox().setValue(patient.getLeavingDate());
 
                 ListBox wards = EditPatientPresenter.this.display.getWardsListBox();
                 for (int i = 0; i < wards.getItemCount(); i++) {
