@@ -23,22 +23,6 @@ public class PatientServiceImpl extends RemoteServiceServlet implements PatientS
     }
 
     @Override
-    public PatientDTO addPatient(PatientDTO patientDTO) {
-        Patient p = new Patient();
-        p.setAddress(patientDTO.getAddress());
-        p.setFirstName(patientDTO.getFirstName());
-        p.setLastName(patientDTO.getLastName());
-        p.setComingDate(patientDTO.getComingDate());
-        if (null != patientDTO.getLeavingDate()) {
-            p.setLeavingDate(patientDTO.getLeavingDate());
-        }
-        p.setDiagnosis(patientDTO.getDiagnosis());
-//        p.setWard(wardDao.findByNumberWard(patientDTO..getNumberWard()));
-        patientDao.insert(p);
-        return toDTO(p);
-    }
-
-    @Override
     public List<PatientDTO> getPatients() {
         List<Patient> patienstDao = patientDao.getAll();
         List<PatientDTO> result = toDTO(patienstDao);
@@ -63,7 +47,7 @@ public class PatientServiceImpl extends RemoteServiceServlet implements PatientS
     }
 
     @Override
-    public PatientDTO updatePatient(PatientDTO patientDTO) {
+    public PatientDTO updateOrSavePatient(PatientDTO patientDTO) {
         Patient patientEntity = toDAO(patientDTO);
         if (null == patientDTO.getId()) {
             patientDao.insert(patientEntity);

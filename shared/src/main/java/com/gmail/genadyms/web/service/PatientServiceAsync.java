@@ -7,7 +7,6 @@ import java.util.List;
 
 public interface PatientServiceAsync {
 
-    void addPatient(PatientDTO patient, AsyncCallback<PatientDTO> callback);
 
     void getPatients(AsyncCallback<List<PatientDTO>> callback);
 
@@ -15,7 +14,7 @@ public interface PatientServiceAsync {
 
     void getCountPatients(AsyncCallback<Long> callback);
 
-    void updatePatient(PatientDTO patient, AsyncCallback<PatientDTO> callback);
+    void updateOrSavePatient(PatientDTO patient, AsyncCallback<PatientDTO> callback);
 
     void getPatients(Integer start, Integer length, AsyncCallback<List<PatientDTO>> callback);
 

@@ -203,7 +203,7 @@ public class EditPatientPresenter implements Presenter {
     }
 
     private void doSave() {
-        rpcPatientService.updatePatient(patient, new AsyncCallback<PatientDTO>() {
+        rpcPatientService.updateOrSavePatient(patient, new AsyncCallback<PatientDTO>() {
             @Override
             public void onFailure(Throwable caught) {
                 Window.alert("Error updating patient");

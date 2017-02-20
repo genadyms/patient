@@ -5,11 +5,8 @@ import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.*;
 
-import com.gmail.genadyms.server.dataaccess.filter.BedPlaceFilter;
 import com.gmail.genadyms.server.datamodel.Patient;
-import com.gmail.genadyms.server.datamodel.Patient_;
 import com.gmail.genadyms.server.datamodel.Ward;
-import com.gmail.genadyms.server.datamodel.Ward_;
 
 import java.util.List;
 

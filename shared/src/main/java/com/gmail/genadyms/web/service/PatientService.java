@@ -9,8 +9,6 @@ import java.util.List;
 @RemoteServiceRelativePath("patient")
 public interface PatientService extends RemoteService {
 
-	PatientDTO addPatient(PatientDTO patient);
-
 	List<PatientDTO> getPatients();
 
 	Long getCountPatients();
@@ -19,5 +17,5 @@ public interface PatientService extends RemoteService {
 
 	PatientDTO getPatient(Long id);
 
-	PatientDTO updatePatient(PatientDTO patient);
+	PatientDTO updateOrSavePatient(PatientDTO patient);
 }

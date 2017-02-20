@@ -15,7 +15,6 @@ import java.util.Set;
 
 public class WardDaoTest {
 	private WardDao daoWard = new WardDao();
-	private PatientDao daoPatient = new PatientDao();
 
 	@Test
 	public void testSave() {
@@ -35,13 +34,6 @@ public class WardDaoTest {
 		Assert.assertNull(delPlace);
 	}
 
-	@Ignore
-	@Test
-	public void testGetFreeWards() {
-		List<Ward> wards = daoWard.findFreeWards();
-		System.out.println(wards.size());
-
-	}
 
 	protected Ward saveMockWard(Integer nChamber, Integer nBed) {
 		Ward mock = new Ward();
