@@ -14,7 +14,9 @@ public enum ConstantsValue {
     BUTTON_SAVE("Save patient "),
     BUTTON_CANCEL("Cancel"),
     BUTTON_UPDATE("Update patient"),
-    TABLE_TITLE("table of patients");
+    TABLE_TITLE("table of patients"),
+    MSG_VALIDATE(" has incorrect value!"),
+    NEW_LINE("\r\n");
 
     private final String value;
 

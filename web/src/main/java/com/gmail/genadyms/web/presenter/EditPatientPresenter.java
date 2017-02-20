@@ -59,7 +59,9 @@ public class EditPatientPresenter implements Presenter {
 
     public EditPatientPresenter(PatientServiceAsync rpcPatientService, WardServiceAsync rpcWardService,
                                 HandlerManager eventBus, Display display, Long id) {
+
         this(rpcPatientService, rpcWardService, eventBus, display);
+
         rpcPatientService.getPatient(id, new AsyncCallback<PatientDTO>() {
             public void onSuccess(PatientDTO result) {
                 patient = result;
@@ -115,7 +117,7 @@ public class EditPatientPresenter implements Presenter {
                         }
                     }
                 }
-                if (isNotSelectedWard && null!=patient.getId()) {
+                if (isNotSelectedWard && null != patient.getId()) {
                     wardsListBox.addItem(String.valueOf(patient.getNumberWard()));
                     wardsListBox.setSelectedIndex(wardsListBox.getItemCount() - 1);
                 }
@@ -127,7 +129,20 @@ public class EditPatientPresenter implements Presenter {
     public void bind() {
         this.display.getSaveButton().addClickHandler(new ClickHandler() {
             public void onClick(ClickEvent event) {
-                doSave();
+
+                patient.setFirstName(display.getFirstName().getValue());
+                patient.setLastName(display.getLastName().getValue());
+                patient.setAddress(display.getAddress().getValue());
+                patient.setDiagnosis(display.getDiagnosis().getValue());
+                patient.setNumberWard(Integer.valueOf(display.getWardsListBox().getSelectedValue()));
+
+                String errorMsg = validate(patient);
+                if (errorMsg.isEmpty()) {
+                    doSave();
+                } else {
+                    Window.alert(errorMsg);
+                }
+
             }
         });
 
@@ -152,6 +167,35 @@ public class EditPatientPresenter implements Presenter {
         });
     }
 
+    private String validate(PatientDTO patient) {
+
+        StringBuffer errorMessage= new StringBuffer();
+
+        if (patient.getFirstName().length()<3||patient.getFirstName().length()>30) {
+            errorMessage.append(ConstantsValue.FIRST_NAME).append(ConstantsValue.MSG_VALIDATE).append(ConstantsValue.NEW_LINE);
+        }
+
+        if (patient.getLastName().length()<3||patient.getLastName().length()>30) {
+            errorMessage.append(ConstantsValue.LAST_NAME).append(ConstantsValue.MSG_VALIDATE).append(ConstantsValue.NEW_LINE);
+        }
+
+        if (patient.getAddress().length()<3||patient.getAddress().length()>30) {
+            errorMessage.append(ConstantsValue.ADDRESS).append(ConstantsValue.MSG_VALIDATE).append(ConstantsValue.NEW_LINE);
+        }
+
+
+        if (patient.getDiagnosis().length()<3||patient.getDiagnosis().length()>30) {
+            errorMessage.append(ConstantsValue.DIAGNOSIS).append(ConstantsValue.MSG_VALIDATE).append(ConstantsValue.NEW_LINE);
+        }
+
+        if (null!=patient.getLeavingDate()&&null!=patient.getComingDate()) {
+            if(patient.getComingDate().getTime()>patient.getLeavingDate().getTime()) {
+                errorMessage.append(ConstantsValue.LEAVING_DATE).append(ConstantsValue.MSG_VALIDATE).append(ConstantsValue.NEW_LINE);
+            }
+        }
+        return errorMessage.toString();
+    }
+
     public void go(final HasWidgets container) {
         prepareWards();
         container.clear();
@@ -159,12 +203,6 @@ public class EditPatientPresenter implements Presenter {
     }
 
     private void doSave() {
-        patient.setFirstName(display.getFirstName().getValue());
-        patient.setLastName(display.getLastName().getValue());
-        patient.setAddress(display.getAddress().getValue());
-        patient.setDiagnosis(display.getDiagnosis().getValue());
-        patient.setNumberWard(Integer.valueOf(display.getWardsListBox().getSelectedValue()));
-
         rpcPatientService.updatePatient(patient, new AsyncCallback<PatientDTO>() {
             @Override
             public void onFailure(Throwable caught) {
