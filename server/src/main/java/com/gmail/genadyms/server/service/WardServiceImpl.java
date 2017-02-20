@@ -17,35 +17,21 @@ import java.util.Set;
 
 public class WardServiceImpl extends RemoteServiceServlet implements WardService {
 
-	private final WardDao daoWard;
-	private final PatientDao daoPatient;
+    private final WardDao daoWard;
 
-	public WardServiceImpl() {
-		daoPatient = new PatientDao();
-		daoWard = new WardDao();
-	}
+    public WardServiceImpl() {
+        daoWard = new WardDao();
+    }
 
-	@Override
-	public Set<WardDTO> getFreeWards() {
-		List<Patient> patientsActive = daoPatient.findActivePatients();
-		Map<Ward, Integer> wardsPatients = new HashMap();
-		for (Patient patient : patientsActive) {
-			Ward currentWard = patient.getWard();
-			if (wardsPatients.containsKey(currentWard)) {
-				Integer changeCountsPatients = wardsPatients.get(currentWard) + 1;
-				wardsPatients.put(currentWard, changeCountsPatients);
-		} else {
-				wardsPatients.put(currentWard, 1);
-			}
-		}
-		Set<WardDTO> wardsFree = new HashSet();
-		for (Ward ward : wardsPatients.keySet()) {
-			if (wardsPatients.get(ward) < ward.getCountBeds()) {
-				WardDTO dtoWard = new WardDTO();
-				dtoWard.setNumberWard(ward.getNumber());
-				wardsFree.add(dtoWard);
-			}
-		}
-		return wardsFree;
-	}
+    @Override
+    public Set<WardDTO> getFreeWards() {
+        Set<WardDTO> outputWards = new HashSet();
+        List<Ward> freeWardsDao = daoWard.findFreeWards();
+        for (Ward crnt : freeWardsDao) {
+            WardDTO dtoWard = new WardDTO();
+            dtoWard.setNumberWard(crnt.getNumber());
+            outputWards.add(dtoWard);
+        }
+        return outputWards;
+    }
 }
